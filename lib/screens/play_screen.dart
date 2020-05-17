@@ -131,7 +131,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
         if (_totalBubbles == 0) {
           var bubble = widget.bubbleInfo;
           bubble.completed = true;
-          print(bubble.completed);
           bubble.save();
           _time = 0;
           setState(() {

@@ -54,7 +54,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     SingleUseBubble(),
                     BubbleList(),
                     Statistics(),
-                    Help(),
+                    ListView(
+                      children: <Widget>[
+                        Text('About Bubble', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+                        Help(),
+                      ],
+                    ),
                   ],
                 ),
               ),

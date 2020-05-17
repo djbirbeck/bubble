@@ -18,7 +18,7 @@ void main() async {
   Hive.registerAdapter(CompletedBubbleAdapter());
   Hive.registerAdapter(IntroAdapter());
   Hive.openBox<CompletedBubble>('completedBubbles');
-  Hive.openBox<Intro>('intro');
+  Hive.openBox<IntroToApp>('intro');
   runApp(MyApp());
 }
 
@@ -71,10 +71,8 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: AppBarTheme(
           color: Colors.cyan[50],
           textTheme: ThemeData.light().textTheme.copyWith(
-                headline6: TextStyle(
-                  color: Colors.lightBlue[800],
-                  fontSize: 20
-                ),
+                headline6:
+                    TextStyle(color: Colors.lightBlue[800], fontSize: 20),
               ),
         ),
       ),

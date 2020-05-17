@@ -161,51 +161,54 @@ class ListBubble extends StatelessWidget {
           Positioned(
             right: 66,
             bottom: 0,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(300),
-              ),
-              elevation: 0,
-              margin: EdgeInsets.zero,
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.indigoAccent[700], width: 2),
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.purple[50]
-                          : Colors.grey[900],
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.indigo[200]
-                          : Theme.of(context).accentColor,
-                    ],
-                  ),
-                ),
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Icon(
-                    Icons.edit,
-                    color: Colors.indigoAccent[700],
-                  ),
-                  onPressed: () => Navigator.push(
-                    context,
-                    SlideRightRoute(
-                      page: NewBubbleTabs(
-                        bubbleInfo: bubble,
+            child: !bubble.completed
+                ? Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(300),
+                    ),
+                    elevation: 0,
+                    margin: EdgeInsets.zero,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: Colors.indigoAccent[700], width: 2),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Theme.of(context).brightness == Brightness.light
+                                ? Colors.purple[50]
+                                : Colors.grey[900],
+                            Theme.of(context).brightness == Brightness.light
+                                ? Colors.indigo[200]
+                                : Theme.of(context).accentColor,
+                          ],
+                        ),
+                      ),
+                      child: FlatButton(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.indigoAccent[700],
+                        ),
+                        onPressed: () => Navigator.push(
+                          context,
+                          SlideRightRoute(
+                            page: NewBubbleTabs(
+                              bubbleInfo: bubble,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  )
+                : Container(),
           ),
           Positioned(
             left: 66,

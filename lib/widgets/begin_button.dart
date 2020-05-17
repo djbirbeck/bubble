@@ -12,9 +12,9 @@ class BeginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Hive.box<Intro>('intro').listenable(),
-      builder: (context, Box<Intro> box, _) {
-        if (box.values.isEmpty) {
+      valueListenable: Hive.box<IntroToApp>('intro').listenable(),
+      builder: (context, Box<IntroToApp> box, _) {
+        if (box.values.isEmpty == true) {
           return Container(
             height: 30,
             child: FlatButton(
@@ -23,7 +23,7 @@ class BeginButton extends StatelessWidget {
               ),
               onPressed: () => animateButtonFunction('intro'),
               child: Text(
-                'Lets get started...',
+                'Lets begin...',
                 style: TextStyle(
                   color: Theme.of(context).textTheme.headline6.color,
                   fontSize: 20,

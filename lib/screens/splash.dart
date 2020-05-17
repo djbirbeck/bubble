@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:notification_permissions/notification_permissions.dart';
 
 import './home_screen.dart';
 import './intro.dart';
@@ -19,6 +20,10 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> with TickerProviderStateMixin {
+  Future<String> permissionStatusFuture;
+  var permGranted = "granted";
+  var permDenied = "denied";
+  var permUnknown = "unknown";
   double _logoSize;
   double _bubble1Size;
   double _bubble2Size;
@@ -33,7 +38,16 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     _bubble1Size = 0;
     _bubble2Size = 0;
     _animateIn();
+    permissionStatusFuture = getCheckNotificationPermStatus();
     super.initState();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() {
+        permissionStatusFuture = getCheckNotificationPermStatus();
+      });
+    }
   }
 
   void _animateIn() {
@@ -63,10 +77,12 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
 
   void _animatePreTransition(String screen) {
+    print(screen);
     setState(() {
       _button = Container();
     });
     if (screen == 'main') {
+      print('hello');
       Timer(Duration(milliseconds: 400), () {
         Navigator.pushReplacement(
           context,
@@ -75,14 +91,39 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           ),
         );
       });
-    }
-    Timer(Duration(milliseconds: 400), () {
+    } else {
+      Timer(Duration(milliseconds: 400), () {
+      NotificationPermissions.requestNotificationPermissions(
+              iosSettings: const NotificationSettingsIos(
+                  sound: true, badge: true, alert: true))
+          .then((_) {
+        setState(() {
+          permissionStatusFuture = getCheckNotificationPermStatus();
+        });
+      });
       Navigator.pushReplacement(
         context,
         FadeRoute(
           page: Intro(),
         ),
       );
+    });
+    }
+  }
+
+  Future<String> getCheckNotificationPermStatus() {
+    return NotificationPermissions.getNotificationPermissionStatus()
+        .then((status) {
+      switch (status) {
+        case PermissionStatus.denied:
+          return permDenied;
+        case PermissionStatus.granted:
+          return permGranted;
+        case PermissionStatus.unknown:
+          return permUnknown;
+        default:
+          return null;
+      }
     });
   }
 

@@ -79,6 +79,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void _minusBubble() {
     if (_amountOfBubbles <= 0) {
       return;
+    } else if (_amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
+      return;
     } else {
       setState(() {
         _amountOfBubbles = _amountOfBubbles - 1;
@@ -140,7 +142,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       Box<BubbleTask> contactsBox = Hive.box<BubbleTask>('bubbles');
       contactsBox.add(bubble);
       Navigator.of(context).pop();
-    } else {
+    } else if (_editing &&
+        _amountOfBubbles != widget.bubbleInfo.completedBubbles) {
       var bubble = widget.bubbleInfo;
       bubble.id = widget.bubbleInfo.id;
       bubble.title = _title.trim();
@@ -154,6 +157,52 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       bubble.completed = false;
       bubble.save();
       Navigator.of(context).pop();
+    } else if (_editing && _amountOfBubbles != widget.bubbleInfo.completedBubbles && widget.bubbleInfo.completedBubbles > 0) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            title: Text('Complete this Bubble?'),
+            content: Text('Do you want to set this Bubble as complete?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Yes',
+                  style: TextStyle(color: Colors.green),
+                ),
+                onPressed: () {
+                  var bubble = widget.bubbleInfo;
+                  bubble.id = widget.bubbleInfo.id;
+                  bubble.title = _title.trim();
+                  bubble.notes = _notes;
+                  bubble.dueDate = _dueDate;
+                  bubble.bubbleType = _bubbleType;
+                  bubble.amountOfBubbles = _amountOfBubbles;
+                  bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
+                  bubble.totalTime = _bubbleType == 'small'
+                      ? _amountOfBubbles * 0.5
+                      : _amountOfBubbles;
+                  bubble.completed = true;
+                  bubble.save();
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  'No',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 

@@ -4,11 +4,11 @@ import 'package:hive/hive.dart';
 part 'intro.g.dart';
 
 @HiveType(typeId: 2)
-class Intro extends HiveObject {
+class IntroToApp extends HiveObject {
   @HiveField(0)
   bool introCompleted;
 
-  Intro({
+  IntroToApp({
     @required this.introCompleted,
   });
 }

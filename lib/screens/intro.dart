@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import '../widgets/hero_bubbles_intro.dart';
 import '../widgets/help.dart';
+import '../screens/home_screen.dart';
+import '../transitions/fade.dart';
+import '../models/intro.dart';
 
 class Intro extends StatelessWidget {
   @override
@@ -43,7 +47,7 @@ class Intro extends StatelessWidget {
                     Help(),
                     Container(
                       height: 66,
-                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      margin: EdgeInsets.all(16),
                       child: Card(
                         color: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
@@ -51,12 +55,21 @@ class Intro extends StatelessWidget {
                         ),
                         elevation: 3,
                         child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          child: Text('Let\'s Go!'),
-                          onPressed: () {},
-                        ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            child: Text('Let\'s Go!'),
+                            onPressed: () {
+                              Box<IntroToApp> introBox = Hive.box<IntroToApp>('intro');
+                              var intro = IntroToApp(introCompleted: true);
+                              introBox.add(intro);
+                              Navigator.pushReplacement(
+                                context,
+                                FadeRoute(
+                                  page: HomeScreen(),
+                                ),
+                              );
+                            }),
                       ),
                     ),
                   ],
