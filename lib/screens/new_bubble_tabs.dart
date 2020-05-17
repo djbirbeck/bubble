@@ -23,7 +23,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   String _title;
   String _notes;
   DateTime _dueDate;
-  String _bubbleType;
+  String _bubbleType = 'small';
   double _amountOfBubbles;
 
   bool _editing;

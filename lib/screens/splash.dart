@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import './home_screen.dart';
+import './intro.dart';
 import '../widgets/begin_button.dart';
 import '../widgets/bubble.dart';
-import './home_screen.dart';
 import '../transitions/fade.dart';
 import '../widgets/basic_scaffold.dart';
 
@@ -61,15 +62,25 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     });
   }
 
-  void _animatePreTransition() {
+  void _animatePreTransition(String screen) {
     setState(() {
       _button = Container();
     });
+    if (screen == 'main') {
+      Timer(Duration(milliseconds: 400), () {
+        Navigator.pushReplacement(
+          context,
+          FadeRoute(
+            page: HomeScreen(),
+          ),
+        );
+      });
+    }
     Timer(Duration(milliseconds: 400), () {
       Navigator.pushReplacement(
         context,
         FadeRoute(
-          page: HomeScreen(),
+          page: Intro(),
         ),
       );
     });

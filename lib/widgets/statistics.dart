@@ -14,7 +14,7 @@ class Statistics extends StatelessWidget {
     int days = (hours / 24).truncate();
 
     String daysStr = (days % 24).toString();
-    String hoursAfterDaysStr = (hours % 24).toString().padLeft(2, '0');
+    String hoursAfterDaysStr = (hours % 24).toString();
     //String hoursStr = (hours % 60).toString().padLeft(2, '0');
     String minutesStr = (minutes % 60).toString().padLeft(2, '0');
     //String secondsStr = (seconds % 60).toString().padLeft(2, '0');
@@ -119,7 +119,7 @@ class Statistics extends StatelessWidget {
                   if (box.values.isEmpty) {
                     return Center(
                       child: Text(
-                        '0\nBig Bubbles',
+                        '0\nBig',
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
@@ -139,7 +139,7 @@ class Statistics extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Big Bubbles',
+                        'Big',
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -153,7 +153,7 @@ class Statistics extends StatelessWidget {
           height: MediaQuery.of(context).size.width * 0.25,
           width: MediaQuery.of(context).size.width * 0.25,
           top: MediaQuery.of(context).size.width * 0.75,
-          right: 140,
+          right: MediaQuery.of(context).size.width * 0.4,
           child: Bubble(
             size: 120,
             isStatBubble: true,
@@ -184,7 +184,7 @@ class Statistics extends StatelessWidget {
                             child: FittedBox(
                               fit: BoxFit.contain,
                               child: Text(
-                                'Small Bubbles',
+                                'Small',
                                 style: Theme.of(context).textTheme.headline6,
                                 textAlign: TextAlign.center,
                               ),
@@ -205,7 +205,7 @@ class Statistics extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Small Bubbles',
+                        'Small',
                         textAlign: TextAlign.center,
                       ),
                     ],

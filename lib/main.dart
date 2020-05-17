@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 import './screens/splash.dart';
 import './models/bubble.dart';
 import './models/completed_bubble.dart';
+import './models/intro.dart';
 import './widgets/basic_scaffold.dart';
 
 void main() async {
@@ -15,7 +16,9 @@ void main() async {
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(BubbleTaskAdapter());
   Hive.registerAdapter(CompletedBubbleAdapter());
+  Hive.registerAdapter(IntroAdapter());
   Hive.openBox<CompletedBubble>('completedBubbles');
+  Hive.openBox<Intro>('intro');
   runApp(MyApp());
 }
 

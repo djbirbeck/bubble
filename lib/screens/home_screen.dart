@@ -5,6 +5,7 @@ import '../widgets/today_stats.dart';
 import '../widgets/bubble_list.dart';
 import '../widgets/single_use_bubble.dart';
 import '../widgets/statistics.dart';
+import '../widgets/help.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -53,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     SingleUseBubble(),
                     BubbleList(),
                     Statistics(),
+                    Help(),
                   ],
                 ),
               ),

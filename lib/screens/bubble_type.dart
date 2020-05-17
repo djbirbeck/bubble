@@ -163,7 +163,7 @@ class BubbleType extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'How many bubbles?',
+                        'How many $bubbleType bubbles?',
                         style: TextStyle(
                           fontSize: 18,
                           color: Theme.of(context).textTheme.headline6.color,
