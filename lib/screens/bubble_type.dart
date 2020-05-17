@@ -35,19 +35,19 @@ class BubbleType extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: editing ? () {} :  () => updateBubbleType('small'),
+                      onTap: editing ? () {} : () => updateBubbleType('small'),
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         ),
                         elevation: 3,
                         child: Container(
-                          height: 200,
-                          width: 160,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: MediaQuery.of(context).size.width * 0.4,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Colors.lightBlue,
-                              width: 2,
+                              width: 3,
                             ),
                             borderRadius: BorderRadius.circular(24),
                             gradient: LinearGradient(
@@ -74,7 +74,7 @@ class BubbleType extends StatelessWidget {
                                   'Small\nBubbles',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 18,
                                     color: Theme.of(context)
                                         .textTheme
                                         .headline6
@@ -96,12 +96,12 @@ class BubbleType extends StatelessWidget {
                         ),
                         elevation: 3,
                         child: Container(
-                          height: 200,
-                          width: 160,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: MediaQuery.of(context).size.width * 0.4,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Colors.lightBlue,
-                              width: 2,
+                              width: 3,
                             ),
                             borderRadius: BorderRadius.circular(24),
                             gradient: LinearGradient(
@@ -119,7 +119,7 @@ class BubbleType extends StatelessWidget {
                               Container(),
                               BubbleButton(
                                 bubbleSizeMin: 80,
-                                bubbleSizeMax: 110,
+                                bubbleSizeMax: 100,
                                 selected: bubbleType == 'big' ? true : false,
                               ),
                               Container(
@@ -128,7 +128,7 @@ class BubbleType extends StatelessWidget {
                                   'Big\nBubbles',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 18,
                                     color: Theme.of(context)
                                         .textTheme
                                         .headline6
@@ -145,10 +145,10 @@ class BubbleType extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  height: 160,
-                  margin: EdgeInsets.symmetric(vertical: 16),
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  margin: EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.lightBlue, width: 2),
+                    border: Border.all(color: Colors.lightBlue, width: 3),
                     borderRadius: BorderRadius.circular(24),
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -159,14 +159,13 @@ class BubbleType extends StatelessWidget {
                       ],
                     ),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
                         'How many bubbles?',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 18,
                           color: Theme.of(context).textTheme.headline6.color,
                           fontWeight: FontWeight.bold,
                         ),
@@ -207,7 +206,7 @@ class BubbleType extends StatelessWidget {
                         child: Text(
                           '${bubbleType == 'small' ? (amountOfBubbles == 0 ? 0.0 : (amountOfBubbles / 2).toStringAsFixed(1)) : amountOfBubbles.toStringAsFixed(0)} hours of bubbling',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               color:
                                   Theme.of(context).textTheme.headline6.color,
                               fontWeight: FontWeight.bold),

@@ -188,9 +188,10 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
+        Text('Bubble on the go', style: Theme.of(context).textTheme.headline6),
         Container(
-          height: MediaQuery.of(context).size.width * 0.7,
-          width: MediaQuery.of(context).size.width * 0.7,
+          height: MediaQuery.of(context).size.width * 0.5,
+          width: MediaQuery.of(context).size.width * 0.5,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -233,14 +234,14 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.lightBlue[50]
                     : Colors.lightBlue,
-                width: 4,
+                width: 3,
               ),
             ),
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.cyanAccent[700]
                 : Colors.indigo[900],
             child: Container(
-              height: 80,
+              height: MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width * 0.7,
               color: Colors.transparent,
               child: Row(
@@ -249,8 +250,8 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                   Container(
                     width: 60,
                     child: BubbleButton(
-                      bubbleSizeMin: 20,
-                      bubbleSizeMax: 40,
+                      bubbleSizeMin: (MediaQuery.of(context).size.height * 0.06) - 20,
+                      bubbleSizeMax: MediaQuery.of(context).size.height * 0.06,
                       selected: _isSmallBubble == true ? true : false,
                     ),
                   ),
@@ -259,13 +260,14 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                     child: Text(
                       '${_isSmallBubble ? 'Little' : 'Big'}\nBubble',
                       textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
                     width: 60,
                     child: BubbleButton(
-                      bubbleSizeMin: 40,
-                      bubbleSizeMax: 60,
+                      bubbleSizeMin: (MediaQuery.of(context).size.height * 0.07) - 20,
+                      bubbleSizeMax: MediaQuery.of(context).size.height * 0.07,
                       selected: _isSmallBubble == false ? true : false,
                     ),
                   ),
@@ -275,8 +277,8 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
           ),
         ),
         Container(
-          height: MediaQuery.of(context).size.width * 0.2,
-          width: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.width * 0.15,
+          width: MediaQuery.of(context).size.width * 0.15,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -287,16 +289,19 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
               width: 4,
             ),
           ),
-          child: IconButton(
-            iconSize: 40,
-            icon: AnimatedIcon(
-              icon: AnimatedIcons.play_pause,
-              progress: _controller,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.lightBlue[50]
-                  : Colors.lightBlue,
+          child: FittedBox(
+            fit: BoxFit.contain,
+                      child: IconButton(
+              iconSize: 40,
+              icon: AnimatedIcon(
+                icon: AnimatedIcons.play_pause,
+                progress: _controller,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.lightBlue[50]
+                    : Colors.lightBlue,
+              ),
+              onPressed: _playPause,
             ),
-            onPressed: _playPause,
           ),
         ),
       ],

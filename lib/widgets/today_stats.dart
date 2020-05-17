@@ -14,10 +14,7 @@ class TodayStats extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16),
           child: Text(
             'Today\'s Completed\nBubbles',
-            style: TextStyle(
-              fontSize: 20,
-              color: Theme.of(context).textTheme.headline6.color,
-            ),
+            style: Theme.of(context).textTheme.headline6,
             textAlign: TextAlign.center,
           ),
         ),
@@ -26,21 +23,21 @@ class TodayStats extends StatelessWidget {
           valueListenable:
               Hive.box<CompletedBubble>('completedBubbles').listenable(),
           builder: (context, Box<CompletedBubble> box, _) {
-            if (box.values.isEmpty) {
+            if (box.values.isNotEmpty) {
               return Center(
                 child: Text(
                   '0',
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
-                    fontSize: 30,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               );
             }
             return Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.width * 0.8,
-              child: DayChart(box.values),
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.width * 0.7,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: DayChart(box.values),
+              ),
             );
           },
         ),

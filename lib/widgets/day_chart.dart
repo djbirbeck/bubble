@@ -23,10 +23,6 @@ class DayChart extends StatelessWidget {
     return totalSum;
   }
 
-  // double get totalSpending {
-  //   return todayValue;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Center(

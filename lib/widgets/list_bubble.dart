@@ -241,7 +241,7 @@ class ListBubble extends StatelessWidget {
                           ]
                         : [
                             Theme.of(context).brightness == Brightness.light
-                                ? Colors.yellow[100]
+                                ? Colors.yellow[200]
                                 : Colors.grey[900],
                             Theme.of(context).brightness == Brightness.light
                                 ? Colors.amberAccent

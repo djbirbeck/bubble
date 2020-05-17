@@ -55,14 +55,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        canvasColor: Colors.transparent,
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
         accentColor: Colors.lightBlue[400],
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
+                fontWeight: FontWeight.w400,
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
                 color: Colors.grey[800],
               ),
             ),
@@ -71,6 +70,7 @@ class _MyAppState extends State<MyApp> {
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
                   color: Colors.lightBlue[800],
+                  fontSize: 20
                 ),
               ),
         ),

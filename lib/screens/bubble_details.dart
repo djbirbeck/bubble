@@ -75,17 +75,17 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                         Container(
                           margin: EdgeInsets.symmetric(
                             horizontal: 32,
-                            vertical: 8,
+                            vertical: 4,
                           ),
                           padding: EdgeInsets.only(
                             left: 24,
                             right: 24,
-                            bottom: 8,
+                            bottom: 4,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.lightBlue, width: 2),
+                            border: Border.all(color: Colors.lightBlue, width: 3),
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -109,13 +109,13 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                         ),
                         Container(
                           margin:
-                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                              EdgeInsets.symmetric(horizontal: 32, vertical: 4),
                           padding:
-                              EdgeInsets.only(left: 24, right: 24, bottom: 8),
+                              EdgeInsets.only(left: 24, right: 24, bottom: 4),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.lightBlue, width: 2),
+                            border: Border.all(color: Colors.lightBlue, width: 3),
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -142,11 +142,11 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                         ),
                         Container(
                           margin:
-                              EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                              EdgeInsets.symmetric(horizontal: 32, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.lightBlue, width: 2),
+                            border: Border.all(color: Colors.lightBlue, width: 3),
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -161,14 +161,14 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32)
                           ),
-                            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
                                 _selectedDate == null
                                     ? 'Choose date (optional)'
                                     : '${DateFormat.yMMMEd().format(_selectedDate)}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
                           ),

@@ -25,7 +25,6 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   DateTime _dueDate;
   String _bubbleType;
   double _amountOfBubbles;
-  //int _completedBubbles;
 
   bool _editing;
 
@@ -87,7 +86,44 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     }
   }
 
-  void _saveBubble() {
+  void _saveBubble(BuildContext context) {
+    if (_title == null || _bubbleType == null || _amountOfBubbles == 0) {
+      String errorTitle = '';
+      String errorType = '';
+      String errorAmount = '';
+      if (_title == null) {
+        errorTitle = 'No name for your Bubble.\n';
+      }
+      if (_bubbleType == null) {
+        errorType = 'Bubble size not selected.\n';
+      }
+      if (_amountOfBubbles == 0) {
+        errorAmount = 'Amount of Bubbles is 0.';
+      }
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            title: Text('Unable to save Bubble'),
+            content: Text(errorTitle + errorType + errorAmount),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Ok',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     if (!_editing) {
       final bubble = BubbleTask(
         id: DateTime.now().toString(),
@@ -126,51 +162,57 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     return BasicScaffold(
       childWidget: Column(
         children: <Widget>[
-          Container(
-            height: 160,
-            child: Stack(
-              children: [
-                Positioned(
-                  right: 20,
-                  top: 10,
-                  child: Text(
-                    'New Bubble',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ),
-                Positioned(
-                  height: 70,
-                  width: 70,
-                  right: 35,
-                  bottom: 20,
-                  child: Hero(
-                    tag: 'bubble-1',
-                    child: Bubble(size: 70),
-                  ),
-                ),
-                Positioned(
-                  height: 50,
-                  width: 50,
-                  right: 200,
-                  top: 10,
-                  child: Hero(
-                    tag: 'bubble-2',
-                    child: Bubble(size: 50),
-                  ),
-                ),
-                Positioned(
-                  left: 30,
-                  bottom: 20,
-                  child: Hero(
-                    tag: 'logoImage',
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      height: 120,
-                      width: 120,
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              height: 120,
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: 20,
+                    top: 10,
+                    child: Text(
+                      'New Bubble',
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    height: 60,
+                    width: 60,
+                    right: 35,
+                    bottom: 20,
+                    child: Hero(
+                      tag: 'bubble-1',
+                      child: Bubble(size: 70),
+                    ),
+                  ),
+                  Positioned(
+                    height: 40,
+                    width: 40,
+                    right: 180,
+                    top: 10,
+                    child: Hero(
+                      tag: 'bubble-2',
+                      child: Bubble(size: 50),
+                    ),
+                  ),
+                  Positioned(
+                    left: 30,
+                    bottom: 20,
+                    child: Hero(
+                      tag: 'logoImage',
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -236,11 +278,13 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                           onPressed: () {
                             _tabController.index == 0
                                 ? Navigator.pop(context)
-                                : setState(() {
-                                    _tabController.index =
-                                        _tabController.index--;
-                                    _rightButton = Text('Next');
-                                  });
+                                : setState(
+                                    () {
+                                      _tabController.index =
+                                          _tabController.index--;
+                                      _rightButton = Text('Next');
+                                    },
+                                  );
                           },
                         ),
                       ),
@@ -284,7 +328,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                                         _tabController.index++;
                                     _rightButton = Text('Save');
                                   })
-                                : _saveBubble();
+                                : _saveBubble(context);
                           },
                         ),
                       ),

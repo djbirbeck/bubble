@@ -74,7 +74,8 @@ class _BubbleListState extends State<BubbleList> {
         ),
         actions: <Widget>[
           DropdownButton(
-              hint: Text(_search, style: Theme.of(context).textTheme.headline6,),
+              hint: Text(_search, style: TextStyle(color: Colors.white),),
+              iconEnabledColor: Colors.white,
               items: [
                 DropdownMenuItem(
                   value: 'All',

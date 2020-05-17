@@ -36,184 +36,183 @@ class Statistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      alignment: Alignment.topCenter,
       children: <Widget>[
-        Container(
-          height: 460,
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              Positioned(
-                height: 220,
-                width: 220,
-                top: 0,
-                left: 40,
-                child: Bubble(
-                  size: 220,
-                  isStatBubble: true,
-                  childWidget: Center(
-                    child: ValueListenableBuilder(
-                      valueListenable:
-                          Hive.box<CompletedBubble>('completedBubbles')
-                              .listenable(),
-                      builder: (context, Box<CompletedBubble> box, _) {
-                        if (box.values.isEmpty) {
-                          return Center(
-                            child: Text(
-                              '0\nBubbles in total',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }
-                        var smallBubbles = box.values.where((element) {
-                          return element.bubbleType == 'small';
-                        });
+        Positioned(
+          height: MediaQuery.of(context).size.width * 0.45,
+          width: MediaQuery.of(context).size.width * 0.45,
+          top: 0,
+          left: 40,
+          child: Bubble(
+            size: 220,
+            isStatBubble: true,
+            childWidget: Center(
+              child: ValueListenableBuilder(
+                valueListenable:
+                    Hive.box<CompletedBubble>('completedBubbles').listenable(),
+                builder: (context, Box<CompletedBubble> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'No Bubbles...\never!',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+                  var smallBubbles = box.values.where((element) {
+                    return element.bubbleType == 'small';
+                  });
 
-                        var bigBubbles = box.values.where((element) {
-                          return element.bubbleType == 'big';
-                        });
+                  var bigBubbles = box.values.where((element) {
+                    return element.bubbleType == 'big';
+                  });
 
-                        int smallTime = smallBubbles.length * 1800;
-                        int bigTime = bigBubbles.length * 3600;
+                  int smallTime = smallBubbles.length * 1800;
+                  int bigTime = bigBubbles.length * 3600;
 
-                        int totalTime = smallTime + bigTime;
+                  int totalTime = smallTime + bigTime;
 
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              transformSeconds(totalTime),
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              'spent Bubblin\' along',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        transformSeconds(totalTime),
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        'spent Bubblin\' along',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
               ),
-              Positioned(
-                height: 120,
-                width: 120,
-                top: 340,
-                right: 140,
-                child: Bubble(
-                  size: 120,
-                  isStatBubble: true,
-                  childWidget: Center(
-                    child: ValueListenableBuilder(
-                      valueListenable:
-                          Hive.box<CompletedBubble>('completedBubbles')
-                              .listenable(),
-                      builder: (context, Box<CompletedBubble> box, _) {
-                        var smallBubbles = box.values.where((element) {
-                          return element.bubbleType == 'small';
-                        });
+            ),
+          ),
+        ),
+        Positioned(
+          height: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.4,
+          right: 40,
+          top: MediaQuery.of(context).size.width * 0.35,
+          child: Bubble(
+            size: 160,
+            isStatBubble: true,
+            childWidget: Center(
+              child: ValueListenableBuilder(
+                valueListenable:
+                    Hive.box<CompletedBubble>('completedBubbles').listenable(),
+                builder: (context, Box<CompletedBubble> box, _) {
+                  var bigBubbles = box.values.where((element) {
+                    return element.bubbleType == 'big';
+                  });
 
-                        if (box.values.isEmpty) {
-                          return Center(
-                            child: Text(
-                              '0\nSmall Bubbles',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              smallBubbles.length.toString(),
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
-                              ),
-                            ),
-                            Text(
-                              'Small Bubbles',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text(
+                        '0\nBig Bubbles',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        bigBubbles.length.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        'Big Bubbles',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
               ),
-              Positioned(
-                height: 160,
-                width: 160,
-                right: 40,
-                top: 180,
-                child: Bubble(
-                  size: 160,
-                  isStatBubble: true,
-                  childWidget: Center(
-                    child: ValueListenableBuilder(
-                      valueListenable:
-                          Hive.box<CompletedBubble>('completedBubbles')
-                              .listenable(),
-                      builder: (context, Box<CompletedBubble> box, _) {
-                        var bigBubbles = box.values.where((element) {
-                          return element.bubbleType == 'big';
-                        });
+            ),
+          ),
+        ),
+        Positioned(
+          height: MediaQuery.of(context).size.width * 0.25,
+          width: MediaQuery.of(context).size.width * 0.25,
+          top: MediaQuery.of(context).size.width * 0.75,
+          right: 140,
+          child: Bubble(
+            size: 120,
+            isStatBubble: true,
+            childWidget: Center(
+              child: ValueListenableBuilder(
+                valueListenable:
+                    Hive.box<CompletedBubble>('completedBubbles').listenable(),
+                builder: (context, Box<CompletedBubble> box, _) {
+                  var smallBubbles = box.values.where((element) {
+                    return element.bubbleType == 'small';
+                  });
 
-                        if (box.values.isEmpty) {
-                          return Center(
-                            child: Text(
-                              '0\nBig Bubbles',
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                              '0',
                               style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
+                                color: Theme.of(context).textTheme.headline6.color,
+                                fontSize: 20,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                          );
-                        }
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              bigBubbles.length.toString(),
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
-                                fontSize: 30,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                'Small Bubbles',
+                                style: Theme.of(context).textTheme.headline6,
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            Text(
-                              'Big Bubbles',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        smallBubbles.length.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        'Small Bubbles',
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
+            ),
           ),
         ),
       ],
