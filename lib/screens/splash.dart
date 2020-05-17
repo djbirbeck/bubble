@@ -38,15 +38,15 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   void _animateIn() {
     Timer(Duration(milliseconds: 400), () {
       setState(() {
-        _logoSize = 200;
+        _logoSize = MediaQuery.of(context).size.height * 0.2;
       });
       Timer(Duration(milliseconds: 200), () {
         setState(() {
-          _bubble1Size = 100;
+          _bubble1Size = MediaQuery.of(context).size.height * 0.15;
         });
         Timer(Duration(milliseconds: 200), () {
           setState(() {
-            _bubble2Size = 60;
+            _bubble2Size = MediaQuery.of(context).size.height * 0.1;
           });
         });
       });
@@ -80,7 +80,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     return BasicScaffold(
       childWidget: Stack(
         children: [
-          Center(
+          Positioned(
+            top: 30,
+            left: 60,
             child: AnimatedContainer(
               curve: Curves.bounceOut,
               height: _bubble1Size,
@@ -93,16 +95,20 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Center(
-            child: AnimatedContainer(
-              curve: Curves.bounceOut,
-              height: _bubble2Size,
-              width: _bubble2Size,
-              duration: Duration(milliseconds: 600),
-              margin: EdgeInsets.only(left: 150, top: 500),
-              child: Hero(
-                tag: 'bubble-2',
-                child: Bubble(size: _bubble2Size),
+          Positioned(
+            bottom: 80,
+            right: 100,
+            child: Center(
+              child: AnimatedContainer(
+                curve: Curves.bounceOut,
+                height: _bubble2Size,
+                width: _bubble2Size,
+                duration: Duration(milliseconds: 600),
+                margin: EdgeInsets.only(left: 150, top: 500),
+                child: Hero(
+                  tag: 'bubble-2',
+                  child: Bubble(size: _bubble2Size),
+                ),
               ),
             ),
           ),
