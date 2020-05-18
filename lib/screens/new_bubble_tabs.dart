@@ -79,7 +79,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void _minusBubble() {
     if (_amountOfBubbles <= 0) {
       return;
-    } else if (_amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
+    } else if (widget.bubbleInfo.completedBubbles != null && _amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
       return;
     } else {
       setState(() {
@@ -257,6 +257,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                         'assets/images/logo.png',
                         height: 100,
                         width: 100,
+                        semanticLabel: 'Bubble logo'
                       ),
                     ),
                   ),

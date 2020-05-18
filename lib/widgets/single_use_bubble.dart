@@ -294,6 +294,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                       child: IconButton(
               iconSize: 40,
               icon: AnimatedIcon(
+                semanticLabel: 'Play or pause button',
                 icon: AnimatedIcons.play_pause,
                 progress: _controller,
                 color: Theme.of(context).brightness == Brightness.light

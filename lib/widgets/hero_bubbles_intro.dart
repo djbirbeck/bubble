@@ -30,6 +30,7 @@ class HeroBubblesIntro extends StatelessWidget {
                 'assets/images/logo.png',
                 height: 80,
                 width: 80,
+                semanticLabel: 'Bubble logo',
               ),
             ),
           ),

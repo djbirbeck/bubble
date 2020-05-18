@@ -249,6 +249,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                       'assets/images/logo.png',
                       height: 60,
                       width: 60,
+                      semanticLabel: 'Bubble logo',
                     ),
                   ),
                 ),
@@ -399,11 +400,10 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                   ),
                   child: FlatButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: FittedBox(
-                        fit: BoxFit.scaleDown, child: Icon(Icons.arrow_back)),
+                    child: Icon(Icons.arrow_back),
                     textColor: Colors.red[900],
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(200),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
@@ -432,18 +432,24 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   child: widget.bubbleInfo.completed
-                      ? Icon(Icons.check, color: Colors.green[900])
-                      : FlatButton(
-                          padding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                      ? Semantics(
+                          label: 'completed icon',
+                          child: Icon(Icons.check, color: Colors.green[900]),
+                        )
+                      : Semantics(
+                          label: 'play or pause button',
+                          child: FlatButton(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: AnimatedIcon(
+                              icon: AnimatedIcons.play_pause,
+                              progress: _iconController,
+                              color: _playColour,
+                            ),
+                            onPressed: _playPause,
                           ),
-                          child: AnimatedIcon(
-                            icon: AnimatedIcons.play_pause,
-                            progress: _iconController,
-                            color: _playColour,
-                          ),
-                          onPressed: _playPause,
                         ),
                 ),
               ],

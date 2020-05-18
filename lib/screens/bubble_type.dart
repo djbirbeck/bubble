@@ -34,110 +34,120 @@ class BubbleType extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      onTap: editing ? () {} : () => updateBubbleType('small'),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 3,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.lightBlue,
-                              width: 3,
-                            ),
+                    Semantics(
+                      label: 'Small bubble toggle button',
+                      selected: bubbleType == 'small' ? true : false,
+                      child: InkWell(
+                        onTap:
+                            editing ? () {} : () => updateBubbleType('small'),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Theme.of(context).primaryColor,
-                                Theme.of(context).accentColor,
-                              ],
-                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(),
-                              BubbleButton(
-                                bubbleSizeMin: 50,
-                                bubbleSizeMax: 80,
-                                selected: bubbleType == 'small' ? true : false,
+                          elevation: 3,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.lightBlue,
+                                width: 3,
                               ),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  'Small\nBubbles',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        .color,
-                                    fontWeight: FontWeight.bold,
+                              borderRadius: BorderRadius.circular(24),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).accentColor,
+                                ],
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(),
+                                BubbleButton(
+                                  bubbleSizeMin: 50,
+                                  bubbleSizeMax: 80,
+                                  selected:
+                                      bubbleType == 'small' ? true : false,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  child: Text(
+                                    'Small\nBubbles',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headline6
+                                          .color,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: editing ? () {} : () => updateBubbleType('big'),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 3,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.lightBlue,
-                              width: 3,
-                            ),
+                    Semantics(
+                      label: 'Big buble toggle button',
+                      selected: bubbleType == 'big' ? true : false,
+                      child: InkWell(
+                        onTap: editing ? () {} : () => updateBubbleType('big'),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Theme.of(context).primaryColor,
-                                Theme.of(context).accentColor,
-                              ],
-                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(),
-                              BubbleButton(
-                                bubbleSizeMin: 80,
-                                bubbleSizeMax: 100,
-                                selected: bubbleType == 'big' ? true : false,
+                          elevation: 3,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.lightBlue,
+                                width: 3,
                               ),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 12),
-                                child: Text(
-                                  'Big\nBubbles',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        .color,
-                                    fontWeight: FontWeight.bold,
+                              borderRadius: BorderRadius.circular(24),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).accentColor,
+                                ],
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(),
+                                BubbleButton(
+                                  bubbleSizeMin: 80,
+                                  bubbleSizeMax: 100,
+                                  selected: bubbleType == 'big' ? true : false,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  child: Text(
+                                    'Big\nBubbles',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headline6
+                                          .color,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -173,13 +183,16 @@ class BubbleType extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          FloatingActionButton(
-                            heroTag: 'minusFAB',
-                            backgroundColor: Colors.lightBlueAccent[400],
-                            elevation: 3,
-                            mini: true,
-                            child: Icon(Icons.remove),
-                            onPressed: () => minusBubble(),
+                          Semantics(
+                            label: 'minus button',
+                            child: FloatingActionButton(
+                              heroTag: 'minusFAB',
+                              backgroundColor: Colors.lightBlueAccent[400],
+                              elevation: 3,
+                              mini: true,
+                              child: Icon(Icons.remove),
+                              onPressed: () => minusBubble(),
+                            ),
                           ),
                           Container(
                             width: 100,
@@ -192,13 +205,16 @@ class BubbleType extends StatelessWidget {
                               ),
                             ),
                           ),
-                          FloatingActionButton(
-                            heroTag: 'addFAB',
-                            backgroundColor: Colors.lightBlueAccent[400],
-                            elevation: 3,
-                            mini: true,
-                            child: Icon(Icons.add),
-                            onPressed: () => addBubble(),
+                          Semantics(
+                            label: 'add button',
+                            child: FloatingActionButton(
+                              heroTag: 'addFAB',
+                              backgroundColor: Colors.lightBlueAccent[400],
+                              elevation: 3,
+                              mini: true,
+                              child: Icon(Icons.add),
+                              onPressed: () => addBubble(),
+                            ),
                           ),
                         ],
                       ),

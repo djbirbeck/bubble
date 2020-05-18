@@ -61,9 +61,8 @@ class _BubbleListState extends State<BubbleList> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.lightBlue[700],
         automaticallyImplyLeading: false,
-        //centerTitle: true,
         title: Text(
           'My Bubbles',
           style: TextStyle(color: Colors.white),
@@ -74,7 +73,10 @@ class _BubbleListState extends State<BubbleList> {
         ),
         actions: <Widget>[
           DropdownButton(
-              hint: Text(_search, style: TextStyle(color: Colors.white),),
+              hint: Text(
+                _search,
+                style: TextStyle(color: Colors.white),
+              ),
               iconEnabledColor: Colors.white,
               items: [
                 DropdownMenuItem(
@@ -99,15 +101,18 @@ class _BubbleListState extends State<BubbleList> {
                   _search = value;
                 });
               }),
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.push(
-              context,
-              SlideRightRoute(
-                page: NewBubbleTabs(),
+          Semantics(
+            label: 'Add a new bubble button',
+            child: IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.push(
+                context,
+                SlideRightRoute(
+                  page: NewBubbleTabs(),
+                ),
               ),
             ),
           ),

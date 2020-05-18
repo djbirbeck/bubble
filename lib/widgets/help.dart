@@ -8,7 +8,7 @@ class Help extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Text('What does bubble do?'),
+          child: Text('What does Bubble do?'),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -40,7 +40,7 @@ class Help extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
-                'Otherwise you can plan ahead by setting a goal, with a due date, description, pre-chosen Bubble size and amount of Bubbles. Once set up, you can edit it w,henever you want, to add or remove Bubbles, or work away and get bubblin\'.',
+                'Otherwise you can plan ahead by setting a goal, with a due date, description, pre-chosen Bubble size and amount of Bubbles. Once set up, you can edit it whenever you want, to add or remove Bubbles, or work away and get bubblin\'.',
                 textAlign: TextAlign.justify,
               ),
             ),

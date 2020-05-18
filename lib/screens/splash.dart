@@ -77,12 +77,10 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
 
   void _animatePreTransition(String screen) {
-    print(screen);
     setState(() {
       _button = Container();
     });
     if (screen == 'main') {
-      print('hello');
       Timer(Duration(milliseconds: 400), () {
         Navigator.pushReplacement(
           context,
@@ -175,7 +173,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                     height: _logoSize,
                     width: _logoSize,
                     duration: Duration(milliseconds: 800),
-                    child: Image.asset('assets/images/logo.png'),
+                    child: Image.asset('assets/images/logo.png', semanticLabel: 'Bubble logo'),
                   ),
                 ),
                 AnimatedSwitcher(

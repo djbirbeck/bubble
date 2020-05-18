@@ -119,41 +119,44 @@ class ListBubble extends StatelessWidget {
           Positioned(
             right: 8,
             top: 4,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(300),
-              ),
-              elevation: 0,
-              margin: EdgeInsets.zero,
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.red[900], width: 2),
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.red[50]
-                          : Colors.grey[900],
-                      Theme.of(context).brightness == Brightness.light
-                          ? Colors.redAccent[100]
-                          : Theme.of(context).accentColor,
-                    ],
-                  ),
+            child: Semantics(
+              label: 'Delete this bubble button',
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(300),
                 ),
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                child: Container(
+                  height: 52,
+                  width: 52,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.red[900], width: 2),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Theme.of(context).brightness == Brightness.light
+                            ? Colors.red[50]
+                            : Colors.grey[900],
+                        Theme.of(context).brightness == Brightness.light
+                            ? Colors.redAccent[100]
+                            : Theme.of(context).accentColor,
+                      ],
+                    ),
                   ),
-                  child: Icon(
-                    Icons.delete_outline,
-                    color: Colors.red[900],
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: Colors.red[900],
+                    ),
+                    onPressed: () => deleteFunction(context, bubble),
                   ),
-                  onPressed: () => deleteFunction(context, bubble),
                 ),
               ),
             ),
@@ -162,46 +165,49 @@ class ListBubble extends StatelessWidget {
             right: 66,
             bottom: 0,
             child: !bubble.completed
-                ? Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(300),
-                    ),
-                    elevation: 0,
-                    margin: EdgeInsets.zero,
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Colors.indigoAccent[700], width: 2),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Theme.of(context).brightness == Brightness.light
-                                ? Colors.purple[50]
-                                : Colors.grey[900],
-                            Theme.of(context).brightness == Brightness.light
-                                ? Colors.indigo[200]
-                                : Theme.of(context).accentColor,
-                          ],
-                        ),
+                ? Semantics(
+                    label: 'Delete this bubble button',
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(300),
                       ),
-                      child: FlatButton(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                      elevation: 0,
+                      margin: EdgeInsets.zero,
+                      child: Container(
+                        height: 52,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: Colors.indigoAccent[700], width: 2),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.purple[50]
+                                  : Colors.grey[900],
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.indigo[200]
+                                  : Theme.of(context).accentColor,
+                            ],
+                          ),
                         ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.indigoAccent[700],
-                        ),
-                        onPressed: () => Navigator.push(
-                          context,
-                          SlideRightRoute(
-                            page: NewBubbleTabs(
-                              bubbleInfo: bubble,
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.indigoAccent[700],
+                          ),
+                          onPressed: () => Navigator.push(
+                            context,
+                            SlideRightRoute(
+                              page: NewBubbleTabs(
+                                bubbleInfo: bubble,
+                              ),
                             ),
                           ),
                         ),
@@ -220,8 +226,8 @@ class ListBubble extends StatelessWidget {
               elevation: 0,
               margin: EdgeInsets.zero,
               child: Container(
-                height: 50,
-                width: 50,
+                height: 52,
+                width: 52,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -253,25 +259,31 @@ class ListBubble extends StatelessWidget {
                   ),
                 ),
                 child: bubble.completed
-                    ? Icon(
-                        Icons.check,
-                        color: Colors.green[900],
-                      )
-                    : FlatButton(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
+                    ? Semantics(
+                        label: 'Completed icon',
                         child: Icon(
-                          Icons.play_arrow,
-                          color: Colors.amber[900],
+                          Icons.check,
+                          color: Colors.green[900],
                         ),
-                        onPressed: () => Navigator.push(
-                          context,
-                          SlideRightRoute(
-                            page: PlayScreen(
-                              bubbleInfo: bubble,
-                              deleteFunction: deleteFunction,
+                      )
+                    : Semantics(
+                        label: 'Button to navigate to play screen',
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.play_arrow,
+                            color: Colors.amber[900],
+                          ),
+                          onPressed: () => Navigator.push(
+                            context,
+                            SlideRightRoute(
+                              page: PlayScreen(
+                                bubbleInfo: bubble,
+                                deleteFunction: deleteFunction,
+                              ),
                             ),
                           ),
                         ),

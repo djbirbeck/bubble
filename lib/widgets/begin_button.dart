@@ -11,19 +11,38 @@ class BeginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: Hive.box<IntroToApp>('intro').listenable(),
-      builder: (context, Box<IntroToApp> box, _) {
-        if (box.values.isEmpty == true) {
+    return Semantics(
+      label: 'Start button',
+      child: ValueListenableBuilder(
+        valueListenable: Hive.box<IntroToApp>('intro').listenable(),
+        builder: (context, Box<IntroToApp> box, _) {
+          if (box.values.isEmpty == true) {
+            return Container(
+              height: 48,
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                onPressed: () => animateButtonFunction('intro'),
+                child: Text(
+                  'Lets begin...',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.headline6.color,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            );
+          }
           return Container(
-            height: 30,
+            height: 48,
             child: FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              onPressed: () => animateButtonFunction('intro'),
+              onPressed: () => animateButtonFunction('main'),
               child: Text(
-                'Lets begin...',
+                'Lets get started...',
                 style: TextStyle(
                   color: Theme.of(context).textTheme.headline6.color,
                   fontSize: 20,
@@ -31,24 +50,8 @@ class BeginButton extends StatelessWidget {
               ),
             ),
           );
-        }
-        return Container(
-          height: 30,
-          child: FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            onPressed: () => animateButtonFunction('main'),
-            child: Text(
-              'Lets get started...',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.headline6.color,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

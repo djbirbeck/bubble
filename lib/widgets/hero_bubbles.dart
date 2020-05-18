@@ -29,7 +29,8 @@ class HeroBubbles extends StatelessWidget {
               child: Image.asset(
                 'assets/images/logo.png',
                 height: 80,
-                width: 80,
+                width: 80, 
+                semanticLabel: 'Bubble logo',
               ),
             ),
           ),
