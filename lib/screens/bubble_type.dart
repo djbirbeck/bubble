@@ -78,14 +78,8 @@ class BubbleType extends StatelessWidget {
                                   child: Text(
                                     'Small\nBubbles',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
                                   ),
                                 ),
                               ],
@@ -136,14 +130,8 @@ class BubbleType extends StatelessWidget {
                                   child: Text(
                                     'Big\nBubbles',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .color,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
                                   ),
                                 ),
                               ],
@@ -174,11 +162,7 @@ class BubbleType extends StatelessWidget {
                     children: [
                       Text(
                         'How many $bubbleType bubbles?',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Theme.of(context).textTheme.headline6.color,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,9 +184,12 @@ class BubbleType extends StatelessWidget {
                             child: Text(
                               amountOfBubbles.toStringAsFixed(0),
                               style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .fontFamily),
                             ),
                           ),
                           Semantics(
@@ -221,11 +208,7 @@ class BubbleType extends StatelessWidget {
                       Center(
                         child: Text(
                           '${bubbleType == 'small' ? (amountOfBubbles == 0 ? 0.0 : (amountOfBubbles / 2).toStringAsFixed(1)) : amountOfBubbles.toStringAsFixed(0)} hours of bubbling',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color:
-                                  Theme.of(context).textTheme.headline6.color,
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                     ],

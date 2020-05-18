@@ -29,6 +29,7 @@ class BeginButton extends StatelessWidget {
                   style: TextStyle(
                     color: Theme.of(context).textTheme.headline6.color,
                     fontSize: 20,
+                    fontFamily: Theme.of(context).textTheme.headline6.fontFamily
                   ),
                 ),
               ),
@@ -46,6 +47,7 @@ class BeginButton extends StatelessWidget {
                 style: TextStyle(
                   color: Theme.of(context).textTheme.headline6.color,
                   fontSize: 20,
+                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                 ),
               ),
             ),

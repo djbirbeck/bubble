@@ -59,6 +59,7 @@ class Statistics extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
+                          fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -85,12 +86,14 @@ class Statistics extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
+                          fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         'spent Bubblin\' along',
                         textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   );
@@ -123,6 +126,7 @@ class Statistics extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
+                          fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -136,11 +140,13 @@ class Statistics extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
+                          fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                         ),
                       ),
                       Text(
                         'Big',
                         textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   );
@@ -172,13 +178,15 @@ class Statistics extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                              '0',
-                              style: TextStyle(
-                                color: Theme.of(context).textTheme.headline6.color,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.center,
+                            '0',
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.headline6.color,
+                              fontSize: 20,
+                              fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                             ),
+                            textAlign: TextAlign.center,
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: FittedBox(
@@ -202,11 +210,13 @@ class Statistics extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline6.color,
                           fontSize: 20,
+                          fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                         ),
                       ),
                       Text(
                         'Small',
                         textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   );

@@ -22,19 +22,16 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   String _title;
   String _notes;
-  DateTime _dueDate;
+  String _rightButton = 'Next';
   String _bubbleType = 'small';
   double _amountOfBubbles;
-
   bool _editing;
-
-  Widget _rightButton;
+  DateTime _dueDate;
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     _amountOfBubbles = 0;
-    _rightButton = Text('Next');
     _editing = widget.bubbleInfo == null ? false : true;
     if (widget.bubbleInfo != null) {
       _title = widget.bubbleInfo.title;
@@ -79,7 +76,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void _minusBubble() {
     if (_amountOfBubbles <= 0) {
       return;
-    } else if (widget.bubbleInfo.completedBubbles != null && _amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
+    } else if (widget.bubbleInfo.completedBubbles != null &&
+        _amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
       return;
     } else {
       setState(() {
@@ -91,13 +89,9 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void _saveBubble(BuildContext context) {
     if (_title == null || _bubbleType == null || _amountOfBubbles == 0) {
       String errorTitle = '';
-      String errorType = '';
       String errorAmount = '';
       if (_title == null) {
         errorTitle = 'No name for your Bubble.\n';
-      }
-      if (_bubbleType == null) {
-        errorType = 'Bubble size not selected.\n';
       }
       if (_amountOfBubbles == 0) {
         errorAmount = 'Amount of Bubbles is 0.';
@@ -109,8 +103,11 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
-            title: Text('Unable to save Bubble'),
-            content: Text(errorTitle + errorType + errorAmount),
+            title: Text(
+              'Unable to save Bubble',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            content: Text(errorTitle + errorAmount, style: Theme.of(context).textTheme.headline6,),
             actions: <Widget>[
               FlatButton(
                 child: Text(
@@ -157,7 +154,9 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       bubble.completed = false;
       bubble.save();
       Navigator.of(context).pop();
-    } else if (_editing && _amountOfBubbles != widget.bubbleInfo.completedBubbles && widget.bubbleInfo.completedBubbles > 0) {
+    } else if (_editing &&
+        _amountOfBubbles != widget.bubbleInfo.completedBubbles &&
+        widget.bubbleInfo.completedBubbles > 0) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -165,13 +164,23 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
-            title: Text('Complete this Bubble?'),
-            content: Text('Do you want to set this Bubble as complete?'),
+            title: Text(
+              'Complete this Bubble?',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            content: Text(
+              'Do you want to set this Bubble as complete?',
+              style: Theme.of(context).textTheme.headline6,
+            ),
             actions: <Widget>[
               FlatButton(
                 child: Text(
                   'Yes',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily,
+                  ),
                 ),
                 onPressed: () {
                   var bubble = widget.bubbleInfo;
@@ -193,7 +202,11 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
               FlatButton(
                 child: Text(
                   'No',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -225,7 +238,11 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     top: 10,
                     child: Text(
                       'New Bubble',
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily:
+                            Theme.of(context).textTheme.headline6.fontFamily,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -253,12 +270,10 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     bottom: 20,
                     child: Hero(
                       tag: 'logoImage',
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        height: 100,
-                        width: 100,
-                        semanticLabel: 'Bubble logo'
-                      ),
+                      child: Image.asset('assets/images/logo.png',
+                          height: 100,
+                          width: 100,
+                          semanticLabel: 'Bubble logo'),
                     ),
                   ),
                 ],
@@ -324,7 +339,10 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
-                          child: Text('Back'),
+                          child: Text(
+                            'Back',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                           onPressed: () {
                             _tabController.index == 0
                                 ? Navigator.pop(context)
@@ -332,7 +350,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                                     () {
                                       _tabController.index =
                                           _tabController.index--;
-                                      _rightButton = Text('Next');
+                                      _rightButton = 'Next';
                                     },
                                   );
                           },
@@ -369,14 +387,17 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                           ),
                           child: AnimatedSwitcher(
                             duration: Duration(milliseconds: 600),
-                            child: _rightButton,
+                            child: Text(
+                              _rightButton,
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
                           ),
                           onPressed: () {
                             _tabController.index == 0
                                 ? setState(() {
                                     _tabController.index =
                                         _tabController.index++;
-                                    _rightButton = Text('Save');
+                                    _rightButton = 'Save';
                                   })
                                 : _saveBubble(context);
                           },

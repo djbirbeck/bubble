@@ -209,6 +209,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                   ? Colors.white
                   : Colors.lightBlue,
               fontSize: 50,
+              fontFamily: Theme.of(context).textTheme.headline6.fontFamily
             ),
           ),
         ),
@@ -250,7 +251,8 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                   Container(
                     width: 60,
                     child: BubbleButton(
-                      bubbleSizeMin: (MediaQuery.of(context).size.height * 0.06) - 20,
+                      bubbleSizeMin:
+                          (MediaQuery.of(context).size.height * 0.06) - 20,
                       bubbleSizeMax: MediaQuery.of(context).size.height * 0.06,
                       selected: _isSmallBubble == true ? true : false,
                     ),
@@ -260,13 +262,18 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                     child: Text(
                       '${_isSmallBubble ? 'Little' : 'Big'}\nBubble',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                      ),
                     ),
                   ),
                   Container(
                     width: 60,
                     child: BubbleButton(
-                      bubbleSizeMin: (MediaQuery.of(context).size.height * 0.07) - 20,
+                      bubbleSizeMin:
+                          (MediaQuery.of(context).size.height * 0.07) - 20,
                       bubbleSizeMax: MediaQuery.of(context).size.height * 0.07,
                       selected: _isSmallBubble == false ? true : false,
                     ),
@@ -291,7 +298,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
           ),
           child: FittedBox(
             fit: BoxFit.contain,
-                      child: IconButton(
+            child: IconButton(
               iconSize: 40,
               icon: AnimatedIcon(
                 semanticLabel: 'Play or pause button',

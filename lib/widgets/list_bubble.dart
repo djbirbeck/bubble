@@ -81,9 +81,15 @@ class ListBubble extends StatelessWidget {
                               : (bubble.amountOfBubbles -
                                       bubble.completedBubbles)
                                   .toStringAsFixed(0),
-                          style: TextStyle(fontSize: 24),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                          ),
                         ),
-                        Text('hours')
+                        Text(
+                          'hours',
+                          style: Theme.of(context).textTheme.headline6,
+                        )
                       ],
                     ),
                   ),
@@ -99,6 +105,7 @@ class ListBubble extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
                             ),
                             textAlign: TextAlign.center,
                             softWrap: true,
@@ -107,6 +114,7 @@ class ListBubble extends StatelessWidget {
                         ),
                         Text(
                           DateFormat.yMd().format(bubble.dueDate),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ],
                     ),

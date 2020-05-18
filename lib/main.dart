@@ -64,15 +64,19 @@ class _MyAppState extends State<MyApp> {
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 16,
+                fontSize: 18,
                 color: Colors.grey[800],
+                fontFamily: 'Josefin Sans'
               ),
             ),
         appBarTheme: AppBarTheme(
           color: Colors.cyan[50],
           textTheme: ThemeData.light().textTheme.copyWith(
-                headline6:
-                    TextStyle(color: Colors.lightBlue[800], fontSize: 20),
+                headline6: TextStyle(
+                  color: Colors.lightBlue[800],
+                  fontSize: 20,
+                  fontFamily: 'Josefin Sans'
+                ),
               ),
         ),
       ),
@@ -83,8 +87,9 @@ class _MyAppState extends State<MyApp> {
         textTheme: ThemeData.dark().textTheme.copyWith(
               headline6: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 16,
+                fontSize: 18,
                 color: Colors.grey[50],
+                fontFamily: 'Josefin Sans',
               ),
             ),
         appBarTheme: AppBarTheme(
@@ -92,6 +97,7 @@ class _MyAppState extends State<MyApp> {
                 headline6: TextStyle(
                   fontSize: 20,
                   color: Colors.lightBlue[50],
+                  fontFamily: 'Josefin Sans',
                 ),
               ),
         ),
@@ -102,7 +108,10 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
+              return Text(
+                snapshot.error.toString(),
+                style: Theme.of(context).textTheme.headline6,
+              );
             } else {
               return Splash();
             }

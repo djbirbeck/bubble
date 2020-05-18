@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Text('Bubble'),
+        title: Text('Bubble', style: Theme.of(context).textTheme.headline6,),
         centerTitle: true,
       ),
       body: Container(
@@ -56,7 +56,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Statistics(),
                     ListView(
                       children: <Widget>[
-                        Text('About Bubble', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+                        Text(
+                          'About Bubble',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .fontFamily,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                         Help(),
                       ],
                     ),

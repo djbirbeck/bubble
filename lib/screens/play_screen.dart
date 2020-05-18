@@ -47,17 +47,26 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
       setState(() {
         _dateWidget = Text(
           'Due: ' + DateFormat.yMMMMd().format(widget.bubbleInfo.dueDate),
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+          ),
           textAlign: TextAlign.center,
         );
         _titleWidget = Text(
           widget.bubbleInfo.title,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+          ),
           textAlign: TextAlign.center,
         );
         _notesWidget = Text(
           widget.bubbleInfo.notes,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+          ),
           textAlign: TextAlign.center,
         );
       });
@@ -332,7 +341,11 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                       child: Text(
                         transformSeconds(_time),
                         softWrap: true,
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                        ),
                       ),
                     ),
                   ),
@@ -364,7 +377,13 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         child: Text(
                           _totalBubbles.toStringAsFixed(0),
                           softWrap: true,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .fontFamily,
+                          ),
                         ),
                       ),
                     ),

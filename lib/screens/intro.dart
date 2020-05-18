@@ -15,7 +15,10 @@ class Intro extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Text('Bubble'),
+        title: Text(
+          'Bubble',
+          style: Theme.of(context).textTheme.headline6,
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -37,9 +40,10 @@ class Intro extends StatelessWidget {
                 'Welcome to Bubble!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.headline6.color,
-                  fontSize: 24,
-                ),
+                    color: Theme.of(context).textTheme.headline6.color,
+                    fontSize: 24,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily),
               ),
               Expanded(
                 child: ListView(
@@ -58,9 +62,13 @@ class Intro extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32),
                             ),
-                            child: Text('Let\'s Go!'),
+                            child: Text(
+                              'Let\'s Go!',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
                             onPressed: () {
-                              Box<IntroToApp> introBox = Hive.box<IntroToApp>('intro');
+                              Box<IntroToApp> introBox =
+                                  Hive.box<IntroToApp>('intro');
                               var intro = IntroToApp(introCompleted: true);
                               introBox.add(intro);
                               Navigator.pushReplacement(

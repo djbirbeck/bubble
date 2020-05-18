@@ -29,12 +29,15 @@ class _BubbleListState extends State<BubbleList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32),
           ),
-          title: Text('Delete this bubble?'),
+          title: Text('Delete this bubble?', style: Theme.of(context).textTheme.headline6,),
           actions: <Widget>[
             FlatButton(
               child: Text(
                 "Delete",
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                ),
               ),
               onPressed: () {
                 bubble.delete();
@@ -44,7 +47,10 @@ class _BubbleListState extends State<BubbleList> {
             FlatButton(
               child: Text(
                 "Keep",
-                style: TextStyle(color: Colors.green),
+                style: TextStyle(
+                  color: Colors.green,
+                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                ),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -61,11 +67,11 @@ class _BubbleListState extends State<BubbleList> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue[700],
+        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.lightBlue[300] : Colors.lightBlue[700],
         automaticallyImplyLeading: false,
         title: Text(
           'My Bubbles',
-          style: TextStyle(color: Colors.white),
+          style: Theme.of(context).textTheme.headline6,
         ),
         elevation: 3,
         shape: RoundedRectangleBorder(
@@ -75,25 +81,37 @@ class _BubbleListState extends State<BubbleList> {
           DropdownButton(
               hint: Text(
                 _search,
-                style: TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.headline6,
               ),
               iconEnabledColor: Colors.white,
               items: [
                 DropdownMenuItem(
                   value: 'All',
-                  child: Text('All'),
+                  child: Text(
+                    'All',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
                 DropdownMenuItem(
                   value: 'Today',
-                  child: Text('Today'),
+                  child: Text(
+                    'Today',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
                 DropdownMenuItem(
                   value: 'Complete',
-                  child: Text('Complete'),
+                  child: Text(
+                    'Complete',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
                 DropdownMenuItem(
                   value: 'Incomplete',
-                  child: Text('Incomplete'),
+                  child: Text(
+                    'Incomplete',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
               ],
               onChanged: (value) {
@@ -149,7 +167,10 @@ class _BubbleListState extends State<BubbleList> {
                       page: NewBubbleTabs(),
                     ),
                   ),
-                  child: Text('Add a Bubble?'),
+                  child: Text(
+                    'Add a Bubble?',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
               ),
             );
