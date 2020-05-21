@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   double _bubble2Size;
 
   Widget _button = Container(
-    height: 30,
+    height: 48,
   );
 
   @override
