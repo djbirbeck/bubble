@@ -58,7 +58,7 @@ class Statistics extends StatelessWidget {
                         if (box.values.isEmpty) {
                           return Center(
                             child: Text(
-                              'No Bubbles...\never!',
+                              'No. Bubbles...\never!',
                               style: TextStyle(
                                 color: Theme.of(context).textTheme.headline6.color,
                                 fontSize: 20,

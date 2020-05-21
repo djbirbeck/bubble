@@ -222,6 +222,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   @override
   Widget build(BuildContext context) {
     return BasicScaffold(
+      implyLeading: false,
+      screenTitle: '',
       childWidget: Column(
         children: <Widget>[
           GestureDetector(

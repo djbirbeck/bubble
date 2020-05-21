@@ -33,6 +33,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   Widget _titleWidget = Container();
   Widget _notesWidget = Container();
   Color _playColour = Colors.green[900];
+  var _lines = List<String>();
   Box _completedBox = Hive.box<CompletedBubble>('completedBubbles');
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -85,11 +86,19 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     var scheduledNotificationDateTime = DateTime.now().add(
       Duration(seconds: time),
     );
+
+    _lines.add(isBubble ? 'Time to chill!' : 'Back to work!');
+
+    var inboxStyleInformation = InboxStyleInformation(
+      _lines,
+      contentTitle: 'Lots of Bubbling going on here!',
+    );
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      isBubble ? 'completedBubble' : 'completedRest',
-      isBubble ? 'Completed Bubble' : 'Completed Rest',
-      isBubble ? 'Bubble is complete' : 'Rest is complete',
+      'bubble-channel',
+      'bubble-channel',
+      'bubble-notifications',
       groupKey: 'com.eightbitbirbeck.bubble.bubbles',
+      styleInformation: inboxStyleInformation,
       importance: Importance.Max,
       priority: Priority.High,
       ticker: 'ticker',
@@ -98,7 +107,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
-      DateTime.now().microsecondsSinceEpoch,
+      1,
       isBubble ? 'Bubble complete' : 'Rest over',
       isBubble ? 'Time to chill!' : 'Back to work!',
       scheduledNotificationDateTime,

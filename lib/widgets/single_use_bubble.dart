@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:quiver/async.dart';
@@ -20,6 +19,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
   bool _bubbling = true;
   bool _countingDown = false;
   int _time;
+  var _lines = List<String>();
   CountdownTimer _countDownTimer;
   StreamSubscription<CountdownTimer> _sub;
   Box _completedBox = Hive.box<CompletedBubble>('completedBubbles');
@@ -46,17 +46,22 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
   }
 
   void _addNotification({bool isBubble, int time}) async {
-    Random random = new Random();
-    int randomNumber = random.nextInt(100);
-
     var scheduledNotificationDateTime = DateTime.now().add(
       Duration(seconds: time),
+    );
+
+    _lines.add(isBubble ? 'Time to chill!' : 'Back to work!');
+
+    var inboxStyleInformation = InboxStyleInformation(
+      _lines,
+      contentTitle: 'Lots of Bubbling going on here!',
     );
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'bubble-channel',
       'bubble-channel',
-      'bubble-notification',
+      'bubble-notifications',
       groupKey: 'com.eightbitbirbeck.bubble.bubbles',
+      styleInformation: inboxStyleInformation,
       importance: Importance.Max,
       priority: Priority.High,
       ticker: 'ticker',
@@ -65,7 +70,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
-      randomNumber,
+      1,
       isBubble ? 'Bubble complete' : 'Rest over',
       isBubble ? 'Time to chill!' : 'Back to work!',
       scheduledNotificationDateTime,
@@ -93,7 +98,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _restCountDown(_isSmallBubble ? 300 : 600);
+        _restCountDown(_isSmallBubble ? 3 : 600);
         var completed = CompletedBubble(
           bubbleType: _isSmallBubble ? 'small' : 'big',
           amountOfBubbles: 1,
@@ -129,7 +134,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _bubbleCountDown(_isSmallBubble ? 1500 : 3000);
+        _bubbleCountDown(_isSmallBubble ? 5 : 3000);
         setState(() {
           _bubbling = !_bubbling;
         });
@@ -211,19 +216,18 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
           child: Text(
             transformSeconds(_time),
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.white
-                  : Colors.lightBlue,
-              fontSize: 50,
-              fontFamily: Theme.of(context).textTheme.headline6.fontFamily
-            ),
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.white
+                    : Colors.lightBlue,
+                fontSize: 50,
+                fontFamily: Theme.of(context).textTheme.headline6.fontFamily),
           ),
         ),
         InkWell(
           onTap: () {
             setState(() {
               _isSmallBubble = !_isSmallBubble;
-              _time = _isSmallBubble ? 1500 : 3000;
+              _time = _isSmallBubble ? 5 : 3000;
             });
             if (_bubbling && _countingDown) {
               _sub.cancel();
@@ -271,7 +275,8 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                        fontFamily:
+                            Theme.of(context).textTheme.headline6.fontFamily,
                       ),
                     ),
                   ),

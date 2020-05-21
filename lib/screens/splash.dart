@@ -128,6 +128,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BasicScaffold(
+      implyLeading: false,
+      screenTitle: '',
       childWidget: Stack(
         children: [
           Positioned(

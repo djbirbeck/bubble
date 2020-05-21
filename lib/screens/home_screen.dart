@@ -6,6 +6,7 @@ import '../widgets/bubble_list.dart';
 import '../widgets/single_use_bubble.dart';
 import '../widgets/statistics.dart';
 import '../widgets/help.dart';
+import '../widgets/menu_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -26,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
         elevation: 0,
         title: Text('Bubble', style: Theme.of(context).textTheme.headline6,),
         centerTitle: true,
@@ -53,23 +53,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     TodayStats(),
                     SingleUseBubble(),
                     BubbleList(),
-                    Statistics(),
-                    ListView(
-                      children: <Widget>[
-                        Text(
-                          'About Bubble',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .fontFamily,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Help(),
-                      ],
-                    ),
+                    // Statistics(),
+                    // ListView(
+                    //   children: <Widget>[
+                    //     Text(
+                    //       'About Bubble',
+                    //       style: TextStyle(
+                    //         fontSize: 24,
+                    //         fontFamily: Theme.of(context)
+                    //             .textTheme
+                    //             .headline6
+                    //             .fontFamily,
+                    //       ),
+                    //       textAlign: TextAlign.center,
+                    //     ),
+                    //     Help(),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
       ),
+      drawer: MenuDrawer(),
     );
   }
 }

@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:bezier_chart/bezier_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -30,12 +27,9 @@ class WeeklyChart extends StatelessWidget {
         }
       }
 
-      Random random = new Random();
-      int randomNumber = random.nextInt(10);
-
       return {
         'day': weekDay,
-        'amount': totalSum + randomNumber,
+        'amount': totalSum,
       };
     }).reversed.toList();
   }

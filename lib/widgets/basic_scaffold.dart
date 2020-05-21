@@ -4,8 +4,16 @@ class BasicScaffold extends StatelessWidget {
   final Widget childWidget;
   final Widget bottomWidget;
   final bool extendScaffoldBody;
+  final bool implyLeading;
+  final String screenTitle;
 
-  BasicScaffold({this.childWidget, this.bottomWidget, this.extendScaffoldBody});
+  BasicScaffold({
+    this.childWidget,
+    this.bottomWidget,
+    this.extendScaffoldBody,
+    this.implyLeading,
+    this.screenTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +21,9 @@ class BasicScaffold extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: implyLeading,
+        title: Text(screenTitle),
+        centerTitle: true,
       ),
       extendBody: true,
       body: Container(
