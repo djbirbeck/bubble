@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:quiver/async.dart';
@@ -39,18 +40,23 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
 
   @override
   dispose() {
+    flutterLocalNotificationsPlugin.cancelAll();
     _controller.dispose();
     super.dispose();
   }
 
   void _addNotification({bool isBubble, int time}) async {
+    Random random = new Random();
+    int randomNumber = random.nextInt(100);
+
     var scheduledNotificationDateTime = DateTime.now().add(
       Duration(seconds: time),
     );
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      isBubble ? 'completedBubble' : 'completedRest',
-      isBubble ? 'Completed Bubble' : 'Completed Rest',
-      isBubble ? 'Bubble is complete' : 'Rest is complete',
+      'bubble-channel',
+      'bubble-channel',
+      'bubble-notification',
+      groupKey: 'com.eightbitbirbeck.bubble.bubbles',
       importance: Importance.Max,
       priority: Priority.High,
       ticker: 'ticker',
@@ -59,7 +65,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
-      isBubble ? 0 : 1,
+      randomNumber,
       isBubble ? 'Bubble complete' : 'Rest over',
       isBubble ? 'Time to chill!' : 'Back to work!',
       scheduledNotificationDateTime,

@@ -76,6 +76,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
 
   @override
   dispose() {
+    flutterLocalNotificationsPlugin.cancelAll();
     _iconController.dispose();
     super.dispose();
   }
@@ -88,6 +89,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
       isBubble ? 'completedBubble' : 'completedRest',
       isBubble ? 'Completed Bubble' : 'Completed Rest',
       isBubble ? 'Bubble is complete' : 'Rest is complete',
+      groupKey: 'com.eightbitbirbeck.bubble.bubbles',
       importance: Importance.Max,
       priority: Priority.High,
       ticker: 'ticker',
@@ -96,7 +98,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
-      isBubble ? 0 : 1,
+      DateTime.now().microsecondsSinceEpoch,
       isBubble ? 'Bubble complete' : 'Rest over',
       isBubble ? 'Time to chill!' : 'Back to work!',
       scheduledNotificationDateTime,
@@ -200,7 +202,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
         _playColour = Colors.green[900];
       });
       _sub.cancel();
-      flutterLocalNotificationsPlugin.cancel(0);
+      flutterLocalNotificationsPlugin.cancelAll();
       _iconController.reverse();
     } else if (_countingDown && !_bubbling) {
       setState(() {
@@ -208,7 +210,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
         _playColour = Colors.green[900];
       });
       _sub.cancel();
-      flutterLocalNotificationsPlugin.cancel(1);
+      flutterLocalNotificationsPlugin.cancelAll();
       _iconController.reverse();
     } else if (!_countingDown && !_bubbling) {
       setState(() {
