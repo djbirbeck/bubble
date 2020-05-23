@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../screens/statistics_screen.dart';
-import '../screens/help_screen.dart';
+import '../screens/about_screen.dart';
 import '../screens/all_templates.dart';
 import '../screens/home_screen.dart';
 import '../transitions/slide_right.dart';
 
 class MenuDrawer extends StatelessWidget {
-    void _changeMainWidget(Widget screen, BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      SlideRightRoute(
-        page: screen,
-      ),
-    );
+  final String currentScreen;
+
+  MenuDrawer({@required this.currentScreen});
+
+  void _changeMainWidget(Widget screen, String screenName, BuildContext context) {
+    if (screenName != currentScreen) {
+      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        SlideRightRoute(
+          page: screen,
+        ),
+      );
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -45,32 +54,28 @@ class MenuDrawer extends StatelessWidget {
               leading: Icon(Icons.bubble_chart),
               title: Text('Home'),
               onTap: () {
-                Navigator.pop(context);
-                _changeMainWidget(HomeScreen(), context);
+                _changeMainWidget(HomeScreen(), 'home', context);
               },
             ),
             ListTile(
               leading: Icon(Icons.show_chart),
               title: Text('Your Statistics'),
               onTap: () {
-                Navigator.pop(context);
-                _changeMainWidget(StatisticsScreen(), context);
+                _changeMainWidget(StatisticsScreen(), 'statistics', context);
               },
             ),
             ListTile(
               leading: Icon(Icons.alarm_add),
               title: Text('My Templates'),
               onTap: () {
-                Navigator.pop(context);
-                _changeMainWidget(AllTemplates(), context);
+                _changeMainWidget(AllTemplates(), 'templates', context);
               },
             ),
             ListTile(
               leading: Icon(Icons.info_outline),
               title: Text('About Bubble'),
               onTap: () {
-                Navigator.pop(context);
-                _changeMainWidget(HelpScreen(), context);
+                _changeMainWidget(AboutScreen(), 'about', context);
               },
             ),
           ],

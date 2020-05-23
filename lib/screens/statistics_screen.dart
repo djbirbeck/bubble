@@ -17,7 +17,7 @@ class StatisticsScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(currentScreen: 'statistics'),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

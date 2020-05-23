@@ -4,7 +4,7 @@ import '../widgets/menu_drawer.dart';
 import '../widgets/help.dart';
 import '../widgets/hero_bubbles_help.dart';
 
-class HelpScreen extends StatelessWidget {
+class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +17,7 @@ class HelpScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(currentScreen: 'about'),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

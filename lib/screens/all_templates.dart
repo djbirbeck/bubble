@@ -21,7 +21,7 @@ class AllTemplates extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(currentScreen: 'templates'),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
