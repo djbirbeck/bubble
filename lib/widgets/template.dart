@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
+import './basic_scaffold.dart';
+
 class TemplateSheet extends StatefulWidget {
   @override
   _TemplateSheetState createState() => _TemplateSheetState();
@@ -26,24 +28,11 @@ class _TemplateSheetState extends State<TemplateSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(32),
-          topRight: Radius.circular(32),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
-          ],
-        ),
-      ),
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BasicScaffold(
+      screenTitle: 'New Template',
+      implyLeading: true,
+      childWidget: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             margin: EdgeInsets.symmetric(
@@ -86,90 +75,88 @@ class _TemplateSheetState extends State<TemplateSheet> {
               },
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                size: MediaQuery.of(context).size.width * 0.5,
-                startAngle: 140,
-                angleRange: 260,
-                customColors: CustomSliderColors(
-                  trackColor: Colors.blue,
-                  hideShadow: true,
-                  progressBarColors: [
-                    Colors.indigo,
-                    Colors.blue[600],
-                    Colors.cyan[300],
-                  ],
+              SleekCircularSlider(
+                appearance: CircularSliderAppearance(
+                  size: MediaQuery.of(context).size.width * 0.5,
+                  startAngle: 140,
+                  angleRange: 260,
+                  customColors: CustomSliderColors(
+                    trackColor: Colors.blue,
+                    hideShadow: true,
+                    progressBarColors: [
+                      Colors.indigo,
+                      Colors.blue[600],
+                      Colors.cyan[300],
+                    ],
+                  ),
                 ),
-              ),
-              min: 5,
-              max: 90,
-              initialValue: 5,
-              innerWidget: (double value) {
-                final roundedValue = value.ceil().toInt().toString();
-                return Center(
-                  child: Container(
-                    child: Text(
-                      '${roundedValue}m\nwork',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.headline6.color,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                        fontSize: 20,
+                min: 5,
+                max: 90,
+                initialValue: 5,
+                innerWidget: (double value) {
+                  final roundedValue = value.ceil().toInt().toString();
+                  return Center(
+                    child: Container(
+                      child: Text(
+                        '${roundedValue}m\nwork',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-              onChangeEnd: (value) {
-                setState(() {
-                  _workTime = value.ceil().toInt();
-                });
-              },
-            ),
-            SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                size: MediaQuery.of(context).size.width * 0.35,
-                startAngle: 140,
-                angleRange: 260,
-                customColors: CustomSliderColors(
-                  trackColor: Colors.blue,
-                  hideShadow: true,
-                  progressBarColors: [
-                    Colors.indigo,
-                    Colors.blue[600],
-                    Colors.cyan[300],
-                  ],
-                ),
+                  );
+                },
+                onChangeEnd: (value) {
+                  setState(() {
+                    _workTime = value.ceil().toInt();
+                  });
+                },
               ),
-              min: 5,
-              max: 30,
-              initialValue: 5,
-              innerWidget: (double value) {
-                final roundedValue = value.ceil().toInt().toString();
-                return Center(
-                  child: Container(
-                    child: Text(
-                      '${roundedValue}m\nrest',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.headline6.color,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                        fontSize: 20,
+              SleekCircularSlider(
+                appearance: CircularSliderAppearance(
+                  size: MediaQuery.of(context).size.width * 0.35,
+                  startAngle: 140,
+                  angleRange: 260,
+                  customColors: CustomSliderColors(
+                    trackColor: Colors.blue,
+                    hideShadow: true,
+                    progressBarColors: [
+                      Colors.indigo,
+                      Colors.blue[600],
+                      Colors.cyan[300],
+                    ],
+                  ),
+                ),
+                min: 5,
+                max: 30,
+                initialValue: 5,
+                innerWidget: (double value) {
+                  final roundedValue = value.ceil().toInt().toString();
+                  return Center(
+                    child: Container(
+                      child: Text(
+                        '${roundedValue}m\nrest',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.headline6.color,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-              onChangeEnd: (value) {
-                setState(() {
-                  _workTime = value.ceil().toInt();
-                });
-              },
-            ),
-          ]),
+                  );
+                },
+                onChangeEnd: (value) {
+                  setState(() {
+                    _workTime = value.ceil().toInt();
+                  });
+                },
+              ),
           Container(
             height: 66,
             width: MediaQuery.of(context).size.width * 0.4,

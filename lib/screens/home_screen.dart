@@ -5,6 +5,7 @@ import '../widgets/today_stats.dart';
 import '../widgets/bubble_list.dart';
 import '../widgets/single_use_bubble.dart';
 import '../widgets/menu_drawer.dart';
+import '../transitions/slide_right.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController _tabController;
+  Widget _mainWidget;
 
   @override
   void initState() {
@@ -26,9 +28,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        title: Text('Bubble', style: Theme.of(context).textTheme.headline6,),
+        title: Text(
+          'Bubble',
+          style: Theme.of(context).textTheme.headline6,
+        ),
         centerTitle: true,
       ),
+      drawer: MenuDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -67,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
       ),
-      drawer: MenuDrawer(),
     );
   }
 }

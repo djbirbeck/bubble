@@ -4,34 +4,24 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../widgets/bubble.dart';
 import '../widgets/template.dart';
+import '../widgets/menu_drawer.dart';
 import '../models/bubble.dart';
+import '../transitions/slide_right.dart';
 
 class AllTemplates extends StatelessWidget {
-  void _showBottomSheet(context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft:Radius.circular(32),
-          topRight: Radius.circular(32)
-        )
-      ),
-      builder: (BuildContext bc) {
-        return TemplateSheet();
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        automaticallyImplyLeading: true,
+        title: Text(
+          'Bubble',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        centerTitle: true,
       ),
-      extendBody: true,
+      drawer: MenuDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -115,7 +105,7 @@ class AllTemplates extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.add),
-                        onPressed: () => _showBottomSheet(context),
+                        onPressed: () => Navigator.push(context, SlideRightRoute(page: TemplateSheet()),),
                       ),
                     ]),
               ),

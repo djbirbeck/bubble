@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BubbleDetails extends StatefulWidget {
   final TabController tabController;
@@ -76,8 +77,7 @@ class _BubbleDetailsState extends State<BubbleDetails> {
       },
       child: Container(
         //width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
             Container(
               margin: EdgeInsets.symmetric(
@@ -154,40 +154,41 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                 onChanged: (value) => widget.updateNotes(value),
               ),
             ),
-            // Container(
-            //   margin: EdgeInsets.symmetric(
-            //     horizontal: MediaQuery.of(context).size.width * 0.05,
-            //     vertical: 8,
-            //   ),
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(30),
-            //     border: Border.all(color: Colors.lightBlue, width: 3),
-            //     gradient: LinearGradient(
-            //       begin: Alignment.topCenter,
-            //       end: Alignment.bottomCenter,
-            //       colors: [
-            //         Theme.of(context).primaryColor,
-            //         Theme.of(context).accentColor,
-            //       ],
-            //     ),
-            //   ),
-            //   child: FlatButton(
-            //     onPressed: _presentDatePicker,
-            //     shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(32)),
-            //     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-            //     child: FittedBox(
-            //       fit: BoxFit.scaleDown,
-            //       child: Text(
-            //         _selectedDate == null
-            //             ? 'Choose date (optional)'
-            //             : '${DateFormat.yMMMEd().format(_selectedDate)}',
-            //         style: Theme.of(context).textTheme.headline6,
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+                vertical: 8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.lightBlue, width: 3),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).accentColor,
+                  ],
+                ),
+              ),
+              child: FlatButton(
+                onPressed: _presentDatePicker,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    _selectedDate == null
+                        ? 'Choose date (optional)'
+                        : '${DateFormat.yMMMEd().format(_selectedDate)}',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:Bubble/transitions/slide_right.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -62,60 +63,6 @@ class _BubbleListState extends State<BubbleList> {
         );
       },
     );
-  }
-
-  void _showBottomSheet(context) {
-    showDialog(
-        context: context,
-        // backgroundColor: Colors.transparent,
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.only(
-        //     topLeft: Radius.circular(32),
-        //     topRight: Radius.circular(32),
-        //   ),
-        // ),
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: Theme.of(context).accentColor,
-            contentPadding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
-            ),
-            content: Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: NewBubbleTabs(),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32)),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Cancel',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32)),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Save',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ),
-            ],
-          );
-        });
   }
 
   @override
@@ -185,7 +132,12 @@ class _BubbleListState extends State<BubbleList> {
                   Icons.add,
                   color: Colors.white,
                 ),
-                onPressed: () => _showBottomSheet(context),
+                onPressed: () => Navigator.push(
+                  context,
+                  SlideRightRoute(
+                    page: NewBubbleTabs(),
+                  ),
+                ),
               ),
             ),
           ])
@@ -216,7 +168,12 @@ class _BubbleListState extends State<BubbleList> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                  onPressed: () => _showBottomSheet(context),
+                  onPressed: () => Navigator.push(
+                    context,
+                    SlideRightRoute(
+                      page: NewBubbleTabs(),
+                    ),
+                  ),
                   child: Text(
                     'Add a Bubble?',
                     style: Theme.of(context).textTheme.headline6,

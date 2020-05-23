@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../transitions/slide_right.dart';
 import '../screens/statistics_screen.dart';
 import '../screens/help_screen.dart';
 import '../screens/all_templates.dart';
+import '../screens/home_screen.dart';
+import '../transitions/slide_right.dart';
 
 class MenuDrawer extends StatelessWidget {
-  void _navigateTo({Widget screen, BuildContext context}) {
-    Navigator.pop(context);
-    Navigator.push(
+    void _changeMainWidget(Widget screen, BuildContext context) {
+    Navigator.pushReplacement(
       context,
       SlideRightRoute(
         page: screen,
@@ -43,27 +43,35 @@ class MenuDrawer extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.bubble_chart),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+                _changeMainWidget(HomeScreen(), context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.show_chart),
               title: Text('Your Statistics'),
-              onTap: () => _navigateTo(
-                screen: StatisticsScreen(),
-                context: context,
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                _changeMainWidget(StatisticsScreen(), context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.alarm_add),
               title: Text('My Templates'),
-              onTap: () => _navigateTo(
-                screen: AllTemplates(),
-                context: context,
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                _changeMainWidget(AllTemplates(), context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.info_outline),
               title: Text('About Bubble'),
-              onTap: () => _navigateTo(
-                screen: HelpScreen(),
-                context: context,
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                _changeMainWidget(HelpScreen(), context);
+              },
             ),
           ],
         ),

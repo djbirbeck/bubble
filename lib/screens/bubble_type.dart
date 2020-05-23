@@ -28,7 +28,7 @@ class BubbleType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: 16),
@@ -219,40 +219,7 @@ class BubbleType extends StatelessWidget {
               //   ),
               // ),
               Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.lightBlue, width: 3),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
-                    ],
-                  ),
-                ),
-                child: FlatButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32)),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      _selectedDate == null
-                          ? 'Choose date (optional)'
-                          : '${DateFormat.yMMMEd().format(_selectedDate)}',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
                 margin: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.05,
                   vertical: 8,
@@ -285,7 +252,7 @@ class BubbleType extends StatelessWidget {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.125,
+                height: MediaQuery.of(context).size.height * 0.2,
                 margin: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.05,
                   vertical: 8,
@@ -357,45 +324,45 @@ class BubbleType extends StatelessWidget {
             ],
           ),
         ),
-        // Container(
-        //   height: 66,
-        //   margin: EdgeInsets.symmetric(
-        //       horizontal: MediaQuery.of(context).size.width * 0.3),
-        //   child: Card(
-        //     margin: EdgeInsets.only(
-        //       bottom: 16,
-        //       right: 0,
-        //     ),
-        //     color: Theme.of(context).primaryColor,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(32),
-        //     ),
-        //     elevation: 4,
-        //     child: Container(
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.end,
-        //         crossAxisAlignment: CrossAxisAlignment.stretch,
-        //         children: [
-        //           Expanded(
-        //             child: FlatButton(
-        //               shape: RoundedRectangleBorder(
-        //                 borderRadius: BorderRadius.circular(32),
-        //               ),
-        //               child: AnimatedSwitcher(
-        //                 duration: Duration(milliseconds: 600),
-        //                 child: Text(
-        //                   'Save',
-        //                   style: Theme.of(context).textTheme.headline6,
-        //                 ),
-        //               ),
-        //               onPressed: () => saveBubble(context),
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Container(
+          height: 66,
+          margin: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.3),
+          child: Card(
+            margin: EdgeInsets.only(
+              bottom: 16,
+              right: 0,
+            ),
+            color: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            elevation: 4,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 600),
+                        child: Text(
+                          'Save',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      onPressed: () => saveBubble(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

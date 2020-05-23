@@ -22,7 +22,6 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   String _title;
   String _notes;
-  //String _rightButton = 'Next';
   String _bubbleType = 'small';
   double _amountOfBubbles;
   bool _editing;
@@ -224,127 +223,110 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
+    return BasicScaffold(
+      screenTitle: '',
+      implyLeading: true,
+      childWidget: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Container(
+                height: 120,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 20,
+                      top: 10,
+                      child: Text(
+                        '${_editing ? 'Edit' : 'New'} Bubble',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      height: 60,
+                      width: 60,
+                      right: 35,
+                      bottom: 20,
+                      child: Hero(
+                        tag: 'bubble-1',
+                        child: Bubble(size: 70),
+                      ),
+                    ),
+                    Positioned(
+                      height: 40,
+                      width: 40,
+                      right: 180,
+                      top: 10,
+                      child: Hero(
+                        tag: 'bubble-2',
+                        child: Bubble(size: 50),
+                      ),
+                    ),
+                    Positioned(
+                      left: 30,
+                      bottom: 20,
+                      child: Hero(
+                        tag: 'logoImage',
+                        child: Image.asset('assets/images/logo.png',
+                            height: 100,
+                            width: 100,
+                            semanticLabel: 'Bubble logo'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                //physics: NeverScrollableScrollPhysics(),
+                children: [
+                  BubbleDetails(
+                    tabController: _tabController,
+                    titleText: _title,
+                    notesText: _notes,
+                    dueDate: _dueDate,
+                    updateTitle: _updateTitle,
+                    updateNotes: _updateNotes,
+                    updateDueDate: _updateDueDate,
+                    amountOfBubbles: _amountOfBubbles,
+                    addBubble: _addBubble,
+                    minusBubble: _minusBubble,
+                    saveBubble: _saveBubble,
+                  ),
+                  BubbleType(
+                    tabController: _tabController,
+                    saveBubble: _saveBubble,
+                    updateBubbleType: _updateBubbleType,
+                    addBubble: _addBubble,
+                    minusBubble: _minusBubble,
+                    bubbleType: _bubbleType,
+                    amountOfBubbles: _amountOfBubbles,
+                    editing: _editing,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TabPageSelector(
+                controller: _tabController,
+                color: Colors.indigo,
+                selectedColor: Colors.lightBlue[50],
+                indicatorSize: 16,
+              ),
+            )
           ],
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Text(
-              'New Bubble',
-              style: Theme.of(context).textTheme.headline6,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          // GestureDetector(
-          //   behavior: HitTestBehavior.translucent,
-          //   onTap: () {
-          //     FocusScope.of(context).unfocus();
-          //   },
-          //   child: Container(
-          //     height: 120,
-          //     child: Stack(
-          //       children: [
-          //         Positioned(
-          //           right: 20,
-          //           top: 10,
-          //           child: Text(
-          //             'New Bubble',
-          //             style: TextStyle(
-          //               fontSize: 24,
-          //               fontFamily:
-          //                   Theme.of(context).textTheme.headline6.fontFamily,
-          //             ),
-          //           ),
-          //         ),
-          //         Positioned(
-          //           height: 60,
-          //           width: 60,
-          //           right: 35,
-          //           bottom: 20,
-          //           child: Hero(
-          //             tag: 'bubble-1',
-          //             child: Bubble(size: 70),
-          //           ),
-          //         ),
-          //         Positioned(
-          //           height: 40,
-          //           width: 40,
-          //           right: 180,
-          //           top: 10,
-          //           child: Hero(
-          //             tag: 'bubble-2',
-          //             child: Bubble(size: 50),
-          //           ),
-          //         ),
-          //         Positioned(
-          //           left: 30,
-          //           bottom: 20,
-          //           child: Hero(
-          //             tag: 'logoImage',
-          //             child: Image.asset('assets/images/logo.png',
-          //                 height: 100,
-          //                 width: 100,
-          //                 semanticLabel: 'Bubble logo'),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              //physics: NeverScrollableScrollPhysics(),
-              children: [
-                BubbleDetails(
-                  tabController: _tabController,
-                  titleText: _title,
-                  notesText: _notes,
-                  dueDate: _dueDate,
-                  updateTitle: _updateTitle,
-                  updateNotes: _updateNotes,
-                  updateDueDate: _updateDueDate,
-                  amountOfBubbles: _amountOfBubbles,
-                  addBubble: _addBubble,
-                  minusBubble: _minusBubble,
-                  saveBubble: _saveBubble,
-                ),
-                BubbleType(
-                  tabController: _tabController,
-                  saveBubble: _saveBubble,
-                  updateBubbleType: _updateBubbleType,
-                  addBubble: _addBubble,
-                  minusBubble: _minusBubble,
-                  bubbleType: _bubbleType,
-                  amountOfBubbles: _amountOfBubbles,
-                  editing: _editing,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TabPageSelector(
-              controller: _tabController,
-              color: Colors.indigo,
-              selectedColor: Colors.lightBlue[50],
-              indicatorSize: 16,
-            ),
-          )
-        ],
-      ),
     );
   }
 }
