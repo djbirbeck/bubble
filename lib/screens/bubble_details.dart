@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class BubbleDetails extends StatefulWidget {
   final TabController tabController;
   final String titleText;
   final String notesText;
   final DateTime dueDate;
+  final Function addBubble;
+  final Function minusBubble;
   final Function updateTitle;
   final Function updateNotes;
   final Function updateDueDate;
+  final Function saveBubble;
 
-  const BubbleDetails({
-    this.tabController,
-    this.titleText,
-    this.notesText,
-    this.dueDate,
-    this.updateTitle,
-    this.updateNotes,
-    this.updateDueDate,
-  });
+  final double amountOfBubbles;
+
+  const BubbleDetails(
+      {this.tabController,
+      this.titleText,
+      this.notesText,
+      this.dueDate,
+      this.updateTitle,
+      this.updateNotes,
+      this.updateDueDate,
+      this.addBubble,
+      this.minusBubble,
+      this.amountOfBubbles,
+      this.saveBubble});
 
   @override
   _BubbleDetailsState createState() => _BubbleDetailsState();
@@ -67,122 +74,122 @@ class _BubbleDetailsState extends State<BubbleDetails> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
+      child: Container(
+        //width: MediaQuery.of(context).size.width * 0.9,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+                vertical: 8,
               ),
-              child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 4,
-                      ),
-                      padding: EdgeInsets.only(
-                        left: 24,
-                        right: 24,
-                        bottom: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.lightBlue, width: 3),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).accentColor,
-                          ],
-                        ),
-                      ),
-                      child: TextField(
-                        cursorColor: Theme.of(context).primaryColor,
-                        autocorrect: false,
-                        maxLength: 30,
-                        decoration: InputDecoration(
-                          labelText: 'Bubble name',
-                          labelStyle: Theme.of(context).textTheme.headline6,
-                          counterStyle: Theme.of(context).textTheme.headline6,
-                        ),
-                        controller: _titleController,
-                        onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                        onChanged: (value) => widget.updateTitle(value),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                      padding: EdgeInsets.only(left: 24, right: 24, bottom: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.lightBlue, width: 3),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).accentColor,
-                          ],
-                        ),
-                      ),
-                      child: TextField(
-                        cursorColor: Theme.of(context).primaryColor,
-                        autocorrect: false,
-                        maxLength: 160,
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          labelText: 'Bubble details (optional)',
-                          labelStyle: Theme.of(context).textTheme.headline6,
-                          counterStyle: Theme.of(context).textTheme.headline6,
-                        ),
-                        controller: _notesController,
-                        onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                        onChanged: (value) => widget.updateNotes(value),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Colors.lightBlue, width: 3),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).accentColor,
-                          ],
-                        ),
-                      ),
-                      child: FlatButton(
-                        onPressed: _presentDatePicker,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32)),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            _selectedDate == null
-                                ? 'Choose date (optional)'
-                                : '${DateFormat.yMMMEd().format(_selectedDate)}',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ),
-                      ),
-                    ),
+              padding: EdgeInsets.only(
+                left: 24,
+                right: 24,
+                bottom: 4,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.lightBlue, width: 3),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).accentColor,
                   ],
                 ),
               ),
+              child: TextField(
+                cursorColor: Theme.of(context).primaryColor,
+                autocorrect: false,
+                maxLength: 30,
+                decoration: InputDecoration(
+                  labelText: 'Bubble name',
+                  labelStyle: Theme.of(context).textTheme.headline6,
+                  counterStyle: Theme.of(context).textTheme.headline6,
+                ),
+                controller: _titleController,
+                onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                onChanged: (value) => widget.updateTitle(value),
+              ),
             ),
-          );
-        },
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+                vertical: 8,
+              ),
+              padding: EdgeInsets.only(
+                left: 24,
+                right: 24,
+                bottom: 4,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.lightBlue, width: 3),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).accentColor,
+                  ],
+                ),
+              ),
+              child: TextField(
+                cursorColor: Theme.of(context).primaryColor,
+                autocorrect: false,
+                maxLength: 160,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  labelText: 'Bubble details (optional)',
+                  labelStyle: Theme.of(context).textTheme.headline6,
+                  counterStyle: Theme.of(context).textTheme.headline6,
+                ),
+                controller: _notesController,
+                onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                onChanged: (value) => widget.updateNotes(value),
+              ),
+            ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(
+            //     horizontal: MediaQuery.of(context).size.width * 0.05,
+            //     vertical: 8,
+            //   ),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(30),
+            //     border: Border.all(color: Colors.lightBlue, width: 3),
+            //     gradient: LinearGradient(
+            //       begin: Alignment.topCenter,
+            //       end: Alignment.bottomCenter,
+            //       colors: [
+            //         Theme.of(context).primaryColor,
+            //         Theme.of(context).accentColor,
+            //       ],
+            //     ),
+            //   ),
+            //   child: FlatButton(
+            //     onPressed: _presentDatePicker,
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(32)),
+            //     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+            //     child: FittedBox(
+            //       fit: BoxFit.scaleDown,
+            //       child: Text(
+            //         _selectedDate == null
+            //             ? 'Choose date (optional)'
+            //             : '${DateFormat.yMMMEd().format(_selectedDate)}',
+            //         style: Theme.of(context).textTheme.headline6,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

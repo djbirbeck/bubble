@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
     ]);
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings('app_icon');
+        new AndroidInitializationSettings('notification_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -116,7 +116,7 @@ class _MyAppState extends State<MyApp> {
               return Splash();
             }
           } else
-            return BasicScaffold();
+            return BasicScaffold(screenTitle: '', implyLeading: false,);
         },
       ),
     );

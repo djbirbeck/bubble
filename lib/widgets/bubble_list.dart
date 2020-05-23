@@ -4,7 +4,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import './list_bubble.dart';
 import '../models/bubble.dart';
-import '../transitions/slide_right.dart';
 import '../screens/new_bubble_tabs.dart';
 
 class BubbleList extends StatefulWidget {
@@ -29,7 +28,10 @@ class _BubbleListState extends State<BubbleList> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32),
           ),
-          title: Text('Delete this bubble?', style: Theme.of(context).textTheme.headline6,),
+          title: Text(
+            'Delete this bubble?',
+            style: Theme.of(context).textTheme.headline6,
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text(
@@ -62,12 +64,68 @@ class _BubbleListState extends State<BubbleList> {
     );
   }
 
+  void _showBottomSheet(context) {
+    showDialog(
+        context: context,
+        // backgroundColor: Colors.transparent,
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.only(
+        //     topLeft: Radius.circular(32),
+        //     topRight: Radius.circular(32),
+        //   ),
+        // ),
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).accentColor,
+            contentPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+            content: Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: NewBubbleTabs(),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32)),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32)),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'Save',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.lightBlue[300] : Colors.lightBlue[700],
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.lightBlue[300]
+            : Colors.lightBlue[700],
         automaticallyImplyLeading: false,
         title: Text(
           'My Bubbles',
@@ -77,63 +135,60 @@ class _BubbleListState extends State<BubbleList> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32),
         ),
-        actions: <Widget>[
-          DropdownButton(
-              hint: Text(
-                _search,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              iconEnabledColor: Colors.white,
-              items: [
-                DropdownMenuItem(
-                  value: 'All',
-                  child: Text(
-                    'All',
-                    style: Theme.of(context).textTheme.headline6,
+        actions: [
+          ButtonBar(children: [
+            DropdownButton(
+                hint: Text(
+                  _search,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                iconEnabledColor: Colors.white,
+                items: [
+                  DropdownMenuItem(
+                    value: 'All',
+                    child: Text(
+                      'All',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
-                ),
-                DropdownMenuItem(
-                  value: 'Today',
-                  child: Text(
-                    'Today',
-                    style: Theme.of(context).textTheme.headline6,
+                  DropdownMenuItem(
+                    value: 'Today',
+                    child: Text(
+                      'Today',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
-                ),
-                DropdownMenuItem(
-                  value: 'Complete',
-                  child: Text(
-                    'Complete',
-                    style: Theme.of(context).textTheme.headline6,
+                  DropdownMenuItem(
+                    value: 'Complete',
+                    child: Text(
+                      'Complete',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
-                ),
-                DropdownMenuItem(
-                  value: 'Incomplete',
-                  child: Text(
-                    'Incomplete',
-                    style: Theme.of(context).textTheme.headline6,
+                  DropdownMenuItem(
+                    value: 'Incomplete',
+                    child: Text(
+                      'Incomplete',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _search = value;
+                  });
+                }),
+            Semantics(
+              label: 'Add a new bubble button',
+              child: IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
                 ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  _search = value;
-                });
-              }),
-          Semantics(
-            label: 'Add a new bubble button',
-            child: IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                SlideRightRoute(
-                  page: NewBubbleTabs(),
-                ),
+                onPressed: () => _showBottomSheet(context),
               ),
             ),
-          ),
+          ])
         ],
       ),
       body: ValueListenableBuilder(
@@ -161,12 +216,7 @@ class _BubbleListState extends State<BubbleList> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                  onPressed: () => Navigator.push(
-                    context,
-                    SlideRightRoute(
-                      page: NewBubbleTabs(),
-                    ),
-                  ),
+                  onPressed: () => _showBottomSheet(context),
                   child: Text(
                     'Add a Bubble?',
                     style: Theme.of(context).textTheme.headline6,

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../transitions/slide_right.dart';
-import './basic_scaffold.dart';
-import './statistics.dart';
-import './help.dart';
+import '../screens/statistics_screen.dart';
+import '../screens/help_screen.dart';
+import '../screens/all_templates.dart';
 
 class MenuDrawer extends StatelessWidget {
-
-  void _navigateTo({Widget screen, BuildContext context, String title}) {
+  void _navigateTo({Widget screen, BuildContext context}) {
     Navigator.pop(context);
     Navigator.push(
       context,
       SlideRightRoute(
-        page: BasicScaffold(childWidget: screen, implyLeading: true, screenTitle: title,),
+        page: screen,
       ),
     );
   }
@@ -45,12 +44,26 @@ class MenuDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.bubble_chart),
               title: Text('Your Statistics'),
-              onTap: () => _navigateTo(screen: Statistics(), context: context, title: 'Your Statistics'),
+              onTap: () => _navigateTo(
+                screen: StatisticsScreen(),
+                context: context,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.alarm_add),
+              title: Text('My Templates'),
+              onTap: () => _navigateTo(
+                screen: AllTemplates(),
+                context: context,
+              ),
             ),
             ListTile(
               leading: Icon(Icons.info_outline),
-              title: Text('About BUbble'),
-              onTap: () => _navigateTo(screen: Help(), context: context, title: 'About Bubble'),
+              title: Text('About Bubble'),
+              onTap: () => _navigateTo(
+                screen: HelpScreen(),
+                context: context,
+              ),
             ),
           ],
         ),

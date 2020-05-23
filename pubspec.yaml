@@ -31,6 +31,7 @@ dependencies:
   flutter_local_notifications: ^1.4.3
   notification_permissions: ^0.4.4
   bezier_chart: "^1.0.16"
+  sleek_circular_slider : ^1.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

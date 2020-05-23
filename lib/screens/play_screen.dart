@@ -23,6 +23,7 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   AnimationController _iconController;
+  Animation<Color> _colourAnimation;
   double _totalBubbles;
   int _time;
   bool _countingDown = false;
@@ -32,7 +33,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   Widget _dateWidget = Container();
   Widget _titleWidget = Container();
   Widget _notesWidget = Container();
-  Color _playColour = Colors.green[900];
   var _lines = List<String>();
   Box _completedBox = Hive.box<CompletedBubble>('completedBubbles');
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -42,6 +42,13 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   void initState() {
     _iconController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _colourAnimation = ColorTween(
+      begin: Colors.green[900],
+      end: Colors.amber[900],
+    ).animate(_iconController)
+      ..addListener(() {
+        setState(() {});
+      });
     _totalBubbles = widget.bubbleInfo.amountOfBubbles;
     _time = widget.bubbleInfo.bubbleType == 'small' ? 1500 : 3000;
     Timer(Duration(milliseconds: 600), () {
@@ -155,7 +162,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
           _time = 0;
           setState(() {
             _iconController.reverse();
-            _playColour = Colors.green[900];
           });
         } else {
           _restCountDown(widget.bubbleInfo.bubbleType == 'small' ? 300 : 600);
@@ -201,14 +207,12 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     if (!_countingDown && _bubbling) {
       setState(() {
         _countingDown = !_countingDown;
-        _playColour = Colors.amber[900];
       });
       _bubbleCountDown(_time);
       _iconController.forward();
     } else if (_countingDown && _bubbling) {
       setState(() {
         _countingDown = !_countingDown;
-        _playColour = Colors.green[900];
       });
       _sub.cancel();
       flutterLocalNotificationsPlugin.cancelAll();
@@ -216,7 +220,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     } else if (_countingDown && !_bubbling) {
       setState(() {
         _countingDown = !_countingDown;
-        _playColour = Colors.green[900];
       });
       _sub.cancel();
       flutterLocalNotificationsPlugin.cancelAll();
@@ -224,7 +227,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     } else if (!_countingDown && !_bubbling) {
       setState(() {
         _countingDown = !_countingDown;
-        _playColour = Colors.amber[900];
       });
       _restCountDown(_time);
       _iconController.forward();
@@ -253,6 +255,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BasicScaffold(
+      screenTitle: '',
+      implyLeading: true,
       childWidget: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -385,16 +389,22 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                       ),
                       child: Center(
-                        child: Text(
-                          _totalBubbles.toStringAsFixed(0),
-                          softWrap: true,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .fontFamily,
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              _totalBubbles.toStringAsFixed(0),
+                              softWrap: true,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .fontFamily,
+                              ),
+                            ),
+                            Text(_totalBubbles != 1 ? 'Bubbles' : 'Bubble')
+                          ],
                         ),
                       ),
                     ),
@@ -408,44 +418,46 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Container(
-                  height: 60,
-                  width: 60,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.red[900], width: 2),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.red[50]
-                            : Colors.grey[900],
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.redAccent[100]
-                            : Theme.of(context).accentColor,
-                      ],
-                    ),
-                  ),
-                  child: FlatButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Icon(Icons.arrow_back),
-                    textColor: Colors.red[900],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   height: 60,
+                //   width: 60,
+                //   alignment: Alignment.center,
+                //   decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     border: Border.all(color: Colors.red[900], width: 2),
+                //     gradient: LinearGradient(
+                //       begin: Alignment.topLeft,
+                //       end: Alignment.bottomRight,
+                //       colors: [
+                //         Theme.of(context).brightness == Brightness.light
+                //             ? Colors.red[50]
+                //             : Colors.grey[900],
+                //         Theme.of(context).brightness == Brightness.light
+                //             ? Colors.redAccent[100]
+                //             : Theme.of(context).accentColor,
+                //       ],
+                //     ),
+                //   ),
+                //   child: FlatButton(
+                //     onPressed: () => Navigator.of(context).pop(),
+                //     child: Icon(Icons.arrow_back),
+                //     textColor: Colors.red[900],
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(30),
+                //     ),
+                //   ),
+                // ),
+                Container(),
                 Container(),
                 AnimatedContainer(
                   duration: Duration(milliseconds: 600),
                   height: 60,
                   width: 60,
+                  curve: Curves.bounceOut,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(_countingDown ? 8 : 30),
                     border: Border.all(
-                      color: _playColour,
+                      color: _colourAnimation.value,
                       width: 2,
                     ),
                     gradient: LinearGradient(
@@ -476,7 +488,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                             child: AnimatedIcon(
                               icon: AnimatedIcons.play_pause,
                               progress: _iconController,
-                              color: _playColour,
+                              color: _colourAnimation.value,
+                              semanticLabel: 'play or pause button',
                             ),
                             onPressed: _playPause,
                           ),

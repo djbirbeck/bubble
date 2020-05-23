@@ -46,7 +46,7 @@ class WeeklyChart extends StatelessWidget {
           width: 3,
         ),
       ),
-      height: MediaQuery.of(context).size.height * 0.55,
+      height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -60,7 +60,7 @@ class WeeklyChart extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Container(
-            height: MediaQuery  .of(context).size.height * 0.46,
+            height: MediaQuery  .of(context).size.height * 0.4,
             width: MediaQuery.of(context).size.width,
             child: BezierChart(
               fromDate: _fromDate,

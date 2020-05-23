@@ -98,7 +98,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _restCountDown(_isSmallBubble ? 3 : 600);
+        _restCountDown(_isSmallBubble ? 300 : 600);
         var completed = CompletedBubble(
           bubbleType: _isSmallBubble ? 'small' : 'big',
           amountOfBubbles: 1,
@@ -134,7 +134,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _bubbleCountDown(_isSmallBubble ? 5 : 3000);
+        _bubbleCountDown(_isSmallBubble ? 1500 : 3000);
         setState(() {
           _bubbling = !_bubbling;
         });
@@ -227,7 +227,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
           onTap: () {
             setState(() {
               _isSmallBubble = !_isSmallBubble;
-              _time = _isSmallBubble ? 5 : 3000;
+              _time = _isSmallBubble ? 1500 : 3000;
             });
             if (_bubbling && _countingDown) {
               _sub.cancel();

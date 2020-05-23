@@ -22,7 +22,7 @@ class BasicScaffold extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         automaticallyImplyLeading: implyLeading,
-        title: Text(screenTitle),
+        title: Text(screenTitle, style: Theme.of(context).textTheme.headline6,),
         centerTitle: true,
       ),
       extendBody: true,

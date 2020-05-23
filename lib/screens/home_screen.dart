@@ -4,8 +4,6 @@ import '../widgets/hero_bubbles.dart';
 import '../widgets/today_stats.dart';
 import '../widgets/bubble_list.dart';
 import '../widgets/single_use_bubble.dart';
-import '../widgets/statistics.dart';
-import '../widgets/help.dart';
 import '../widgets/menu_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -53,23 +51,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     TodayStats(),
                     SingleUseBubble(),
                     BubbleList(),
-                    // Statistics(),
-                    // ListView(
-                    //   children: <Widget>[
-                    //     Text(
-                    //       'About Bubble',
-                    //       style: TextStyle(
-                    //         fontSize: 24,
-                    //         fontFamily: Theme.of(context)
-                    //             .textTheme
-                    //             .headline6
-                    //             .fontFamily,
-                    //       ),
-                    //       textAlign: TextAlign.center,
-                    //     ),
-                    //     Help(),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -81,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   selectedColor: Colors.lightBlue[50],
                   indicatorSize: 16,
                 ),
-              )
+              ),
             ],
           ),
         ),

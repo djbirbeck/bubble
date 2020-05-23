@@ -82,9 +82,7 @@ class _BubbleState extends State<Bubble> with SingleTickerProviderStateMixin {
           end: Alignment.bottomRight,
           colors: _isStatBubble
               ? [Colors.transparent, Colors.transparent]
-              : Theme.of(context).brightness == Brightness.light
-                  ? [Colors.blue, Colors.cyan[300], Colors.cyan[300]]
-                  : [Colors.blue[600], Colors.cyan[300]],
+              : [Colors.blue[600], Colors.cyan[300]],
         ),
       ),
       child: widget.childWidget == null

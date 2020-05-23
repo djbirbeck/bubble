@@ -22,7 +22,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   String _title;
   String _notes;
-  String _rightButton = 'Next';
+  //String _rightButton = 'Next';
   String _bubbleType = 'small';
   double _amountOfBubbles;
   bool _editing;
@@ -107,7 +107,10 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
               'Unable to save Bubble',
               style: Theme.of(context).textTheme.headline6,
             ),
-            content: Text(errorTitle + errorAmount, style: Theme.of(context).textTheme.headline6,),
+            content: Text(
+              errorTitle + errorAmount,
+              style: Theme.of(context).textTheme.headline6,
+            ),
             actions: <Widget>[
               FlatButton(
                 child: Text(
@@ -221,71 +224,89 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   @override
   Widget build(BuildContext context) {
-    return BasicScaffold(
-      implyLeading: false,
-      screenTitle: '',
-      childWidget: Column(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor,
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Container(
-              height: 120,
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: 20,
-                    top: 10,
-                    child: Text(
-                      'New Bubble',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    height: 60,
-                    width: 60,
-                    right: 35,
-                    bottom: 20,
-                    child: Hero(
-                      tag: 'bubble-1',
-                      child: Bubble(size: 70),
-                    ),
-                  ),
-                  Positioned(
-                    height: 40,
-                    width: 40,
-                    right: 180,
-                    top: 10,
-                    child: Hero(
-                      tag: 'bubble-2',
-                      child: Bubble(size: 50),
-                    ),
-                  ),
-                  Positioned(
-                    left: 30,
-                    bottom: 20,
-                    child: Hero(
-                      tag: 'logoImage',
-                      child: Image.asset('assets/images/logo.png',
-                          height: 100,
-                          width: 100,
-                          semanticLabel: 'Bubble logo'),
-                    ),
-                  ),
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text(
+              'New Bubble',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
             ),
           ),
+          // GestureDetector(
+          //   behavior: HitTestBehavior.translucent,
+          //   onTap: () {
+          //     FocusScope.of(context).unfocus();
+          //   },
+          //   child: Container(
+          //     height: 120,
+          //     child: Stack(
+          //       children: [
+          //         Positioned(
+          //           right: 20,
+          //           top: 10,
+          //           child: Text(
+          //             'New Bubble',
+          //             style: TextStyle(
+          //               fontSize: 24,
+          //               fontFamily:
+          //                   Theme.of(context).textTheme.headline6.fontFamily,
+          //             ),
+          //           ),
+          //         ),
+          //         Positioned(
+          //           height: 60,
+          //           width: 60,
+          //           right: 35,
+          //           bottom: 20,
+          //           child: Hero(
+          //             tag: 'bubble-1',
+          //             child: Bubble(size: 70),
+          //           ),
+          //         ),
+          //         Positioned(
+          //           height: 40,
+          //           width: 40,
+          //           right: 180,
+          //           top: 10,
+          //           child: Hero(
+          //             tag: 'bubble-2',
+          //             child: Bubble(size: 50),
+          //           ),
+          //         ),
+          //         Positioned(
+          //           left: 30,
+          //           bottom: 20,
+          //           child: Hero(
+          //             tag: 'logoImage',
+          //             child: Image.asset('assets/images/logo.png',
+          //                 height: 100,
+          //                 width: 100,
+          //                 semanticLabel: 'Bubble logo'),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              physics: NeverScrollableScrollPhysics(),
+              //physics: NeverScrollableScrollPhysics(),
               children: [
                 BubbleDetails(
                   tabController: _tabController,
@@ -295,6 +316,10 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                   updateTitle: _updateTitle,
                   updateNotes: _updateNotes,
                   updateDueDate: _updateDueDate,
+                  amountOfBubbles: _amountOfBubbles,
+                  addBubble: _addBubble,
+                  minusBubble: _minusBubble,
+                  saveBubble: _saveBubble,
                 ),
                 BubbleType(
                   tabController: _tabController,
@@ -309,109 +334,16 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: TabPageSelector(
+              controller: _tabController,
+              color: Colors.indigo,
+              selectedColor: Colors.lightBlue[50],
+              indicatorSize: 16,
+            ),
+          )
         ],
-      ),
-      bottomWidget: BottomAppBar(
-        elevation: 0,
-        color: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              height: 66,
-              width: MediaQuery.of(context).size.width * 0.4,
-              margin: EdgeInsets.only(left: 16),
-              child: Card(
-                margin: EdgeInsets.only(
-                  bottom: 16,
-                  right: 0,
-                ),
-                color: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                elevation: 4,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          child: Text(
-                            'Back',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          onPressed: () {
-                            _tabController.index == 0
-                                ? Navigator.pop(context)
-                                : setState(
-                                    () {
-                                      _tabController.index =
-                                          _tabController.index--;
-                                      _rightButton = 'Next';
-                                    },
-                                  );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 66,
-              width: MediaQuery.of(context).size.width * 0.4,
-              margin: EdgeInsets.only(right: 16),
-              child: Card(
-                margin: EdgeInsets.only(
-                  bottom: 16,
-                  right: 0,
-                ),
-                color: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                elevation: 4,
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          child: AnimatedSwitcher(
-                            duration: Duration(milliseconds: 600),
-                            child: Text(
-                              _rightButton,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                          ),
-                          onPressed: () {
-                            _tabController.index == 0
-                                ? setState(() {
-                                    _tabController.index =
-                                        _tabController.index++;
-                                    _rightButton = 'Save';
-                                  })
-                                : _saveBubble(context);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
