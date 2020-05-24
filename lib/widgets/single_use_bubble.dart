@@ -37,8 +37,8 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       duration: Duration(milliseconds: 400),
     );
     _colourAnimation = ColorTween(
-      begin: Colors.green,
-      end: Colors.amber,
+      begin: Colors.lightGreenAccent[100],
+      end: Colors.amber[900],
     ).animate(_controller)
       ..addListener(() {
         setState(() {});
@@ -230,14 +230,30 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
               width: 4,
             ),
           ),
-          child: Text(
-            transformSeconds(_time),
-            style: TextStyle(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.white
-                    : Colors.lightBlue,
-                fontSize: 50,
-                fontFamily: Theme.of(context).textTheme.headline6.fontFamily),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                transformSeconds(_time),
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.white
+                      : Colors.lightBlue,
+                  fontSize: 50,
+                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                ),
+              ),
+              Text(
+                _bubbling ? 'Working' : 'Resting',
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.white
+                      : Colors.lightBlue,
+                  fontSize: 18,
+                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                ),
+              ),
+            ],
           ),
         ),
         Padding(

@@ -42,8 +42,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     _iconController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 600));
     _colourAnimation = ColorTween(
-      begin: Colors.green,
-      end: Colors.amber,
+      begin: Colors.lightGreenAccent[100],
+      end: Colors.amber[700],
     ).animate(_iconController)
       ..addListener(() {
         setState(() {});
@@ -319,13 +319,13 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             timerTemplate: widget.bubbleInfo.bubbleTemplate,
           ),
           Container(
-            height: 212,
-            width: 212,
+            height: 230,
+            width: 230,
             child: Stack(
               children: [
                 Positioned(
-                  top: 12,
-                  left: 12,
+                  top: 30,
+                  left: 30,
                   height: 200,
                   width: 200,
                   child: Hero(
@@ -340,14 +340,38 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                           width: 4,
                         ),
                       ),
-                      child: Text(
-                        transformSeconds(_time),
-                        softWrap: true,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily:
-                              Theme.of(context).textTheme.headline6.fontFamily,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            transformSeconds(_time),
+                            style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.white
+                                  : Colors.lightBlue,
+                              fontSize: 50,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontFamily,
+                            ),
+                          ),
+                          Text(
+                            _bubbling ? 'Working' : 'Resting',
+                            style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.white
+                                  : Colors.lightBlue,
+                              fontSize: 18,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontFamily,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -14,8 +14,7 @@ class Statistics extends StatelessWidget {
     int hours = (minutes / 60).truncate();
     int days = (hours / 24).truncate();
 
-    String daysStr = (days % 24).toString();
-    String hoursAfterDaysStr = (hours % 24).toString();
+    String hoursAfterDaysStr = (hours % 24).toString().padLeft(2, '0');
     //String hoursStr = (hours % 60).toString().padLeft(2, '0');
     String minutesStr = (minutes % 60).toString().padLeft(2, '0');
     //String secondsStr = (seconds % 60).toString().padLeft(2, '0');
@@ -25,13 +24,13 @@ class Statistics extends StatelessWidget {
     // } else if (hoursStr == '00') {
     //   return minutesStr + ':' + secondsStr;
     // } else
-    if (daysStr == '0') {
+    if (days.toString() == '0') {
       if (minutesStr == '00') {
-        return hoursAfterDaysStr + 'hrs';
+        return hoursAfterDaysStr + ':00';
       }
-      return hoursAfterDaysStr + 'hrs ' + minutesStr;
+      return hoursAfterDaysStr + ':' + minutesStr;
     } else {
-      return daysStr + 'd ' + hoursAfterDaysStr + ':' + minutesStr;
+      return days.toString() + 'd ' + hoursAfterDaysStr + ':' + minutesStr;
     }
   }
 
@@ -79,8 +78,11 @@ class Statistics extends StatelessWidget {
                           }
 
                           int totalMinutes = 0;
-                          box.values.map((e) => totalMinutes += e.bubbleTemplate.workTime);
-                          int totalSeconds = totalMinutes + 60;
+                          box.values.forEach((e) {
+                            print(e.bubbleTemplate.workTime);
+                            totalMinutes =  totalMinutes + e.bubbleTemplate.workTime;
+                          });
+                          int totalSeconds = totalMinutes * 60;
 
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +94,7 @@ class Statistics extends StatelessWidget {
                                       .textTheme
                                       .headline6
                                       .color,
-                                  fontSize: 20,
+                                  fontSize: 24,
                                   fontFamily: Theme.of(context)
                                       .textTheme
                                       .headline6
@@ -101,7 +103,7 @@ class Statistics extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                'Bubbles bubbled.',
+                                'Bubblin\'',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline6,
                               ),
@@ -163,7 +165,7 @@ class Statistics extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Bubbles',
+                                '${totalBubbles == 1 ? 'Bubble' : 'Bubbles'}',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline6,
                               ),

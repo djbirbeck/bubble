@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
-        accentColor: Colors.lightBlue[400],
+        accentColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                   fontWeight: FontWeight.w400,

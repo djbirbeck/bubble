@@ -72,7 +72,6 @@ class _BubbleDetailsState extends State<BubbleDetails> {
         FocusScope.of(context).unfocus();
       },
       child: Container(
-        //width: MediaQuery.of(context).size.width * 0.9,
         child: ListView(
           children: [
             Container(

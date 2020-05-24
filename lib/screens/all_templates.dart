@@ -17,7 +17,7 @@ class AllTemplates extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         title: Text(
-          'Bubble',
+          'Templates',
           style: Theme.of(context).textTheme.headline6,
         ),
         centerTitle: true,

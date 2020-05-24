@@ -12,7 +12,7 @@ class StatisticsScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         title: Text(
-          'Bubble',
+          'My Statistics',
           style: Theme.of(context).textTheme.headline6,
         ),
         centerTitle: true,

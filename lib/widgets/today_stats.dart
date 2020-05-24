@@ -23,7 +23,7 @@ class TodayStats extends StatelessWidget {
           valueListenable:
               Hive.box<CompletedBubble>('completedBubbles').listenable(),
           builder: (context, Box<CompletedBubble> box, _) {
-            if (box.values.isNotEmpty) {
+            if (box.values.isEmpty) {
               return Center(
                 child: Text(
                   '0',
