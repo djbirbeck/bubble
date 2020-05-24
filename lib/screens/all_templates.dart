@@ -1,3 +1,4 @@
+import 'package:Bubble/models/timer_template.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -5,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../widgets/bubble.dart';
 import '../widgets/template.dart';
 import '../widgets/menu_drawer.dart';
-import '../models/bubble.dart';
+import '../widgets/template_list_item.dart';
 import '../transitions/slide_right.dart';
 
 class AllTemplates extends StatelessWidget {
@@ -105,21 +106,34 @@ class AllTemplates extends StatelessWidget {
                       ),
                       IconButton(
                         icon: Icon(Icons.add),
-                        onPressed: () => Navigator.push(context, SlideRightRoute(page: TemplateSheet()),),
+                        onPressed: () => Navigator.push(
+                          context,
+                          SlideRightRoute(page: TemplateSheet()),
+                        ),
                       ),
                     ]),
               ),
             ),
             ValueListenableBuilder(
-              valueListenable: Hive.box<BubbleTask>('bubbles').listenable(),
-              builder: (context, Box<BubbleTask> box, _) {
+              valueListenable:
+                  Hive.box<TimerTemplate>('timerTemplates').listenable(),
+              builder: (context, Box<TimerTemplate> box, _) {
                 if (box.isEmpty) {
                   return Center(
                     child: Text('No Templates'),
                   );
                 }
-                return Center(
-                  child: Text('Template list...'),
+                return ListView.custom(
+                  shrinkWrap: true,
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return TemplateListItem(
+                        timerTemplate: box.values.elementAt(index),
+                        index: index,
+                      );
+                    },
+                    childCount: box.values.length,
+                  ),
                 );
               },
             ),

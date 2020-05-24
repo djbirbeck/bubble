@@ -4,11 +4,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
+
 import '../models/bubble.dart';
 import '../models/completed_bubble.dart';
-import '../models/timer_template.dart';
 import '../widgets/bubble.dart';
 import '../widgets/basic_scaffold.dart';
+import '../widgets/template_list_item.dart';
 
 class PlayScreen extends StatefulWidget {
   final BubbleTask bubbleInfo;
@@ -31,9 +32,6 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   bool _bubbling = true;
   CountdownTimer _countDownTimer;
   StreamSubscription<CountdownTimer> _sub;
-  Widget _dateWidget = Container();
-  Widget _titleWidget = Container();
-  Widget _notesWidget = Container();
   var _lines = List<String>();
   Box _completedBox = Hive.box<CompletedBubble>('completedBubbles');
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -44,42 +42,14 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
     _iconController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 600));
     _colourAnimation = ColorTween(
-      begin: Colors.green[900],
-      end: Colors.amber[900],
+      begin: Colors.green,
+      end: Colors.amber,
     ).animate(_iconController)
       ..addListener(() {
         setState(() {});
       });
     _totalBubbles = widget.bubbleInfo.amountOfBubbles;
     _time = widget.bubbleInfo.bubbleTemplate.workTime * 60;
-    Timer(Duration(milliseconds: 600), () {
-      setState(() {
-        _dateWidget = Text(
-          'Due: ' + DateFormat.yMMMMd().format(widget.bubbleInfo.dueDate),
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-          ),
-          textAlign: TextAlign.center,
-        );
-        _titleWidget = Text(
-          widget.bubbleInfo.title,
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-          ),
-          textAlign: TextAlign.center,
-        );
-        _notesWidget = Text(
-          widget.bubbleInfo.notes,
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-          ),
-          textAlign: TextAlign.center,
-        );
-      });
-    });
     super.initState();
   }
 
@@ -309,28 +279,44 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             height: 30,
             margin: EdgeInsets.all(8),
             alignment: Alignment.center,
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 600),
-              child: _titleWidget,
+            child: Text(
+              widget.bubbleInfo.title,
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
           Container(
             height: 30,
             margin: EdgeInsets.all(8),
             alignment: Alignment.center,
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 600),
-              child: _dateWidget,
+            child: Text(
+              'Due: ' + DateFormat.yMMMMd().format(widget.bubbleInfo.dueDate),
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
           Container(
             height: 80,
+            width: MediaQuery.of(context).size.width * 0.8,
             margin: EdgeInsets.all(8),
             alignment: Alignment.center,
-            child: AnimatedSwitcher(
-              duration: Duration(milliseconds: 600),
-              child: _notesWidget,
+            child: Text(
+              widget.bubbleInfo.notes,
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+              ),
+              textAlign: TextAlign.center,
             ),
+          ),
+          TemplateListItem(
+            timerTemplate: widget.bubbleInfo.bubbleTemplate,
           ),
           Container(
             height: 212,
@@ -351,7 +337,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
-                          width: 3,
+                          width: 4,
                         ),
                       ),
                       child: Text(
@@ -378,7 +364,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
-                          width: 3,
+                          width: 4,
                         ),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
@@ -419,82 +405,32 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                // Container(
-                //   height: 60,
-                //   width: 60,
-                //   alignment: Alignment.center,
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     border: Border.all(color: Colors.red[900], width: 2),
-                //     gradient: LinearGradient(
-                //       begin: Alignment.topLeft,
-                //       end: Alignment.bottomRight,
-                //       colors: [
-                //         Theme.of(context).brightness == Brightness.light
-                //             ? Colors.red[50]
-                //             : Colors.grey[900],
-                //         Theme.of(context).brightness == Brightness.light
-                //             ? Colors.redAccent[100]
-                //             : Theme.of(context).accentColor,
-                //       ],
-                //     ),
-                //   ),
-                //   child: FlatButton(
-                //     onPressed: () => Navigator.of(context).pop(),
-                //     child: Icon(Icons.arrow_back),
-                //     textColor: Colors.red[900],
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(30),
-                //     ),
-                //   ),
-                // ),
                 Container(),
                 Container(),
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 600),
-                  height: 60,
-                  width: 60,
-                  curve: Curves.bounceOut,
+                Container(
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(_countingDown ? 8 : 30),
+                    shape: BoxShape.circle,
                     border: Border.all(
                       color: _colourAnimation.value,
-                      width: 2,
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.green[50]
-                            : Colors.grey[900],
-                        Theme.of(context).brightness == Brightness.light
-                            ? Colors.greenAccent[100]
-                            : Theme.of(context).accentColor,
-                      ],
+                      width: 4,
                     ),
                   ),
-                  child: widget.bubbleInfo.completed
-                      ? Semantics(
-                          label: 'completed icon',
-                          child: Icon(Icons.check, color: Colors.green[900]),
-                        )
-                      : Semantics(
-                          label: 'play or pause button',
-                          child: FlatButton(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: AnimatedIcon(
-                              icon: AnimatedIcons.play_pause,
-                              progress: _iconController,
-                              color: _colourAnimation.value,
-                              semanticLabel: 'play or pause button',
-                            ),
-                            onPressed: _playPause,
-                          ),
-                        ),
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: IconButton(
+                      iconSize: 40,
+                      icon: AnimatedIcon(
+                        semanticLabel: 'Play or pause button',
+                        icon: AnimatedIcons.play_pause,
+                        progress: _iconController,
+                        color: _colourAnimation.value,
+                      ),
+                      onPressed: _playPause,
+                    ),
+                  ),
                 ),
               ],
             ),

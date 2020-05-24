@@ -23,7 +23,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   String _title;
   String _notes;
-  TimerTemplate _bubbleType;
+  TimerTemplate _bubbleTemplate;
   double _amountOfBubbles;
   bool _editing;
   DateTime _dueDate;
@@ -37,7 +37,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       _title = widget.bubbleInfo.title;
       _notes = widget.bubbleInfo.notes;
       _dueDate = widget.bubbleInfo.dueDate;
-      _bubbleType = widget.bubbleInfo.bubbleTemplate;
+      _bubbleTemplate = widget.bubbleInfo.bubbleTemplate;
       _amountOfBubbles = widget.bubbleInfo.amountOfBubbles;
     }
     super.initState();
@@ -61,9 +61,9 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     });
   }
 
-  void _updateBubbleType(TimerTemplate bubbleType) {
+  void _updateBubbleTemplate(TimerTemplate bubbleTemplate) {
     setState(() {
-      _bubbleType = bubbleType;
+      _bubbleTemplate = bubbleTemplate;
     });
   }
 
@@ -87,11 +87,15 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   }
 
   void _saveBubble(BuildContext context) {
-    if (_title == null || _bubbleType == null || _amountOfBubbles == 0) {
+    if (_title == null || _title == '' || _bubbleTemplate == null || _amountOfBubbles == 0) {
       String errorTitle = '';
+      String errorTemplate = '';
       String errorAmount = '';
-      if (_title == null) {
+      if (_title == null || _title == '') {
         errorTitle = 'No name for your Bubble.\n';
+      }
+      if (_bubbleTemplate == null) {
+        errorTemplate = 'No template for your Bubble.\n';
       }
       if (_amountOfBubbles == 0) {
         errorAmount = 'Amount of Bubbles is 0.';
@@ -108,7 +112,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
               style: Theme.of(context).textTheme.headline6,
             ),
             content: Text(
-              errorTitle + errorAmount,
+              errorTitle + errorTemplate + errorAmount,
               style: Theme.of(context).textTheme.headline6,
             ),
             actions: <Widget>[
@@ -132,7 +136,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         title: _title.trim(),
         notes: _notes != null ? _notes.trim() : '',
         dueDate: _dueDate == null ? DateTime.now() : _dueDate,
-        bubbleTemplate: _bubbleType,
+        bubbleTemplate: _bubbleTemplate,
         amountOfBubbles: _amountOfBubbles,
         completedBubbles: 0,
         // totalTime:
@@ -149,7 +153,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       bubble.title = _title.trim();
       bubble.notes = _notes;
       bubble.dueDate = _dueDate;
-      bubble.bubbleTemplate = _bubbleType;
+      bubble.bubbleTemplate = _bubbleTemplate;
       bubble.amountOfBubbles = _amountOfBubbles;
       bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
       // bubble.totalTime =
@@ -191,7 +195,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                   bubble.title = _title.trim();
                   bubble.notes = _notes;
                   bubble.dueDate = _dueDate;
-                  bubble.bubbleTemplate = _bubbleType;
+                  bubble.bubbleTemplate = _bubbleTemplate;
                   bubble.amountOfBubbles = _amountOfBubbles;
                   bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
                   // bubble.totalTime = _bubbleType == 'small'
@@ -289,10 +293,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                //physics: NeverScrollableScrollPhysics(),
                 children: [
                   BubbleDetails(
-                    tabController: _tabController,
                     titleText: _title,
                     notesText: _notes,
                     dueDate: _dueDate,
@@ -300,17 +302,14 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     updateNotes: _updateNotes,
                     updateDueDate: _updateDueDate,
                     amountOfBubbles: _amountOfBubbles,
-                    addBubble: _addBubble,
-                    minusBubble: _minusBubble,
                     saveBubble: _saveBubble,
                   ),
                   BubbleType(
-                    tabController: _tabController,
                     saveBubble: _saveBubble,
-                    updateBubbleType: _updateBubbleType,
+                    updateBubbleTemplate: _updateBubbleTemplate,
                     addBubble: _addBubble,
                     minusBubble: _minusBubble,
-                    bubbleTemplate: _bubbleType,
+                    bubbleTemplate: _bubbleTemplate,
                     amountOfBubbles: _amountOfBubbles,
                     editing: _editing,
                   ),

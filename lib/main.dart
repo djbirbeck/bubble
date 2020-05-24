@@ -21,7 +21,7 @@ void main() async {
   Hive.registerAdapter(TimerTemplateAdapter());
   Hive.openBox<CompletedBubble>('completedBubbles');
   Hive.openBox<IntroToApp>('intro');
-  Hive.openBox<IntroToApp>('timerTemplates');
+  Hive.openBox<TimerTemplate>('timerTemplates');
   runApp(MyApp());
 }
 
@@ -66,20 +66,18 @@ class _MyAppState extends State<MyApp> {
         accentColor: Colors.lightBlue[400],
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 18,
-                color: Colors.grey[800],
-                fontFamily: 'Josefin Sans'
-              ),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18,
+                  color: Colors.grey[800],
+                  fontFamily: 'Josefin Sans'),
             ),
         appBarTheme: AppBarTheme(
           color: Colors.cyan[50],
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
-                  color: Colors.lightBlue[800],
-                  fontSize: 20,
-                  fontFamily: 'Josefin Sans'
-                ),
+                    color: Colors.lightBlue[800],
+                    fontSize: 20,
+                    fontFamily: 'Josefin Sans'),
               ),
         ),
       ),
@@ -119,7 +117,10 @@ class _MyAppState extends State<MyApp> {
               return Splash();
             }
           } else
-            return BasicScaffold(screenTitle: '', implyLeading: false,);
+            return BasicScaffold(
+              screenTitle: '',
+              implyLeading: false,
+            );
         },
       ),
     );

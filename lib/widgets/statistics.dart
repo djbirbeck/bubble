@@ -78,13 +78,15 @@ class Statistics extends StatelessWidget {
                             );
                           }
 
-                          var totalBubbles = box.values.length;
+                          int totalMinutes = 0;
+                          box.values.map((e) => totalMinutes += e.bubbleTemplate.workTime);
+                          int totalSeconds = totalMinutes + 60;
 
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                totalBubbles.toString(),
+                                transformSeconds(totalSeconds),
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -125,7 +127,7 @@ class Statistics extends StatelessWidget {
                           if (box.values.isEmpty) {
                             return Center(
                               child: Text(
-                                '0\nBig',
+                                '0',
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -141,11 +143,13 @@ class Statistics extends StatelessWidget {
                               ),
                             );
                           }
+                          var totalBubbles = box.values.length;
+
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                'test',
+                                totalBubbles.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -159,86 +163,7 @@ class Statistics extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Big',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.width * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  child: Bubble(
-                    size: 120,
-                    isStatBubble: true,
-                    childWidget: Center(
-                      child: ValueListenableBuilder(
-                        valueListenable:
-                            Hive.box<CompletedBubble>('completedBubbles')
-                                .listenable(),
-                        builder: (context, Box<CompletedBubble> box, _) {
-                          if (box.values.isEmpty) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    '0',
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .color,
-                                      fontSize: 20,
-                                      fontFamily: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .fontFamily,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    child: FittedBox(
-                                      fit: BoxFit.contain,
-                                      child: Text(
-                                        'Small',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'test',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline6
-                                      .color,
-                                  fontSize: 20,
-                                  fontFamily: Theme.of(context)
-                                      .textTheme
-                                      .headline6
-                                      .fontFamily,
-                                ),
-                              ),
-                              Text(
-                                'Small',
+                                'Bubbles',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline6,
                               ),

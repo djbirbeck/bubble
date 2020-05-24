@@ -73,7 +73,7 @@ class ListBubble extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          bubble.amountOfBubbles.toString(),
+                          bubble.amountOfBubbles.toStringAsFixed(0),
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: Theme.of(context)
@@ -83,7 +83,7 @@ class ListBubble extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(

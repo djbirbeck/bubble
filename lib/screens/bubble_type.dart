@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../models/timer_template.dart';
+import '../widgets/template_dropdown.dart';
 
 class BubbleType extends StatelessWidget {
-  final TabController tabController;
   final Function saveBubble;
-  final Function updateBubbleType;
+  final Function updateBubbleTemplate;
   final Function addBubble;
   final Function minusBubble;
   final TimerTemplate bubbleTemplate;
@@ -13,9 +13,8 @@ class BubbleType extends StatelessWidget {
   final bool editing;
 
   BubbleType({
-    this.tabController,
     this.saveBubble,
-    this.updateBubbleType,
+    this.updateBubbleTemplate,
     this.addBubble,
     this.minusBubble,
     this.bubbleTemplate,
@@ -33,43 +32,10 @@ class BubbleType extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.lightBlue, width: 3),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
-                    ],
-                  ),
-                ),
-                child: FlatButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32)),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Bubble Template',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ),
-              ),
+              TemplateDropdown(updateTimer: updateBubbleTemplate, editing: editing, timerTemp: bubbleTemplate,),
               Container(
                 height: MediaQuery.of(context).size.height * 0.2,
                 margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05,
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(

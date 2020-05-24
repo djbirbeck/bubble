@@ -6,27 +6,23 @@ class BubbleDetails extends StatefulWidget {
   final String titleText;
   final String notesText;
   final DateTime dueDate;
-  final Function addBubble;
-  final Function minusBubble;
   final Function updateTitle;
   final Function updateNotes;
   final Function updateDueDate;
   final Function saveBubble;
-
   final double amountOfBubbles;
 
-  const BubbleDetails(
-      {this.tabController,
-      this.titleText,
-      this.notesText,
-      this.dueDate,
-      this.updateTitle,
-      this.updateNotes,
-      this.updateDueDate,
-      this.addBubble,
-      this.minusBubble,
-      this.amountOfBubbles,
-      this.saveBubble});
+  const BubbleDetails({
+    this.tabController,
+    this.titleText,
+    this.notesText,
+    this.dueDate,
+    this.updateTitle,
+    this.updateNotes,
+    this.updateDueDate,
+    this.amountOfBubbles,
+    this.saveBubble,
+  });
 
   @override
   _BubbleDetailsState createState() => _BubbleDetailsState();
