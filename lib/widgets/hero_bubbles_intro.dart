@@ -12,6 +12,18 @@ class HeroBubblesIntro extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
+            top: 8,
+            left: 40,
+            child: Text(
+              'Bubble',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.headline6.color,
+                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                fontSize: 24
+              ),
+            ),
+          ),
+          Positioned(
             height: 50,
             width: 50,
             left: 60,

@@ -87,7 +87,7 @@ class ListBubble extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              'bubbles',
+                              bubble.amountOfBubbles == 1 ? 'bubble' : 'bubbles',
                               style: Theme.of(context).textTheme.headline6,
                             ),
                           ),

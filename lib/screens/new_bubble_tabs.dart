@@ -76,7 +76,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void _minusBubble() {
     if (_amountOfBubbles <= 0) {
       return;
-    } else if (widget.bubbleInfo.completedBubbles != null &&
+    } else if (widget.bubbleInfo != null &&
         _amountOfBubbles <= widget.bubbleInfo.completedBubbles) {
       return;
     } else {

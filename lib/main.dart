@@ -65,11 +65,18 @@ class _MyAppState extends State<MyApp> {
         primaryColor: Colors.cyan[50],
         accentColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
+              headline5: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 24,
+                color: Colors.grey[800],
+                fontFamily: 'Josefin Sans',
+              ),
               headline6: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                  color: Colors.grey[800],
-                  fontFamily: 'Josefin Sans'),
+                fontWeight: FontWeight.w400,
+                fontSize: 18,
+                color: Colors.grey[800],
+                fontFamily: 'Josefin Sans',
+              ),
             ),
         appBarTheme: AppBarTheme(
           color: Colors.cyan[50],
@@ -86,6 +93,12 @@ class _MyAppState extends State<MyApp> {
         accentColor: Colors.black,
         brightness: Brightness.dark,
         textTheme: ThemeData.dark().textTheme.copyWith(
+              headline5: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 24,
+                color: Colors.grey[50],
+                fontFamily: 'Josefin Sans',
+              ),
               headline6: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 18,

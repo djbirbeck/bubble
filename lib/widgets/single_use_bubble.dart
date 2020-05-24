@@ -216,7 +216,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Text('Bubble on the go', style: Theme.of(context).textTheme.headline6),
+        Text('Bubble on The Go', style: Theme.of(context).textTheme.headline6),
         Container(
           height: MediaQuery.of(context).size.width * 0.5,
           width: MediaQuery.of(context).size.width * 0.5,

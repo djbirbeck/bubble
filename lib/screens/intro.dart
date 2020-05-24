@@ -44,11 +44,6 @@ class Intro extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         elevation: 0,
-        title: Text(
-          'Bubble',
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        centerTitle: true,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -65,15 +60,6 @@ class Intro extends StatelessWidget {
           child: Column(
             children: <Widget>[
               HeroBubblesIntro(),
-              Text(
-                'Welcome to Bubble!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.headline6.color,
-                    fontSize: 24,
-                    fontFamily:
-                        Theme.of(context).textTheme.headline6.fontFamily),
-              ),
               Expanded(
                 child: ListView(
                   children: [
@@ -92,7 +78,7 @@ class Intro extends StatelessWidget {
                             borderRadius: BorderRadius.circular(32),
                           ),
                           child: Text(
-                            'Let\'s Go!',
+                            'Get in your Bubble',
                             style: Theme.of(context).textTheme.headline6,
                           ),
                           onPressed: () => _navigateHome(context),
