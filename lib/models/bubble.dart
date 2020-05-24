@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
+import './timer_template.dart';
+
 part 'bubble.g.dart';
 
 @HiveType(typeId: 0)
@@ -15,7 +17,7 @@ class BubbleTask extends HiveObject {
   String notes;
   
   @HiveField(3)
-  String bubbleType;
+  TimerTemplate bubbleTemplate;
   
   @HiveField(4)
   double amountOfBubbles;
@@ -36,10 +38,10 @@ class BubbleTask extends HiveObject {
     this.id,
     @required this.title,
     this.notes,
-    @required this.bubbleType,
+    @required this.bubbleTemplate,
     @required this.amountOfBubbles,
     this.completedBubbles,
-    @required this.totalTime,
+    this.totalTime,
     @required this.dueDate,
     @required this.completed
   });

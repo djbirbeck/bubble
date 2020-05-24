@@ -73,22 +73,24 @@ class ListBubble extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          bubble.bubbleType == 'small'
-                              ? ((bubble.amountOfBubbles -
-                                          bubble.completedBubbles) *
-                                      0.5)
-                                  .toString()
-                              : (bubble.amountOfBubbles -
-                                      bubble.completedBubbles)
-                                  .toStringAsFixed(0),
+                          bubble.amountOfBubbles.toString(),
                           style: TextStyle(
                             fontSize: 24,
-                            fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .fontFamily,
                           ),
                         ),
-                        Text(
-                          'hours',
-                          style: Theme.of(context).textTheme.headline6,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'bubbles',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -105,7 +107,10 @@ class ListBubble extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontFamily,
                             ),
                             textAlign: TextAlign.center,
                             softWrap: true,

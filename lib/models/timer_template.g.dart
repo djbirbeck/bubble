@@ -1,37 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'completed_bubble.dart';
+part of 'timer_template.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CompletedBubbleAdapter extends TypeAdapter<CompletedBubble> {
+class TimerTemplateAdapter extends TypeAdapter<TimerTemplate> {
   @override
-  final typeId = 1;
+  final typeId = 3;
 
   @override
-  CompletedBubble read(BinaryReader reader) {
+  TimerTemplate read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CompletedBubble(
-      bubbleTemplate: fields[0] as TimerTemplate,
-      amountOfBubbles: fields[1] as double,
-      completedDate: fields[2] as DateTime,
+    return TimerTemplate(
+      title: fields[0] as String,
+      workTime: fields[1] as int,
+      restTime: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CompletedBubble obj) {
+  void write(BinaryWriter writer, TimerTemplate obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.bubbleTemplate)
+      ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.amountOfBubbles)
+      ..write(obj.workTime)
       ..writeByte(2)
-      ..write(obj.completedDate);
+      ..write(obj.restTime);
   }
 }

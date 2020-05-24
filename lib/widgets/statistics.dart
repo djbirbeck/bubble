@@ -77,24 +77,14 @@ class Statistics extends StatelessWidget {
                               ),
                             );
                           }
-                          var smallBubbles = box.values.where((element) {
-                            return element.bubbleType == 'small';
-                          });
 
-                          var bigBubbles = box.values.where((element) {
-                            return element.bubbleType == 'big';
-                          });
-
-                          int smallTime = smallBubbles.length * 1800;
-                          int bigTime = bigBubbles.length * 3600;
-
-                          int totalTime = smallTime + bigTime;
+                          var totalBubbles = box.values.length;
 
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                transformSeconds(totalTime),
+                                totalBubbles.toString(),
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -109,7 +99,7 @@ class Statistics extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                'spent Bubblin\' along',
+                                'Bubbles bubbled.',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline6,
                               ),
@@ -132,10 +122,6 @@ class Statistics extends StatelessWidget {
                             Hive.box<CompletedBubble>('completedBubbles')
                                 .listenable(),
                         builder: (context, Box<CompletedBubble> box, _) {
-                          var bigBubbles = box.values.where((element) {
-                            return element.bubbleType == 'big';
-                          });
-
                           if (box.values.isEmpty) {
                             return Center(
                               child: Text(
@@ -159,7 +145,7 @@ class Statistics extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                bigBubbles.length.toString(),
+                                'test',
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
@@ -196,10 +182,6 @@ class Statistics extends StatelessWidget {
                             Hive.box<CompletedBubble>('completedBubbles')
                                 .listenable(),
                         builder: (context, Box<CompletedBubble> box, _) {
-                          var smallBubbles = box.values.where((element) {
-                            return element.bubbleType == 'small';
-                          });
-
                           if (box.values.isEmpty) {
                             return Center(
                               child: Column(
@@ -242,7 +224,7 @@ class Statistics extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                smallBubbles.length.toString(),
+                                'test',
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme

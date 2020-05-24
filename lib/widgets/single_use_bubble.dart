@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:quiver/async.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import './bubble_button.dart';
 import '../models/completed_bubble.dart';
+import '../models/timer_template.dart';
 
 class SingleUseBubble extends StatefulWidget {
   @override
@@ -15,11 +16,11 @@ class SingleUseBubble extends StatefulWidget {
 class _SingleUseBubbleState extends State<SingleUseBubble>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
-  bool _isSmallBubble;
   bool _bubbling = true;
   bool _countingDown = false;
   int _time;
   var _lines = List<String>();
+  TimerTemplate _template;
   CountdownTimer _countDownTimer;
   StreamSubscription<CountdownTimer> _sub;
   Box _completedBox = Hive.box<CompletedBubble>('completedBubbles');
@@ -29,8 +30,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
 
   @override
   void initState() {
-    _isSmallBubble = false;
-    _time = 3000;
+    _time = 0;
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -98,9 +98,9 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _restCountDown(_isSmallBubble ? 300 : 600);
+        _restCountDown(_template.restTime * 60);
         var completed = CompletedBubble(
-          bubbleType: _isSmallBubble ? 'small' : 'big',
+          bubbleTemplate: _template,
           amountOfBubbles: 1,
           completedDate: DateTime.now(),
         );
@@ -134,7 +134,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _bubbleCountDown(_isSmallBubble ? 1500 : 3000);
+        _bubbleCountDown(_template.workTime * 60);
         setState(() {
           _bubbling = !_bubbling;
         });
@@ -223,75 +223,55 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
                 fontFamily: Theme.of(context).textTheme.headline6.fontFamily),
           ),
         ),
-        InkWell(
-          onTap: () {
-            setState(() {
-              _isSmallBubble = !_isSmallBubble;
-              _time = _isSmallBubble ? 1500 : 3000;
-            });
-            if (_bubbling && _countingDown) {
-              _sub.cancel();
-              _bubbleCountDown(_time);
-            } else if (!_bubbling && _countingDown) {
-              _sub.cancel();
-              _restCountDown(_time);
-            }
-          },
-          child: Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
-              side: BorderSide(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.lightBlue[50]
-                    : Colors.lightBlue,
-                width: 3,
-              ),
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+            side: BorderSide(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.lightBlue[50]
+                  : Colors.lightBlue,
+              width: 3,
             ),
-            color: Theme.of(context).brightness == Brightness.light
-                ? Colors.cyanAccent[700]
-                : Colors.indigo[900],
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width * 0.7,
-              color: Colors.transparent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 60,
-                    child: BubbleButton(
-                      bubbleSizeMin:
-                          (MediaQuery.of(context).size.height * 0.06) - 20,
-                      bubbleSizeMax: MediaQuery.of(context).size.height * 0.06,
-                      selected: _isSmallBubble == true ? true : false,
-                    ),
-                  ),
-                  Container(
-                    width: 60,
-                    child: Text(
-                      '${_isSmallBubble ? 'Little' : 'Big'}\nBubble',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
+          ),
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.cyanAccent[700]
+              : Colors.indigo[900],
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width * 0.7,
+            color: Colors.transparent,
+            child: ValueListenableBuilder(
+                valueListenable:
+                    Hive.box<TimerTemplate>('timerTemplates').listenable(),
+                builder: (context, Box<TimerTemplate> box, _) {
+                  if (box.isEmpty) {
+                    return Text(
+                      'No Templates',
+                      style: Theme.of(context).textTheme.headline6,
+                    );
+                  }
+                  return DropdownButton(
+                      hint: Text(
+                        _template.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                    ),
-                  ),
-                  Container(
-                    width: 60,
-                    child: BubbleButton(
-                      bubbleSizeMin:
-                          (MediaQuery.of(context).size.height * 0.07) - 20,
-                      bubbleSizeMax: MediaQuery.of(context).size.height * 0.07,
-                      selected: _isSmallBubble == false ? true : false,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      iconEnabledColor: Colors.white,
+                      items: box.values.map((e) {
+                        DropdownMenuItem(
+                          value: e.title,
+                          child: Text(
+                            e.title,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _template = value;
+                        });
+                      });
+                }),
           ),
         ),
         Container(

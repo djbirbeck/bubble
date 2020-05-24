@@ -8,6 +8,7 @@ import './screens/splash.dart';
 import './models/bubble.dart';
 import './models/completed_bubble.dart';
 import './models/intro.dart';
+import './models/timer_template.dart';
 import './widgets/basic_scaffold.dart';
 
 void main() async {
@@ -16,9 +17,11 @@ void main() async {
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(BubbleTaskAdapter());
   Hive.registerAdapter(CompletedBubbleAdapter());
-  Hive.registerAdapter(IntroAdapter());
+  Hive.registerAdapter(IntroToAppAdapter());
+  Hive.registerAdapter(TimerTemplateAdapter());
   Hive.openBox<CompletedBubble>('completedBubbles');
   Hive.openBox<IntroToApp>('intro');
+  Hive.openBox<IntroToApp>('timerTemplates');
   runApp(MyApp());
 }
 

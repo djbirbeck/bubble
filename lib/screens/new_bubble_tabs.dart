@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import './bubble_details.dart';
 import './bubble_type.dart';
 import '../models/bubble.dart';
+import '../models/timer_template.dart';
 import '../widgets/bubble.dart';
 import '../widgets/basic_scaffold.dart';
 
@@ -22,7 +23,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
 
   String _title;
   String _notes;
-  String _bubbleType = 'small';
+  TimerTemplate _bubbleType;
   double _amountOfBubbles;
   bool _editing;
   DateTime _dueDate;
@@ -36,7 +37,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       _title = widget.bubbleInfo.title;
       _notes = widget.bubbleInfo.notes;
       _dueDate = widget.bubbleInfo.dueDate;
-      _bubbleType = widget.bubbleInfo.bubbleType;
+      _bubbleType = widget.bubbleInfo.bubbleTemplate;
       _amountOfBubbles = widget.bubbleInfo.amountOfBubbles;
     }
     super.initState();
@@ -60,7 +61,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     });
   }
 
-  void _updateBubbleType(String bubbleType) {
+  void _updateBubbleType(TimerTemplate bubbleType) {
     setState(() {
       _bubbleType = bubbleType;
     });
@@ -131,11 +132,11 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         title: _title.trim(),
         notes: _notes != null ? _notes.trim() : '',
         dueDate: _dueDate == null ? DateTime.now() : _dueDate,
-        bubbleType: _bubbleType,
+        bubbleTemplate: _bubbleType,
         amountOfBubbles: _amountOfBubbles,
         completedBubbles: 0,
-        totalTime:
-            _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles,
+        // totalTime:
+        //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles,
         completed: false,
       );
       Box<BubbleTask> contactsBox = Hive.box<BubbleTask>('bubbles');
@@ -148,11 +149,11 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       bubble.title = _title.trim();
       bubble.notes = _notes;
       bubble.dueDate = _dueDate;
-      bubble.bubbleType = _bubbleType;
+      bubble.bubbleTemplate = _bubbleType;
       bubble.amountOfBubbles = _amountOfBubbles;
       bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
-      bubble.totalTime =
-          _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles;
+      // bubble.totalTime =
+      //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles;
       bubble.completed = false;
       bubble.save();
       Navigator.of(context).pop();
@@ -190,12 +191,12 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                   bubble.title = _title.trim();
                   bubble.notes = _notes;
                   bubble.dueDate = _dueDate;
-                  bubble.bubbleType = _bubbleType;
+                  bubble.bubbleTemplate = _bubbleType;
                   bubble.amountOfBubbles = _amountOfBubbles;
                   bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
-                  bubble.totalTime = _bubbleType == 'small'
-                      ? _amountOfBubbles * 0.5
-                      : _amountOfBubbles;
+                  // bubble.totalTime = _bubbleType == 'small'
+                  //     ? _amountOfBubbles * 0.5
+                  //     : _amountOfBubbles;
                   bubble.completed = true;
                   bubble.save();
                   Navigator.of(context).pop();
@@ -309,7 +310,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     updateBubbleType: _updateBubbleType,
                     addBubble: _addBubble,
                     minusBubble: _minusBubble,
-                    bubbleType: _bubbleType,
+                    bubbleTemplate: _bubbleType,
                     amountOfBubbles: _amountOfBubbles,
                     editing: _editing,
                   ),

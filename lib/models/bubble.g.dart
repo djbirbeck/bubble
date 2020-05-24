@@ -20,7 +20,7 @@ class BubbleTaskAdapter extends TypeAdapter<BubbleTask> {
       id: fields[0] as String,
       title: fields[1] as String,
       notes: fields[2] as String,
-      bubbleType: fields[3] as String,
+      bubbleTemplate: fields[3] as TimerTemplate,
       amountOfBubbles: fields[4] as double,
       completedBubbles: fields[5] as int,
       totalTime: fields[6] as double,
@@ -40,7 +40,7 @@ class BubbleTaskAdapter extends TypeAdapter<BubbleTask> {
       ..writeByte(2)
       ..write(obj.notes)
       ..writeByte(3)
-      ..write(obj.bubbleType)
+      ..write(obj.bubbleTemplate)
       ..writeByte(4)
       ..write(obj.amountOfBubbles)
       ..writeByte(5)

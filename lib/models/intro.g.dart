@@ -6,7 +6,7 @@ part of 'intro.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class IntroAdapter extends TypeAdapter<IntroToApp> {
+class IntroToAppAdapter extends TypeAdapter<IntroToApp> {
   @override
   final typeId = 2;
 

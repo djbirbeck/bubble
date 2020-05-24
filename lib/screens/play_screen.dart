@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:quiver/async.dart';
 import '../models/bubble.dart';
 import '../models/completed_bubble.dart';
+import '../models/timer_template.dart';
 import '../widgets/bubble.dart';
 import '../widgets/basic_scaffold.dart';
 
@@ -50,7 +51,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
         setState(() {});
       });
     _totalBubbles = widget.bubbleInfo.amountOfBubbles;
-    _time = widget.bubbleInfo.bubbleType == 'small' ? 1500 : 3000;
+    _time = widget.bubbleInfo.bubbleTemplate.workTime * 60;
     Timer(Duration(milliseconds: 600), () {
       setState(() {
         _dateWidget = Text(
@@ -143,7 +144,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
       if (_countdownNumber == 0) {
         _sub.cancel();
         var completed = CompletedBubble(
-          bubbleType: widget.bubbleInfo.bubbleType,
+          bubbleTemplate: widget.bubbleInfo.bubbleTemplate,
           amountOfBubbles: 1,
           completedDate: DateTime.now(),
         );
@@ -164,7 +165,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             _iconController.reverse();
           });
         } else {
-          _restCountDown(widget.bubbleInfo.bubbleType == 'small' ? 300 : 600);
+          _restCountDown(widget.bubbleInfo.bubbleTemplate.restTime * 60);
         }
       }
       setState(() {
@@ -192,7 +193,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
       _countdownNumber += _stepInSeconds;
       if (_countdownNumber == 0) {
         _sub.cancel();
-        _bubbleCountDown(widget.bubbleInfo.bubbleType == 'small' ? 1500 : 3000);
+        _bubbleCountDown(widget.bubbleInfo.bubbleTemplate.workTime * 60);
         setState(() {
           _bubbling = !_bubbling;
         });
