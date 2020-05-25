@@ -48,7 +48,8 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
       ..addListener(() {
         setState(() {});
       });
-    _totalBubbles = widget.bubbleInfo.amountOfBubbles;
+    _totalBubbles =
+        widget.bubbleInfo.amountOfBubbles - widget.bubbleInfo.completedBubbles;
     _time = widget.bubbleInfo.bubbleTemplate.workTime * 60;
     super.initState();
   }
@@ -226,7 +227,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BasicScaffold(
-      screenTitle: '',
+      screenTitle: widget.bubbleInfo.title,
       implyLeading: true,
       childWidget: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +237,7 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
             child: Stack(
               children: [
                 Positioned(
-                  top: 40,
+                  bottom: 0,
                   left: 200,
                   child: Hero(
                     tag: 'logoImage',
@@ -275,190 +276,190 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
               ],
             ),
           ),
-          Container(
-            height: 30,
-            margin: EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: Text(
-              widget.bubbleInfo.title,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Container(
-            height: 30,
-            margin: EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: Text(
-              'Due: ' + DateFormat.yMMMMd().format(widget.bubbleInfo.dueDate),
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Container(
-            height: 80,
-            width: MediaQuery.of(context).size.width * 0.8,
-            margin: EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: Text(
-              widget.bubbleInfo.notes,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          TemplateListItem(
-            timerTemplate: widget.bubbleInfo.bubbleTemplate,
-          ),
-          Container(
-            height: 230,
-            width: 230,
-            child: Stack(
+          Expanded(
+            child: ListView(
               children: [
-                Positioned(
-                  top: 30,
-                  left: 30,
-                  height: 200,
-                  width: 200,
-                  child: Hero(
-                    tag: 'bubble-3',
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 4,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                Container(
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Due: ' +
+                        DateFormat.yMMMMd().format(widget.bubbleInfo.dueDate),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily:
+                          Theme.of(context).textTheme.headline6.fontFamily,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  height: 80,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  alignment: Alignment.center,
+                  child: Text(
+                    widget.bubbleInfo.notes,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily:
+                          Theme.of(context).textTheme.headline6.fontFamily,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                TemplateListItem(
+                  timerTemplate: widget.bubbleInfo.bubbleTemplate,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 230,
+                      width: 230,
+                      child: Stack(
                         children: [
-                          Text(
-                            transformSeconds(_time),
-                            style: TextStyle(
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Colors.white
-                                  : Colors.lightBlue,
-                              fontSize: 50,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .fontFamily,
+                          Positioned(
+                            top: 30,
+                            left: 30,
+                            height: 200,
+                            width: 200,
+                            child: Hero(
+                              tag: 'bubble-3',
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 4,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      transformSeconds(_time),
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.white
+                                            : Colors.lightBlue,
+                                        fontSize: 50,
+                                        fontFamily: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .fontFamily,
+                                      ),
+                                    ),
+                                    Text(
+                                      _bubbling ? 'Working' : 'Resting',
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Colors.white
+                                            : Colors.lightBlue,
+                                        fontSize: 18,
+                                        fontFamily: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .fontFamily,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                          Text(
-                            _bubbling ? 'Working' : 'Resting',
-                            style: TextStyle(
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Colors.white
-                                  : Colors.lightBlue,
-                              fontSize: 18,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .fontFamily,
+                          Positioned(
+                            height: 100,
+                            width: 100,
+                            top: 0,
+                            left: 0,
+                            child: Hero(
+                              tag: 'amount-bubble',
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 4,
+                                  ),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Theme.of(context).primaryColor,
+                                      Theme.of(context).accentColor,
+                                    ],
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        _totalBubbles.toStringAsFixed(0),
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontFamily: Theme.of(context)
+                                              .textTheme
+                                              .headline6
+                                              .fontFamily,
+                                        ),
+                                      ),
+                                      Text(
+                                          _totalBubbles != 1 ? 'Bubbles' : 'Bubble')
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Positioned(
-                  height: 100,
-                  width: 100,
-                  top: 0,
-                  left: 0,
-                  child: Hero(
-                    tag: 'amount-bubble',
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 4,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(),
+                      Container(),
+                      Container(
+                        height: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: _colourAnimation.value,
+                            width: 4,
+                          ),
                         ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Theme.of(context).primaryColor,
-                            Theme.of(context).accentColor,
-                          ],
-                        ),
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              _totalBubbles.toStringAsFixed(0),
-                              softWrap: true,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .fontFamily,
-                              ),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: IconButton(
+                            iconSize: 40,
+                            icon: AnimatedIcon(
+                              semanticLabel: 'Play or pause button',
+                              icon: AnimatedIcons.play_pause,
+                              progress: _iconController,
+                              color: _colourAnimation.value,
                             ),
-                            Text(_totalBubbles != 1 ? 'Bubbles' : 'Bubble')
-                          ],
+                            onPressed: _playPause,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(),
-                Container(),
-                Container(
-                  height: MediaQuery.of(context).size.width * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: _colourAnimation.value,
-                      width: 4,
-                    ),
-                  ),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: IconButton(
-                      iconSize: 40,
-                      icon: AnimatedIcon(
-                        semanticLabel: 'Play or pause button',
-                        icon: AnimatedIcons.play_pause,
-                        progress: _iconController,
-                        color: _colourAnimation.value,
-                      ),
-                      onPressed: _playPause,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          )
         ],
       ),
     );

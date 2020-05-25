@@ -144,6 +144,7 @@ class _TemplateSheetState extends State<TemplateSheet> {
                     cursorColor: Theme.of(context).primaryColor,
                     autocorrect: false,
                     maxLength: 20,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       labelText: 'Template name',
                       labelStyle: Theme.of(context).textTheme.headline6,

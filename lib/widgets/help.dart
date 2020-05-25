@@ -1,28 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import './bubble.dart';
 
 class Help extends StatelessWidget {
-  _launchRoadmap() async {
-    const url = 'https://8bitbirbeck.co.uk/bubble-roadmap/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _emailSupport()  async {
-    const email = 'mailto:support@8bitbirbeck.co.uk?subject=Bubble Feedback';
-    const emailWebpage = 'https://8bitbirbeck.co.uk/contact/';
-    if (await canLaunch(email)) {
-      await launch(email);
-    } else if (await canLaunch(emailWebpage)) {
-      await launch(emailWebpage);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -196,79 +176,6 @@ class Help extends StatelessWidget {
             'We do not store or collect any of your data.\n\nAt all.',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
-        Container(
-          height: 80,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 45,
-                width: 45,
-                child: Bubble(
-                  size: 45,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  'Further Development',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ),
-              Container(
-                height: 45,
-                width: 45,
-                child: Bubble(
-                  size: 45,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            'Check out our development roadmap to see what we have planned for Bubble.\n\nFeedback and content suggestions are also welcome!',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              OutlineButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                borderSide: BorderSide(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.cyan[100]
-                      : Colors.cyan,
-                  width: 3,
-                ),
-                child: Text('Roadmap',
-                    style: Theme.of(context).textTheme.headline6),
-                onPressed: () => _launchRoadmap(),
-              ),
-              OutlineButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                borderSide: BorderSide(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.cyan[100]
-                      : Colors.cyan,
-                  width: 3,
-                ),
-                child: Text('Feedback',
-                    style: Theme.of(context).textTheme.headline6),
-                onPressed: () => _emailSupport(),
-              ),
-            ],
           ),
         ),
       ],

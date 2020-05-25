@@ -5,6 +5,8 @@ import '../widgets/today_stats.dart';
 import '../widgets/bubble_list.dart';
 import '../widgets/single_use_bubble.dart';
 import '../widgets/menu_drawer.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,11 +15,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController _tabController;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabChange);
     super.initState();
+  }
+
+  void _handleTabChange() {
+    flutterLocalNotificationsPlugin.cancelAll();
   }
 
   @override

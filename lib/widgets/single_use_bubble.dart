@@ -14,7 +14,10 @@ class SingleUseBubble extends StatefulWidget {
 }
 
 class _SingleUseBubbleState extends State<SingleUseBubble>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool wantKeepAlive = true;
+
   AnimationController _controller;
   Animation<Color> _colourAnimation;
   bool _bubbling = true;
@@ -49,6 +52,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
   @override
   dispose() {
     flutterLocalNotificationsPlugin.cancelAll();
+
     _controller.dispose();
     super.dispose();
   }
@@ -213,6 +217,7 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[

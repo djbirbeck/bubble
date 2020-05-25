@@ -101,6 +101,7 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                 cursorColor: Theme.of(context).primaryColor,
                 autocorrect: false,
                 maxLength: 30,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: 'Bubble name',
                   labelStyle: Theme.of(context).textTheme.headline6,
@@ -139,6 +140,7 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                 autocorrect: false,
                 maxLength: 160,
                 maxLines: 4,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: 'Bubble details (optional)',
                   labelStyle: Theme.of(context).textTheme.headline6,

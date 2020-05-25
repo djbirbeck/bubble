@@ -11,16 +11,17 @@ class BubbleType extends StatelessWidget {
   final TimerTemplate bubbleTemplate;
   final double amountOfBubbles;
   final bool editing;
+  final int bubblesComplete;
 
-  BubbleType({
-    this.saveBubble,
-    this.updateBubbleTemplate,
-    this.addBubble,
-    this.minusBubble,
-    this.bubbleTemplate,
-    this.amountOfBubbles,
-    this.editing,
-  });
+  BubbleType(
+      {this.saveBubble,
+      this.updateBubbleTemplate,
+      this.addBubble,
+      this.minusBubble,
+      this.bubbleTemplate,
+      this.amountOfBubbles,
+      this.editing,
+      this.bubblesComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,11 @@ class BubbleType extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TemplateDropdown(updateTimer: updateBubbleTemplate, editing: editing, timerTemp: bubbleTemplate,),
+              TemplateDropdown(
+                updateTimer: updateBubbleTemplate,
+                editing: editing,
+                timerTemp: bubbleTemplate,
+              ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.2,
                 margin: EdgeInsets.symmetric(
@@ -54,7 +59,7 @@ class BubbleType extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'How many bubbles?',
+                      'How many Bubbles?',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Row(
@@ -99,6 +104,12 @@ class BubbleType extends StatelessWidget {
                         ),
                       ],
                     ),
+                    !editing
+                        ? Container()
+                        : Text(
+                            '$bubblesComplete ${bubblesComplete == 1 ? 'Bubble' : 'Bubbles'} completed',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                   ],
                 ),
               ),

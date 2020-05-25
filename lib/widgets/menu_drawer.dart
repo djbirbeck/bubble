@@ -5,6 +5,7 @@ import '../screens/statistics_screen.dart';
 import '../screens/about_screen.dart';
 import '../screens/all_templates.dart';
 import '../screens/home_screen.dart';
+import '../screens/feedback_screen.dart';
 import '../transitions/slide_right.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -91,6 +92,13 @@ class MenuDrawer extends StatelessWidget {
                   title: Text('About Bubble'),
                   onTap: () {
                     _changeMainWidget(AboutScreen(), 'about', context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.chat_bubble_outline),
+                  title: Text('Support & More'),
+                  onTap: () {
+                    _changeMainWidget(FeedbackScreen(), 'feedback', context);
                   },
                 ),
               ],

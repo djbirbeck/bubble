@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './bubble.dart';
 
-class HeroBubblesStats extends StatelessWidget {
+class HeroBubblesFeedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,17 +12,17 @@ class HeroBubblesStats extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            height: 50,
-            width: 50,
-            left: 20,
-            bottom: 10,
+            height: 30,
+            width: 30,
+            right: 20,
+            top: 40,
             child: Hero(
               tag: 'bubble-1',
               child: Bubble(size: 50),
             ),
           ),
           Positioned(
-            right: 160,
+            left: 30,
             top: 10,
             child: Hero(
               tag: 'logoImage',
@@ -35,10 +35,10 @@ class HeroBubblesStats extends StatelessWidget {
             ),
           ),
           Positioned(
-            height: 70,
-            width: 70,
-            right: 40,
-            top: 0,
+            height: 50,
+            width: 50,
+            left: 200,
+            bottom: 0,
             child: Hero(
               tag: 'bubble-2',
               child: Bubble(size: 70),

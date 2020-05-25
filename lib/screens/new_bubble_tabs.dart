@@ -25,6 +25,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   String _notes;
   TimerTemplate _bubbleTemplate;
   double _amountOfBubbles;
+  int _completedBubbles;
   bool _editing;
   DateTime _dueDate;
 
@@ -32,6 +33,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     _amountOfBubbles = 0;
+    _completedBubbles = 0;
     _editing = widget.bubbleInfo == null ? false : true;
     if (widget.bubbleInfo != null) {
       _title = widget.bubbleInfo.title;
@@ -39,6 +41,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       _dueDate = widget.bubbleInfo.dueDate;
       _bubbleTemplate = widget.bubbleInfo.bubbleTemplate;
       _amountOfBubbles = widget.bubbleInfo.amountOfBubbles;
+      _completedBubbles = widget.bubbleInfo.completedBubbles;
     }
     super.initState();
   }
@@ -312,6 +315,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     bubbleTemplate: _bubbleTemplate,
                     amountOfBubbles: _amountOfBubbles,
                     editing: _editing,
+                    bubblesComplete: _completedBubbles,
                   ),
                 ],
               ),
