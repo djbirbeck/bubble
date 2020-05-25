@@ -27,7 +27,7 @@ class HeroBubblesIntro extends StatelessWidget {
             height: 50,
             width: 50,
             left: 60,
-            bottom: 50,
+            bottom: 30,
             child: Hero(
               tag: 'bubble-1',
               child: Bubble(size: 50),

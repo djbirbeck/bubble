@@ -211,7 +211,7 @@ class Help extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   'Further Development',
                   style: Theme.of(context).textTheme.headline5,

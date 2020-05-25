@@ -32,8 +32,7 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           children: [
             HeroBubblesHelp(),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.72,
+            Expanded(
               child: ListView(
                 children: [
                   Help(),

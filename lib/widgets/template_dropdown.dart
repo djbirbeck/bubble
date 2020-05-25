@@ -51,8 +51,8 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 66,
-              width: 66,
+              height: 60,
+              width: 60,
               margin: EdgeInsets.only(left: 8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -79,11 +79,7 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                 children: [
                   Text(
                     '${_template == null ? 0 : _template.workTime.toString()}m',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily:
-                          Theme.of(context).textTheme.headline6.fontFamily,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -150,8 +146,8 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                   );
                 }),
             Container(
-              height: 66,
-              width: 66,
+              height: 60,
+              width: 60,
               margin: EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -178,11 +174,7 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                 children: [
                   Text(
                     '${_template == null ? 0 : _template.restTime.toString()}m',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily:
-                          Theme.of(context).textTheme.headline6.fontFamily,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
