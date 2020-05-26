@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
-        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark),
+        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark, scaffoldBackgroundColor: CupertinoColors.systemGrey6),
       ),
       title: 'Bubble',
       home: FutureBuilder(
