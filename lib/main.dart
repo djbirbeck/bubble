@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -42,7 +43,12 @@ class _MyAppState extends State<MyApp> {
     ]);
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('notification_icon');
-    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettingsIOS = new IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+    );
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(
@@ -55,6 +61,27 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     Hive.close();
     super.dispose();
+  }
+
+  Future onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 
   @override
