@@ -21,7 +21,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
-  String _title;
+  String _title = '';
   String _notes;
   TimerTemplate _bubbleTemplate;
   double _amountOfBubbles;
@@ -90,11 +90,111 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
   }
 
   void _saveBubble(BuildContext context) {
-    if (_title == null || _title == '' || _bubbleTemplate == null || _amountOfBubbles == 0) {
+    try {
+      if (_title != '' && _bubbleTemplate != null && _amountOfBubbles != 0) {
+        if (!_editing) {
+          final bubble = BubbleTask(
+            id: DateTime.now().toString(),
+            title: _title.trim(),
+            notes: _notes != null ? _notes.trim() : '',
+            dueDate: _dueDate == null ? DateTime.now() : _dueDate,
+            bubbleTemplate: _bubbleTemplate,
+            amountOfBubbles: _amountOfBubbles,
+            completedBubbles: 0,
+            // totalTime:
+            //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles,
+            completed: false,
+          );
+          Box<BubbleTask> contactsBox = Hive.box<BubbleTask>('bubbles');
+          contactsBox.add(bubble);
+          Navigator.of(context).pop();
+        } else if (_editing &&
+            _amountOfBubbles != widget.bubbleInfo.completedBubbles) {
+          var bubble = widget.bubbleInfo;
+          bubble.id = widget.bubbleInfo.id;
+          bubble.title = _title.trim();
+          bubble.notes = _notes;
+          bubble.dueDate = _dueDate;
+          bubble.bubbleTemplate = _bubbleTemplate;
+          bubble.amountOfBubbles = _amountOfBubbles;
+          bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
+          // bubble.totalTime =
+          //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles;
+          bubble.completed = false;
+          bubble.save();
+          Navigator.of(context).pop();
+        } else if (_editing &&
+            _amountOfBubbles != widget.bubbleInfo.completedBubbles &&
+            widget.bubbleInfo.completedBubbles > 0) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                title: Text(
+                  'Complete this Bubble?',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                content: Text(
+                  'Do you want to set this Bubble as complete?',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      'Yes',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontFamily:
+                            Theme.of(context).textTheme.headline6.fontFamily,
+                      ),
+                    ),
+                    onPressed: () {
+                      var bubble = widget.bubbleInfo;
+                      bubble.id = widget.bubbleInfo.id;
+                      bubble.title = _title.trim();
+                      bubble.notes = _notes;
+                      bubble.dueDate = _dueDate;
+                      bubble.bubbleTemplate = _bubbleTemplate;
+                      bubble.amountOfBubbles = _amountOfBubbles;
+                      bubble.completedBubbles =
+                          widget.bubbleInfo.completedBubbles;
+                      // bubble.totalTime = _bubbleType == 'small'
+                      //     ? _amountOfBubbles * 0.5
+                      //     : _amountOfBubbles;
+                      bubble.completed = true;
+                      bubble.save();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'No',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontFamily:
+                            Theme.of(context).textTheme.headline6.fontFamily,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } else {
+        throw new Exception();
+      }
+    } catch (_) {
       String errorTitle = '';
       String errorTemplate = '';
       String errorAmount = '';
-      if (_title == null || _title == '') {
+      if (_title == '') {
         errorTitle = 'No name for your Bubble.\n';
       }
       if (_bubbleTemplate == null) {
@@ -106,7 +206,8 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          print('dialog');
+          return new AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(32),
             ),
@@ -133,100 +234,6 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         },
       );
     }
-    if (!_editing) {
-      final bubble = BubbleTask(
-        id: DateTime.now().toString(),
-        title: _title.trim(),
-        notes: _notes != null ? _notes.trim() : '',
-        dueDate: _dueDate == null ? DateTime.now() : _dueDate,
-        bubbleTemplate: _bubbleTemplate,
-        amountOfBubbles: _amountOfBubbles,
-        completedBubbles: 0,
-        // totalTime:
-        //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles,
-        completed: false,
-      );
-      Box<BubbleTask> contactsBox = Hive.box<BubbleTask>('bubbles');
-      contactsBox.add(bubble);
-      Navigator.of(context).pop();
-    } else if (_editing &&
-        _amountOfBubbles != widget.bubbleInfo.completedBubbles) {
-      var bubble = widget.bubbleInfo;
-      bubble.id = widget.bubbleInfo.id;
-      bubble.title = _title.trim();
-      bubble.notes = _notes;
-      bubble.dueDate = _dueDate;
-      bubble.bubbleTemplate = _bubbleTemplate;
-      bubble.amountOfBubbles = _amountOfBubbles;
-      bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
-      // bubble.totalTime =
-      //     _bubbleType == 'small' ? _amountOfBubbles * 0.5 : _amountOfBubbles;
-      bubble.completed = false;
-      bubble.save();
-      Navigator.of(context).pop();
-    } else if (_editing &&
-        _amountOfBubbles != widget.bubbleInfo.completedBubbles &&
-        widget.bubbleInfo.completedBubbles > 0) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
-            ),
-            title: Text(
-              'Complete this Bubble?',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            content: Text(
-              'Do you want to set this Bubble as complete?',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Yes',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontFamily:
-                        Theme.of(context).textTheme.headline6.fontFamily,
-                  ),
-                ),
-                onPressed: () {
-                  var bubble = widget.bubbleInfo;
-                  bubble.id = widget.bubbleInfo.id;
-                  bubble.title = _title.trim();
-                  bubble.notes = _notes;
-                  bubble.dueDate = _dueDate;
-                  bubble.bubbleTemplate = _bubbleTemplate;
-                  bubble.amountOfBubbles = _amountOfBubbles;
-                  bubble.completedBubbles = widget.bubbleInfo.completedBubbles;
-                  // bubble.totalTime = _bubbleType == 'small'
-                  //     ? _amountOfBubbles * 0.5
-                  //     : _amountOfBubbles;
-                  bubble.completed = true;
-                  bubble.save();
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                child: Text(
-                  'No',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontFamily:
-                        Theme.of(context).textTheme.headline6.fontFamily,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 
   @override
@@ -235,102 +242,102 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       screenTitle: '',
       implyLeading: true,
       childWidget: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Container(
-                height: 120,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      right: 20,
-                      top: 10,
-                      child: Text(
-                        '${_editing ? 'Edit' : 'New'} Bubble',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontFamily:
-                              Theme.of(context).textTheme.headline6.fontFamily,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      height: 60,
-                      width: 60,
-                      right: 35,
-                      bottom: 20,
-                      child: Hero(
-                        tag: 'bubble-1',
-                        child: Bubble(size: 70),
-                      ),
-                    ),
-                    Positioned(
-                      height: 40,
-                      width: 40,
-                      right: 180,
-                      top: 10,
-                      child: Hero(
-                        tag: 'bubble-2',
-                        child: Bubble(size: 50),
-                      ),
-                    ),
-                    Positioned(
-                      left: 30,
-                      bottom: 20,
-                      child: Hero(
-                        tag: 'logoImage',
-                        child: Image.asset('assets/images/logo.png',
-                            height: 100,
-                            width: 100,
-                            semanticLabel: 'Bubble logo'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              height: 120,
+              child: Stack(
                 children: [
-                  BubbleDetails(
-                    titleText: _title,
-                    notesText: _notes,
-                    dueDate: _dueDate,
-                    updateTitle: _updateTitle,
-                    updateNotes: _updateNotes,
-                    updateDueDate: _updateDueDate,
-                    amountOfBubbles: _amountOfBubbles,
-                    saveBubble: _saveBubble,
+                  Positioned(
+                    right: 20,
+                    top: 10,
+                    child: Text(
+                      '${_editing ? 'Edit' : 'New'} Bubble',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily:
+                            Theme.of(context).textTheme.headline6.fontFamily,
+                      ),
+                    ),
                   ),
-                  BubbleType(
-                    saveBubble: _saveBubble,
-                    updateBubbleTemplate: _updateBubbleTemplate,
-                    addBubble: _addBubble,
-                    minusBubble: _minusBubble,
-                    bubbleTemplate: _bubbleTemplate,
-                    amountOfBubbles: _amountOfBubbles,
-                    editing: _editing,
-                    bubblesComplete: _completedBubbles,
+                  Positioned(
+                    height: 60,
+                    width: 60,
+                    right: 35,
+                    bottom: 20,
+                    child: Hero(
+                      tag: 'bubble-1',
+                      child: Bubble(size: 70),
+                    ),
+                  ),
+                  Positioned(
+                    height: 40,
+                    width: 40,
+                    right: 180,
+                    top: 10,
+                    child: Hero(
+                      tag: 'bubble-2',
+                      child: Bubble(size: 50),
+                    ),
+                  ),
+                  Positioned(
+                    left: 30,
+                    bottom: 20,
+                    child: Hero(
+                      tag: 'logoImage',
+                      child: Image.asset('assets/images/logo.png',
+                          height: 100,
+                          width: 100,
+                          semanticLabel: 'Bubble logo'),
+                    ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: TabPageSelector(
-                controller: _tabController,
-                color: Colors.indigo,
-                selectedColor: Colors.lightBlue[50],
-                indicatorSize: 16,
-              ),
-            )
-          ],
-        ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                BubbleDetails(
+                  titleText: _title,
+                  notesText: _notes,
+                  dueDate: _dueDate,
+                  updateTitle: _updateTitle,
+                  updateNotes: _updateNotes,
+                  updateDueDate: _updateDueDate,
+                  amountOfBubbles: _amountOfBubbles,
+                  saveBubble: _saveBubble,
+                ),
+                BubbleType(
+                  saveBubble: _saveBubble,
+                  updateBubbleTemplate: _updateBubbleTemplate,
+                  addBubble: _addBubble,
+                  minusBubble: _minusBubble,
+                  bubbleTemplate: _bubbleTemplate,
+                  amountOfBubbles: _amountOfBubbles,
+                  editing: _editing,
+                  bubblesComplete: _completedBubbles,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: TabPageSelector(
+              controller: _tabController,
+              color: Colors.indigo,
+              selectedColor: Colors.lightBlue[50],
+              indicatorSize: 16,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
