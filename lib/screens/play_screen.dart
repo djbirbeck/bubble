@@ -409,8 +409,9 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                               .fontFamily,
                                         ),
                                       ),
-                                      Text(
-                                          _totalBubbles != 1 ? 'Bubbles' : 'Bubble')
+                                      Text(_totalBubbles != 1
+                                          ? 'Bubbles'
+                                          : 'Bubble')
                                     ],
                                   ),
                                 ),
@@ -442,16 +443,21 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                         ),
                         child: FittedBox(
                           fit: BoxFit.contain,
-                          child: IconButton(
-                            iconSize: 40,
-                            icon: AnimatedIcon(
-                              semanticLabel: 'Play or pause button',
-                              icon: AnimatedIcons.play_pause,
-                              progress: _iconController,
-                              color: _colourAnimation.value,
-                            ),
-                            onPressed: _playPause,
-                          ),
+                          child: _totalBubbles == 0
+                              ? Icon(
+                                  Icons.check,
+                                  color: _colourAnimation.value,
+                                )
+                              : IconButton(
+                                  iconSize: 40,
+                                  icon: AnimatedIcon(
+                                    semanticLabel: 'Play or pause button',
+                                    icon: AnimatedIcons.play_pause,
+                                    progress: _iconController,
+                                    color: _colourAnimation.value,
+                                  ),
+                                  onPressed: _playPause,
+                                ),
                         ),
                       ),
                     ],
