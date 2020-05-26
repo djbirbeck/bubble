@@ -12,7 +12,7 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         title: Text(
-          'About Bubble',
+          'More Information',
           style: Theme.of(context).textTheme.headline6,
         ),
         centerTitle: true,

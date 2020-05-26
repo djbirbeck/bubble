@@ -13,7 +13,7 @@ class MenuDrawer extends StatelessWidget {
 
   MenuDrawer({@required this.currentScreen});
 
-    _launch8BitBirbeck() async {
+  _launch8BitBirbeck() async {
     const url = 'https://8bitbirbeck.co.uk/';
     if (await canLaunch(url)) {
       await launch(url);
@@ -88,8 +88,8 @@ class MenuDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.info_outline),
-                  title: Text('About Bubble'),
+                  leading: Icon(Icons.help_outline),
+                  title: Text('More Information'),
                   onTap: () {
                     _changeMainWidget(AboutScreen(), 'about', context);
                   },
@@ -101,6 +101,17 @@ class MenuDrawer extends StatelessWidget {
                     _changeMainWidget(FeedbackScreen(), 'feedback', context);
                   },
                 ),
+                AboutListTile(
+                  icon: Icon(Icons.info_outline),
+                  applicationIcon: Image.asset(
+                    'assets/images/logo.png',
+                    height: 30,
+                    width: 30,
+                  ),
+                  applicationName: 'Bubble',
+                  applicationVersion: 'Version 1.0.6',
+                  applicationLegalese: '2020 8BitBirbeck',
+                )
               ],
             ),
             InkWell(
