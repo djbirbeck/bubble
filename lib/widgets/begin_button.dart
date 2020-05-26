@@ -19,16 +19,11 @@ class BeginButton extends StatelessWidget {
           if (box.values.isEmpty == true) {
             return Container(
               height: 48,
-              child: OutlineButton(
+              child: FlatButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                borderSide: BorderSide(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.cyan[100]
-                      : Colors.cyan,
-                  width: 3,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24),
                 onPressed: () => animateButtonFunction('intro'),
                 child: Text(
                   'Lets begin...',
@@ -43,16 +38,11 @@ class BeginButton extends StatelessWidget {
           }
           return Container(
             height: 48,
-            child: OutlineButton(
+            child: FlatButton(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(30),
               ),
-              borderSide: BorderSide(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.cyan[100]
-                    : Colors.cyan,
-                width: 3,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 24),
               onPressed: () => animateButtonFunction('main'),
               child: Text(
                 'Lets get started...',

@@ -27,17 +27,20 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   double _logoSize;
   double _bubble1Size;
   double _bubble2Size;
-
-  Widget _button = Container(
-    height: 48,
-  );
+  bool _visible;
+  AnimationController _controller;
+  Animation<double> _animation;
 
   @override
   void initState() {
     _logoSize = 0;
     _bubble1Size = 0;
     _bubble2Size = 0;
+    _visible = false;
     _animateIn();
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 600), vsync: this);
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     permissionStatusFuture = getCheckNotificationPermStatus();
     super.initState();
   }
@@ -68,18 +71,18 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     });
 
     Timer(Duration(milliseconds: 1300), () {
+      _controller.forward();
       setState(() {
-        _button = BeginButton(
-          animateButtonFunction: _animatePreTransition,
-        );
+        _visible = !_visible;
       });
     });
   }
 
   void _animatePreTransition(String screen) {
     setState(() {
-      _button = Container();
+      _visible = !_visible;
     });
+    _controller.reverse();
     if (screen == 'main') {
       Timer(Duration(milliseconds: 400), () {
         Navigator.pushReplacement(
@@ -91,21 +94,21 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       });
     } else {
       Timer(Duration(milliseconds: 400), () {
-      NotificationPermissions.requestNotificationPermissions(
-              iosSettings: const NotificationSettingsIos(
-                  sound: true, badge: true, alert: true))
-          .then((_) {
-        setState(() {
-          permissionStatusFuture = getCheckNotificationPermStatus();
+        NotificationPermissions.requestNotificationPermissions(
+                iosSettings: const NotificationSettingsIos(
+                    sound: true, badge: true, alert: true))
+            .then((_) {
+          setState(() {
+            permissionStatusFuture = getCheckNotificationPermStatus();
+          });
         });
+        Navigator.pushReplacement(
+          context,
+          FadeRoute(
+            page: Intro(),
+          ),
+        );
       });
-      Navigator.pushReplacement(
-        context,
-        FadeRoute(
-          page: Intro(),
-        ),
-      );
-    });
     }
   }
 
@@ -175,12 +178,27 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                     height: _logoSize,
                     width: _logoSize,
                     duration: Duration(milliseconds: 800),
-                    child: Image.asset('assets/images/logo.png', semanticLabel: 'Bubble logo'),
+                    child: Image.asset('assets/images/logo.png',
+                        semanticLabel: 'Bubble logo'),
                   ),
                 ),
-                AnimatedSwitcher(
-                  duration: Duration(milliseconds: 600),
-                  child: _button,
+                FadeTransition(
+                  opacity: _animation,
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 600),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Colors.cyan[100]
+                                  : Colors.cyan,
+                          width: _visible ? 3 : 0,
+                        ),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: BeginButton(
+                      animateButtonFunction: _animatePreTransition,
+                    ),
+                  ),
                 ),
               ],
             ),
