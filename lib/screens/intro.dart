@@ -45,50 +45,52 @@ class Intro extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-            ],
+      body: SafeArea(
+              child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              HeroBubblesIntro(),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Help(),
-                    Container(
-                      height: 66,
-                      margin: EdgeInsets.all(16),
-                      child: Card(
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32),
-                        ),
-                        elevation: 3,
-                        child: FlatButton(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                HeroBubblesIntro(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Help(),
+                      Container(
+                        height: 66,
+                        margin: EdgeInsets.all(16),
+                        child: Card(
+                          color: Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
-                          child: Text(
-                            'Get in your Bubble',
-                            style: Theme.of(context).textTheme.headline6,
+                          elevation: 3,
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            child: Text(
+                              'Get in your Bubble',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            onPressed: () => _navigateHome(context),
                           ),
-                          onPressed: () => _navigateHome(context),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

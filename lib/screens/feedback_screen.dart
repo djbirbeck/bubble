@@ -18,24 +18,26 @@ class FeedbackScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: MenuDrawer(currentScreen: 'feedback'),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
+      body: SafeArea(
+              child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
+          ),
+          child: Column(
+            children: [
+              HeroBubblesFeedback(),
+              Expanded(
+                child: FeedbackWidget(),
+              ),
             ],
           ),
-        ),
-        child: Column(
-          children: [
-            HeroBubblesFeedback(),
-            Expanded(
-              child: FeedbackWidget(),
-            ),
-          ],
         ),
       ),
     );

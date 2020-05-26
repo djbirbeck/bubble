@@ -91,6 +91,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
         accentColor: Colors.lightBlue,
+        canvasColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -114,11 +115,13 @@ class _MyAppState extends State<MyApp> {
                     fontFamily: 'Josefin Sans'),
               ),
         ),
+        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.light),
       ),
       darkTheme: ThemeData(
         primaryColor: Colors.blue[900],
         accentColor: Colors.black,
         brightness: Brightness.dark,
+        canvasColor: Colors.black,
         textTheme: ThemeData.dark().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -142,6 +145,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
+        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark),
       ),
       title: 'Bubble',
       home: FutureBuilder(

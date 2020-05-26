@@ -18,23 +18,25 @@ class StatisticsScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: MenuDrawer(currentScreen: 'statistics'),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-            ],
+      body: SafeArea(
+              child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
           ),
+          child: Column(
+          children: [
+            HeroBubblesStats(),
+            Statistics()
+          ]
         ),
-        child: Column(
-        children: [
-          HeroBubblesStats(),
-          Statistics()
-        ]
-      ),
+        ),
       ),
     );
   }

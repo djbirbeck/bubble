@@ -1,4 +1,7 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class BubbleDetails extends StatefulWidget {
@@ -47,21 +50,47 @@ class _BubbleDetailsState extends State<BubbleDetails> {
     super.initState();
   }
 
-  void _presentDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2050),
-    ).then((value) {
-      if (value == null) {
-        return;
-      }
-      widget.updateDueDate(value);
-      setState(() {
-        _selectedDate = value;
+  void _presentDatePicker(BuildContext context) {
+    if (Platform.isAndroid) {
+      showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2050),
+      ).then((value) {
+        if (value == null) {
+          return;
+        }
+        widget.updateDueDate(value);
+        setState(() {
+          _selectedDate = value;
+        });
       });
-    });
+    } else if (Platform.isIOS) {
+      showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoTheme(
+              data: CupertinoThemeData(),
+              child: Container(
+                color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                height: 216,
+                child: CupertinoDatePicker(
+                  initialDateTime:
+                      _selectedDate == null ? DateTime.now() : _selectedDate,
+                  onDateTimeChanged: (DateTime newDate) {
+                    widget.updateDueDate(newDate);
+                    setState(() {
+                      _selectedDate = newDate;
+                    });
+                  },
+                  minimumYear: 2020,
+                  mode: CupertinoDatePickerMode.date,
+                ),
+              ),
+            );
+          });
+    }
   }
 
   @override
@@ -171,7 +200,7 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                 ),
               ),
               child: FlatButton(
-                onPressed: _presentDatePicker,
+                onPressed: () => _presentDatePicker(context),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32)),
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),

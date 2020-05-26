@@ -18,28 +18,30 @@ class AboutScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: MenuDrawer(currentScreen: 'about'),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
+      body: SafeArea(
+              child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
+          ),
+          child: Column(
+            children: [
+              HeroBubblesHelp(),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Help(),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-        child: Column(
-          children: [
-            HeroBubblesHelp(),
-            Expanded(
-              child: ListView(
-                children: [
-                  Help(),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );

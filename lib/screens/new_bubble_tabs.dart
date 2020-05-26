@@ -241,102 +241,104 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
     return BasicScaffold(
       screenTitle: '',
       implyLeading: true,
-      childWidget: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Container(
-              height: 120,
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: 20,
-                    top: 10,
-                    child: Text(
-                      '${_editing ? 'Edit' : 'New'} Bubble',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
+      childWidget: SafeArea(
+              child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Container(
+                height: 120,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: 20,
+                      top: 10,
+                      child: Text(
+                        '${_editing ? 'Edit' : 'New'} Bubble',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    height: 60,
-                    width: 60,
-                    right: 35,
-                    bottom: 20,
-                    child: Hero(
-                      tag: 'bubble-1',
-                      child: Bubble(size: 70),
+                    Positioned(
+                      height: 60,
+                      width: 60,
+                      right: 35,
+                      bottom: 20,
+                      child: Hero(
+                        tag: 'bubble-1',
+                        child: Bubble(size: 70),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    height: 40,
-                    width: 40,
-                    right: 180,
-                    top: 10,
-                    child: Hero(
-                      tag: 'bubble-2',
-                      child: Bubble(size: 50),
+                    Positioned(
+                      height: 40,
+                      width: 40,
+                      right: 180,
+                      top: 10,
+                      child: Hero(
+                        tag: 'bubble-2',
+                        child: Bubble(size: 50),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    left: 30,
-                    bottom: 20,
-                    child: Hero(
-                      tag: 'logoImage',
-                      child: Image.asset('assets/images/logo.png',
-                          height: 100,
-                          width: 100,
-                          semanticLabel: 'Bubble logo'),
+                    Positioned(
+                      left: 30,
+                      bottom: 20,
+                      child: Hero(
+                        tag: 'logoImage',
+                        child: Image.asset('assets/images/logo.png',
+                            height: 100,
+                            width: 100,
+                            semanticLabel: 'Bubble logo'),
+                      ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  BubbleDetails(
+                    titleText: _title,
+                    notesText: _notes,
+                    dueDate: _dueDate,
+                    updateTitle: _updateTitle,
+                    updateNotes: _updateNotes,
+                    updateDueDate: _updateDueDate,
+                    amountOfBubbles: _amountOfBubbles,
+                    saveBubble: _saveBubble,
+                  ),
+                  BubbleType(
+                    saveBubble: _saveBubble,
+                    updateBubbleTemplate: _updateBubbleTemplate,
+                    addBubble: _addBubble,
+                    minusBubble: _minusBubble,
+                    bubbleTemplate: _bubbleTemplate,
+                    amountOfBubbles: _amountOfBubbles,
+                    editing: _editing,
+                    bubblesComplete: _completedBubbles,
                   ),
                 ],
               ),
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                BubbleDetails(
-                  titleText: _title,
-                  notesText: _notes,
-                  dueDate: _dueDate,
-                  updateTitle: _updateTitle,
-                  updateNotes: _updateNotes,
-                  updateDueDate: _updateDueDate,
-                  amountOfBubbles: _amountOfBubbles,
-                  saveBubble: _saveBubble,
-                ),
-                BubbleType(
-                  saveBubble: _saveBubble,
-                  updateBubbleTemplate: _updateBubbleTemplate,
-                  addBubble: _addBubble,
-                  minusBubble: _minusBubble,
-                  bubbleTemplate: _bubbleTemplate,
-                  amountOfBubbles: _amountOfBubbles,
-                  editing: _editing,
-                  bubblesComplete: _completedBubbles,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TabPageSelector(
-              controller: _tabController,
-              color: Colors.indigo,
-              selectedColor: Colors.lightBlue[50],
-              indicatorSize: 16,
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TabPageSelector(
+                controller: _tabController,
+                color: Colors.indigo,
+                selectedColor: Colors.lightBlue[50],
+                indicatorSize: 16,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

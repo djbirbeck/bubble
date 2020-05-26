@@ -41,42 +41,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         centerTitle: true,
       ),
+      extendBody: true,
       drawer: MenuDrawer(currentScreen: 'home'),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).accentColor,
-            ],
+      body: SafeArea(
+              child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              HeroBubbles(),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    TodayStats(),
-                    SingleUseBubble(),
-                    BubbleList(),
-                  ],
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                HeroBubbles(),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      TodayStats(),
+                      SingleUseBubble(),
+                      BubbleList(),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: TabPageSelector(
-                  controller: _tabController,
-                  color: Colors.indigo,
-                  selectedColor: Colors.lightBlue[50],
-                  indicatorSize: 16,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: TabPageSelector(
+                    controller: _tabController,
+                    color: Colors.indigo,
+                    selectedColor: Colors.lightBlue[50],
+                    indicatorSize: 16,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
