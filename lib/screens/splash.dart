@@ -55,13 +55,13 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   }
 
   void _animateIn() {
-    Timer(Duration(milliseconds: 50), () {
+    Timer(Duration(milliseconds: 10), () {
       setState(() {
         _allVisible = !_allVisible;
       });
     });
 
-    Timer(Duration(milliseconds: 400), () {
+    Timer(Duration(milliseconds: 600), () {
       setState(() {
         _logoSize = MediaQuery.of(context).size.height * 0.2;
       });
@@ -139,7 +139,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _allVisible ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(seconds: 1),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,

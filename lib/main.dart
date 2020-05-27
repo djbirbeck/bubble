@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.white,
+      color: Colors.blue[700],
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> {
       ),
       title: 'Bubble',
       home: Container(
-        color: Colors.lightBlue,
+        color: Colors.blue[700],
         child: FutureBuilder(
           future: Hive.openBox<BubbleTask>('bubbles'),
           builder: (context, snapshot) {
@@ -174,7 +174,7 @@ class _MyAppState extends State<MyApp> {
               }
             } else {
               return Container(
-                color: Colors.white,
+                color: Colors.blue[700],
               );
             }
           },
