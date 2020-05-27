@@ -1,11 +1,13 @@
-import 'package:Bubble/transitions/slide_right.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:io' show Platform;
 
 import './list_bubble.dart';
 import '../models/bubble.dart';
 import '../screens/new_bubble_tabs.dart';
+import '../transitions/slide_right.dart';
 
 class BubbleList extends StatefulWidget {
   @override
@@ -25,41 +27,70 @@ class _BubbleListState extends State<BubbleList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(32),
-          ),
-          title: Text(
-            'Delete this bubble?',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                "Delete",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-                ),
-              ),
-              onPressed: () {
-                bubble.delete();
-                Navigator.of(context).pop();
-              },
+        if (Platform.isAndroid) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
             ),
-            FlatButton(
-              child: Text(
-                "Keep",
-                style: TextStyle(
-                  color: Colors.green,
-                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
-                ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            title: Text(
+              'Delete this bubble?',
+              style: Theme.of(context).textTheme.headline6,
             ),
-          ],
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Keep",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  "Delete",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily,
+                  ),
+                ),
+                onPressed: () {
+                  bubble.delete();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        }
+        return CupertinoTheme(
+          data: CupertinoThemeData(),
+          child: CupertinoAlertDialog(
+            title: Text(
+              'Delete this bubble?',
+            ),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                child: Text('Delete'),
+                isDestructiveAction: true,
+                onPressed: () {
+                  bubble.delete();
+                  Navigator.of(context).pop();
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text('Keep'),
+                isDefaultAction: true,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
         );
       },
     );

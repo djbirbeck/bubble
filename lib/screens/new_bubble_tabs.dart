@@ -250,7 +250,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         context: context,
         builder: (BuildContext context) {
           if (Platform.isAndroid) {
-            return new AlertDialog(
+            return AlertDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),

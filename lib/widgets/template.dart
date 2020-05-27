@@ -1,8 +1,10 @@
-import 'package:Bubble/models/timer_template.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'dart:io' show Platform;
 
+import '../models/timer_template.dart';
 import './basic_scaffold.dart';
 
 class TemplateSheet extends StatefulWidget {
@@ -28,29 +30,53 @@ class _TemplateSheetState extends State<TemplateSheet> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
-            ),
-            title: Text(
-              'Unable to save template',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            content: Text(
-              'You havent chosen a name for this template.',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Ok',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+          if (Platform.isAndroid) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
               ),
-            ],
+              title: Text(
+                'Unable to save template',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              content: Text(
+                'You havent chosen a name for this template.',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    'Ok',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+          return CupertinoTheme(
+            data: CupertinoThemeData(),
+            child: CupertinoAlertDialog(
+              title: Text(
+                'Unable to save template',
+              ),
+              content: Text(
+                'You havent chosen a name for this template.',
+              ),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: Text(
+                    'Ok',
+                  ),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
           );
         },
       );
