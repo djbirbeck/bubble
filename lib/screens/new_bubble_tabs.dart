@@ -128,10 +128,10 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         } else if (_editing &&
             _amountOfBubbles != widget.bubbleInfo.completedBubbles &&
             widget.bubbleInfo.completedBubbles > 0) {
-          if (Platform.isAndroid) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              if (Platform.isAndroid) {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
@@ -187,54 +187,48 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
                     ),
                   ],
                 );
-              },
-            );
-          } else if (Platform.isIOS) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoTheme(
-                  data: CupertinoThemeData(),
-                  child: CupertinoAlertDialog(
-                    title: Text(
-                      'Complete this Bubble?',
-                    ),
-                    content: Text(
-                      'Do you want to set this Bubble as complete?',
-                    ),
-                    actions: <Widget>[
-                      CupertinoDialogAction(
-                        child: Text('OK'),
-                        isDefaultAction: true,
-                        onPressed: () {
-                          var bubble = widget.bubbleInfo;
-                          bubble.id = widget.bubbleInfo.id;
-                          bubble.title = _title.trim();
-                          bubble.notes = _notes;
-                          bubble.dueDate = _dueDate;
-                          bubble.bubbleTemplate = _bubbleTemplate;
-                          bubble.amountOfBubbles = _amountOfBubbles;
-                          bubble.completedBubbles =
-                              widget.bubbleInfo.completedBubbles;
-                          // bubble.totalTime = _bubbleType == 'small'
-                          //     ? _amountOfBubbles * 0.5
-                          //     : _amountOfBubbles;
-                          bubble.completed = true;
-                          bubble.save();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      CupertinoDialogAction(
-                        child: Text('Cancel'),
-                        isDestructiveAction: true,
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
+              }
+              return CupertinoTheme(
+                data: CupertinoThemeData(),
+                child: CupertinoAlertDialog(
+                  title: Text(
+                    'Complete this Bubble?',
                   ),
-                );
-              },
-            );
-          }
+                  content: Text(
+                    'Do you want to set this Bubble as complete?',
+                  ),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: Text('OK'),
+                      isDefaultAction: true,
+                      onPressed: () {
+                        var bubble = widget.bubbleInfo;
+                        bubble.id = widget.bubbleInfo.id;
+                        bubble.title = _title.trim();
+                        bubble.notes = _notes;
+                        bubble.dueDate = _dueDate;
+                        bubble.bubbleTemplate = _bubbleTemplate;
+                        bubble.amountOfBubbles = _amountOfBubbles;
+                        bubble.completedBubbles =
+                            widget.bubbleInfo.completedBubbles;
+                        // bubble.totalTime = _bubbleType == 'small'
+                        //     ? _amountOfBubbles * 0.5
+                        //     : _amountOfBubbles;
+                        bubble.completed = true;
+                        bubble.save();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    CupertinoDialogAction(
+                      child: Text('Cancel'),
+                      isDestructiveAction: true,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         }
       } else {
         throw new Exception();
@@ -255,30 +249,51 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          print('dialog');
-          return new AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
-            ),
-            title: Text(
-              'Unable to save Bubble',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            content: Text(
-              errorTitle + errorTemplate + errorAmount,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  'Ok',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+          if (Platform.isAndroid) {
+            return new AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
               ),
-            ],
+              title: Text(
+                'Unable to save Bubble',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              content: Text(
+                errorTitle + errorTemplate + errorAmount,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    'Ok',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+          return CupertinoTheme(
+            data: CupertinoThemeData(),
+            child: CupertinoAlertDialog(
+              title: Text(
+                'Unable to save Bubble',
+              ),
+              content: Text(
+                errorTitle + errorTemplate + errorAmount,
+              ),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: Text('OK'),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
           );
         },
       );
