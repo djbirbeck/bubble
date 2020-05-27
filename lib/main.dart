@@ -91,6 +91,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
         accentColor: Colors.lightBlue,
+        canvasColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -121,9 +122,10 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       darkTheme: ThemeData(
+        brightness: Brightness.dark,
         primaryColor: Colors.blue[900],
         accentColor: Colors.black,
-        brightness: Brightness.dark,
+        canvasColor: Colors.black,
         textTheme: ThemeData.dark().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -155,7 +157,7 @@ class _MyAppState extends State<MyApp> {
       ),
       title: 'Bubble',
       home: Container(
-        color: Colors.white,
+        color: Colors.lightBlue,
         child: FutureBuilder(
           future: Hive.openBox<BubbleTask>('bubbles'),
           builder: (context, snapshot) {
