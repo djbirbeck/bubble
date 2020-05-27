@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:io' show Platform;
 
 import '../models/timer_template.dart';
 
@@ -95,56 +97,98 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
               ),
             ),
             ValueListenableBuilder(
-                valueListenable:
-                    Hive.box<TimerTemplate>('timerTemplates').listenable(),
-                builder: (context, Box<TimerTemplate> box, _) {
-                  if (box.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'Add Template',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    );
-                  }
-                  return Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: ButtonTheme(
-                      alignedDropdown: true,
-                      child: DropdownButton(
-                          isExpanded: true,
-                          hint: Text(
-                            _template != null
-                                ? _template.title
-                                : 'Select Template',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          iconEnabledColor: Colors.white,
-                          items: box.values.map((e) {
-                            return DropdownMenuItem(
-                              value: e.title,
-                              child: Center(
-                                child: Text(
-                                  e.title,
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: _editing
-                              ? null
-                              : (value) {
-                                  var templateToUse =
-                                      box.values.where((element) {
-                                    return element.title == value;
-                                  }).single;
-                                  widget.updateTimer(templateToUse);
-                                  setState(() {
-                                    _template = templateToUse;
-                                  });
-                                }),
+              valueListenable:
+                  Hive.box<TimerTemplate>('timerTemplates').listenable(),
+              builder: (context, Box<TimerTemplate> box, _) {
+                if (box.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Add Template',
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   );
-                }),
+                }
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Platform.isAndroid
+                      ? ButtonTheme(
+                          alignedDropdown: true,
+                          child: DropdownButton(
+                            isExpanded: true,
+                            hint: Text(
+                              _template != null
+                                  ? _template.title
+                                  : 'Select Template',
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                            iconEnabledColor: Colors.white,
+                            items: box.values.map((e) {
+                              return DropdownMenuItem(
+                                value: e.title,
+                                child: Center(
+                                  child: Text(
+                                    e.title,
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: _editing
+                                ? null
+                                : (value) {
+                                    var templateToUse =
+                                        box.values.where((element) {
+                                      return element.title == value;
+                                    }).single;
+                                    widget.updateTimer(templateToUse);
+                                    setState(() {
+                                      _template = templateToUse;
+                                    });
+                                  },
+                          ),
+                        )
+                      : CupertinoTheme(
+                          data: CupertinoThemeData(),
+                          child: CupertinoButton(
+                              child: Text(
+                                _template != null
+                                    ? _template.title
+                                    : 'Select Template',
+                              ),
+                              onPressed: () {
+                                showCupertinoModalPopup(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        height: 216,
+                                        color: CupertinoTheme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        child: CupertinoPicker(
+                                          itemExtent: 32.0,
+                                          onSelectedItemChanged: _editing
+                                              ? null
+                                              : (value) {
+                                                  var templateToUse = box.values
+                                                      .toList()
+                                                      .elementAt(value);
+                                                  widget.updateTimer(
+                                                      templateToUse);
+                                                  setState(() {
+                                                    _template = templateToUse;
+                                                  });
+                                                },
+                                          children: box.values.map((e) {
+                                            return Text(e.title);
+                                          }).toList(),
+                                        ),
+                                      );
+                                    });
+                              }),
+                        ),
+                );
+              },
+            ),
             Container(
               height: 60,
               width: 60,
