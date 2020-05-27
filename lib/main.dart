@@ -10,7 +10,6 @@ import './models/bubble.dart';
 import './models/completed_bubble.dart';
 import './models/intro.dart';
 import './models/timer_template.dart';
-import './widgets/basic_scaffold.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,11 +86,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.white,
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.cyan[50],
         accentColor: Colors.lightBlue,
-        canvasColor: Colors.lightBlue,
         textTheme: ThemeData.light().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -118,14 +117,13 @@ class _MyAppState extends State<MyApp> {
         cupertinoOverrideTheme: CupertinoThemeData(
           brightness: Brightness.light,
           scaffoldBackgroundColor: CupertinoColors.white,
-            textTheme: CupertinoTextThemeData(),
+          textTheme: CupertinoTextThemeData(),
         ),
       ),
       darkTheme: ThemeData(
         primaryColor: Colors.blue[900],
         accentColor: Colors.black,
         brightness: Brightness.dark,
-        canvasColor: Colors.black,
         textTheme: ThemeData.dark().textTheme.copyWith(
               headline5: TextStyle(
                 fontWeight: FontWeight.w400,
@@ -150,30 +148,35 @@ class _MyAppState extends State<MyApp> {
               ),
         ),
         cupertinoOverrideTheme: CupertinoThemeData(
-            brightness: Brightness.dark,
-            scaffoldBackgroundColor: CupertinoColors.systemGrey6,
-            textTheme: CupertinoTextThemeData(),
-            ),
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: CupertinoColors.systemGrey6,
+          textTheme: CupertinoTextThemeData(),
+        ),
       ),
       title: 'Bubble',
-      home: FutureBuilder(
-        future: Hive.openBox<BubbleTask>('bubbles'),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Text(
-                snapshot.error.toString(),
-                style: Theme.of(context).textTheme.headline6,
-              );
+      home: Container(
+        color: Colors.white,
+        child: FutureBuilder(
+          future: Hive.openBox<BubbleTask>('bubbles'),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    snapshot.error.toString(),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                );
+              } else {
+                return Splash();
+              }
             } else {
-              return Splash();
+              return Container(
+                color: Colors.white,
+              );
             }
-          } else
-            return BasicScaffold(
-              screenTitle: '',
-              implyLeading: false,
-            );
-        },
+          },
+        ),
       ),
     );
   }
