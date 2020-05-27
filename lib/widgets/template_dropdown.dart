@@ -20,11 +20,13 @@ class TemplateDropdown extends StatefulWidget {
 class _TemplateDropdownState extends State<TemplateDropdown> {
   TimerTemplate _template;
   bool _editing;
+  int _iosIndex;
 
   @override
   void initState() {
     widget.editing == null ? _editing = false : _editing = widget.editing;
     _template = widget.timerTemp;
+    _iosIndex = 0;
     super.initState();
   }
 
@@ -151,51 +153,65 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                       : CupertinoTheme(
                           data: CupertinoThemeData(),
                           child: CupertinoButton(
-                              child: Text(
-                                _template != null
-                                    ? _template.title
-                                    : 'Select Template',
-                                style: TextStyle(
-                                  color: CupertinoTheme.of(context)
-                                      .textTheme
-                                      .textStyle
-                                      .color,
-                                ),
+                            child: Text(
+                              _template != null
+                                  ? _template.title
+                                  : 'Select Template',
+                              style: TextStyle(
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color,
                               ),
-                              onPressed: () {
-                                showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        height: 216,
-                                        color: CupertinoTheme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        child: CupertinoPicker(
-                                          itemExtent: 32.0,
-                                          onSelectedItemChanged: _editing
-                                              ? null
-                                              : (value) {
-                                                  var templateToUse = box.values
-                                                      .toList()
-                                                      .elementAt(value);
-                                                  widget.updateTimer(
-                                                      templateToUse);
-                                                  setState(() {
-                                                    _template = templateToUse;
-                                                  });
-                                                },
-                                          children: box.values.map((e) {
-                                            return Text(
-                                              e.title,
-                                              style: CupertinoTheme.of(context)
-                                                  .textTheme
-                                                  .textStyle,
-                                            );
-                                          }).toList(),
-                                        ),
-                                      );
-                                    });
-                              }),
+                            ),
+                            onPressed: _editing
+                                ? null
+                                : () {
+                                    if (_template == null) {
+                                      var initialTemp =
+                                          box.values.toList().elementAt(0);
+                                      widget.updateTimer(initialTemp);
+                                      setState(() {
+                                        _template = initialTemp;
+                                      });
+                                    }
+                                    showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          height: 216,
+                                          color: CupertinoTheme.of(context)
+                                              .scaffoldBackgroundColor,
+                                          child: CupertinoPicker(
+                                            itemExtent: 32.0,
+                                            scrollController: FixedExtentScrollController(initialItem: _iosIndex),
+                                            onSelectedItemChanged: (value) {
+                                              var templateToUse = box.values
+                                                  .toList()
+                                                  .elementAt(value);
+                                              widget.updateTimer(templateToUse);
+                                              setState(() {
+                                                _iosIndex = value;
+                                                _template = templateToUse;
+                                              });
+                                            },
+                                            children: box.values.map((e) {
+                                              return Center(
+                                                child: Text(
+                                                  e.title,
+                                                  style:
+                                                      CupertinoTheme.of(context)
+                                                          .textTheme
+                                                          .textStyle,
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                          ),
                         ),
                 );
               },

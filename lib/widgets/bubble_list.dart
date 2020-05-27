@@ -16,10 +16,12 @@ class BubbleList extends StatefulWidget {
 
 class _BubbleListState extends State<BubbleList> {
   String _search;
+  int _iosIndex;
 
   @override
   void initState() {
     _search = 'All';
+    _iosIndex = 0;
     super.initState();
   }
 
@@ -109,53 +111,144 @@ class _BubbleListState extends State<BubbleList> {
           'My Bubbles',
           style: Theme.of(context).textTheme.headline6,
         ),
+        centerTitle: false,
         elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32),
         ),
         actions: [
           ButtonBar(children: [
-            DropdownButton(
-                hint: Text(
-                  _search,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                iconEnabledColor: Colors.white,
-                items: [
-                  DropdownMenuItem(
-                    value: 'All',
-                    child: Text(
-                      'All',
+            Platform.isAndroid
+                ? DropdownButton(
+                    hint: Text(
+                      _search,
                       style: Theme.of(context).textTheme.headline6,
                     ),
+                    iconEnabledColor: Colors.white,
+                    items: [
+                      DropdownMenuItem(
+                        value: 'All',
+                        child: Text(
+                          'All',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Today',
+                        child: Text(
+                          'Today',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Complete',
+                        child: Text(
+                          'Complete',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Incomplete',
+                        child: Text(
+                          'Incomplete',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _search = value;
+                      });
+                    })
+                : CupertinoTheme(
+                    data: CupertinoThemeData(),
+                    child: CupertinoButton(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          _search,
+                          style: TextStyle(
+                            color: CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .color,
+                          ),
+                        ),
+                        onPressed: () {
+                          showCupertinoModalPopup(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 216,
+                                  color: CupertinoTheme.of(context)
+                                      .scaffoldBackgroundColor,
+                                  child: CupertinoPicker(
+                                    itemExtent: 32.0,
+                                    scrollController:
+                                        FixedExtentScrollController(
+                                            initialItem: _iosIndex),
+                                    onSelectedItemChanged: (int value) {
+                                      String searchValue;
+                                      switch (value) {
+                                        case 0:
+                                          searchValue = 'All';
+                                          break;
+                                        case 1:
+                                          searchValue = 'Today';
+                                          break;
+                                        case 2:
+                                          searchValue = 'Complete';
+                                          break;
+                                        case 3:
+                                          searchValue = 'Incomplete';
+                                          break;
+                                        default:
+                                          searchValue = 'All';
+                                          break;
+                                      }
+                                      setState(() {
+                                        _search = searchValue;
+                                        _iosIndex = value;
+                                      });
+                                    },
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          'All',
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Today',
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Complete',
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Incomplete',
+                                          style: CupertinoTheme.of(context)
+                                              .textTheme
+                                              .textStyle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        }),
                   ),
-                  DropdownMenuItem(
-                    value: 'Today',
-                    child: Text(
-                      'Today',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Complete',
-                    child: Text(
-                      'Complete',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Incomplete',
-                    child: Text(
-                      'Incomplete',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _search = value;
-                  });
-                }),
             Semantics(
               label: 'Add a new bubble button',
               child: IconButton(
@@ -170,7 +263,7 @@ class _BubbleListState extends State<BubbleList> {
                   ),
                 ),
               ),
-            ),
+            )
           ])
         ],
       ),
