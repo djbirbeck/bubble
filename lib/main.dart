@@ -115,7 +115,11 @@ class _MyAppState extends State<MyApp> {
                     fontFamily: 'Josefin Sans'),
               ),
         ),
-        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.light, scaffoldBackgroundColor: CupertinoColors.white,),
+        cupertinoOverrideTheme: CupertinoThemeData(
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: CupertinoColors.white,
+            textTheme: CupertinoTextThemeData(),
+        ),
       ),
       darkTheme: ThemeData(
         primaryColor: Colors.blue[900],
@@ -145,7 +149,11 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
         ),
-        cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark, scaffoldBackgroundColor: CupertinoColors.systemGrey6),
+        cupertinoOverrideTheme: CupertinoThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: CupertinoColors.systemGrey6,
+            textTheme: CupertinoTextThemeData(),
+            ),
       ),
       title: 'Bubble',
       home: FutureBuilder(

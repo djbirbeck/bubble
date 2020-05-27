@@ -155,6 +155,12 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                                 _template != null
                                     ? _template.title
                                     : 'Select Template',
+                                style: TextStyle(
+                                  color: CupertinoTheme.of(context)
+                                      .textTheme
+                                      .textStyle
+                                      .color,
+                                ),
                               ),
                               onPressed: () {
                                 showCupertinoModalPopup(
@@ -179,7 +185,12 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                                                   });
                                                 },
                                           children: box.values.map((e) {
-                                            return Text(e.title);
+                                            return Text(
+                                              e.title,
+                                              style: CupertinoTheme.of(context)
+                                                  .textTheme
+                                                  .textStyle,
+                                            );
                                           }).toList(),
                                         ),
                                       );
