@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
+import 'dart:io' show Platform;
 
 import './bubble_details.dart';
 import './bubble_type.dart';
@@ -126,66 +128,113 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
         } else if (_editing &&
             _amountOfBubbles != widget.bubbleInfo.completedBubbles &&
             widget.bubbleInfo.completedBubbles > 0) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                title: Text(
-                  'Complete this Bubble?',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                content: Text(
-                  'Do you want to set this Bubble as complete?',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      'Yes',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                      ),
-                    ),
-                    onPressed: () {
-                      var bubble = widget.bubbleInfo;
-                      bubble.id = widget.bubbleInfo.id;
-                      bubble.title = _title.trim();
-                      bubble.notes = _notes;
-                      bubble.dueDate = _dueDate;
-                      bubble.bubbleTemplate = _bubbleTemplate;
-                      bubble.amountOfBubbles = _amountOfBubbles;
-                      bubble.completedBubbles =
-                          widget.bubbleInfo.completedBubbles;
-                      // bubble.totalTime = _bubbleType == 'small'
-                      //     ? _amountOfBubbles * 0.5
-                      //     : _amountOfBubbles;
-                      bubble.completed = true;
-                      bubble.save();
-                      Navigator.of(context).pop();
-                    },
+          if (Platform.isAndroid) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
                   ),
-                  FlatButton(
-                    child: Text(
-                      'No',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                  title: Text(
+                    'Complete this Bubble?',
+                    style: Theme.of(context).textTheme.headline6,
                   ),
-                ],
-              );
-            },
-          );
+                  content: Text(
+                    'Do you want to set this Bubble as complete?',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                        ),
+                      ),
+                      onPressed: () {
+                        var bubble = widget.bubbleInfo;
+                        bubble.id = widget.bubbleInfo.id;
+                        bubble.title = _title.trim();
+                        bubble.notes = _notes;
+                        bubble.dueDate = _dueDate;
+                        bubble.bubbleTemplate = _bubbleTemplate;
+                        bubble.amountOfBubbles = _amountOfBubbles;
+                        bubble.completedBubbles =
+                            widget.bubbleInfo.completedBubbles;
+                        // bubble.totalTime = _bubbleType == 'small'
+                        //     ? _amountOfBubbles * 0.5
+                        //     : _amountOfBubbles;
+                        bubble.completed = true;
+                        bubble.save();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'No',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontFamily:
+                              Theme.of(context).textTheme.headline6.fontFamily,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else if (Platform.isIOS) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoTheme(
+                  data: CupertinoThemeData(),
+                  child: CupertinoAlertDialog(
+                    title: Text(
+                      'Complete this Bubble?',
+                    ),
+                    content: Text(
+                      'Do you want to set this Bubble as complete?',
+                    ),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                        child: Text('OK'),
+                        isDefaultAction: true,
+                        onPressed: () {
+                          var bubble = widget.bubbleInfo;
+                          bubble.id = widget.bubbleInfo.id;
+                          bubble.title = _title.trim();
+                          bubble.notes = _notes;
+                          bubble.dueDate = _dueDate;
+                          bubble.bubbleTemplate = _bubbleTemplate;
+                          bubble.amountOfBubbles = _amountOfBubbles;
+                          bubble.completedBubbles =
+                              widget.bubbleInfo.completedBubbles;
+                          // bubble.totalTime = _bubbleType == 'small'
+                          //     ? _amountOfBubbles * 0.5
+                          //     : _amountOfBubbles;
+                          bubble.completed = true;
+                          bubble.save();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      CupertinoDialogAction(
+                        child: Text('Cancel'),
+                        isDestructiveAction: true,
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
         }
       } else {
         throw new Exception();
@@ -242,7 +291,7 @@ class _NewBubbleTabsState extends State<NewBubbleTabs>
       screenTitle: '',
       implyLeading: true,
       childWidget: SafeArea(
-              child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             GestureDetector(

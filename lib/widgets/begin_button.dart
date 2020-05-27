@@ -26,12 +26,13 @@ class BeginButton extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 onPressed: () => animateButtonFunction('intro'),
                 child: Text(
-                  'Lets begin...',
+                  'Let\'s begin...',
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.headline6.color,
-                      fontSize: 20,
-                      fontFamily:
-                          Theme.of(context).textTheme.headline6.fontFamily),
+                    color: Theme.of(context).textTheme.headline6.color,
+                    fontSize: 20,
+                    fontFamily:
+                        Theme.of(context).textTheme.headline6.fontFamily,
+                  ),
                 ),
               ),
             );
@@ -45,7 +46,7 @@ class BeginButton extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24),
               onPressed: () => animateButtonFunction('main'),
               child: Text(
-                'Lets get started...',
+                'Let\'s get started...',
                 style: TextStyle(
                   color: Theme.of(context).textTheme.headline6.color,
                   fontSize: 20,
