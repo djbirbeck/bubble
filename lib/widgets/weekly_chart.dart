@@ -1,21 +1,29 @@
-import 'package:bezier_chart/bezier_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 import '../models/completed_bubble.dart';
 
+class ChartBubbles {
+  final DateTime weekDay;
+  final int month;
+  final int number;
+
+  ChartBubbles({this.weekDay, this.month, this.number});
+}
+
 class WeeklyChart extends StatelessWidget {
   final Iterable<CompletedBubble> recentTransactions;
-  final DateTime _fromDate = DateTime.now().subtract(Duration(days: 6));
-  final DateTime _toDate = DateTime.now();
 
   WeeklyChart({this.recentTransactions});
 
-  List<Map<String, dynamic>> get groupedTransactionValues {
-    return List.generate(7, (index) {
+  static List<charts.Series<ChartBubbles, int>> _groupedTransactionValues(
+      recentTransactions, context) {
+    var data = List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
-      var totalSum = 0.0;
+      var totalSum = 0;
 
       for (var i = 0; i < recentTransactions.length; i++) {
         if (recentTransactions.elementAt(i).completedDate.day == weekDay.day &&
@@ -27,32 +35,43 @@ class WeeklyChart extends StatelessWidget {
         }
       }
 
-      return {
-        'day': weekDay,
-        'amount': totalSum,
-      };
+      return ChartBubbles(
+        weekDay: weekDay,
+        month: weekDay.month,
+        number: totalSum,
+      );
     }).reversed.toList();
+
+    return [
+      new charts.Series<ChartBubbles, int>(
+        id: 'Sales',
+        domainFn: (ChartBubbles bubble, _) => bubble.weekDay.day,
+        measureFn: (ChartBubbles bubble, _) => bubble.number,
+        data: data,
+        colorFn: (_, index) {
+          return charts.MaterialPalette.indigo.makeShades(7)[index];
+        },
+        outsideLabelStyleAccessorFn: (ChartBubbles bubble, _) {
+          final color = Theme.of(context).brightness == Brightness.light
+              ? charts.MaterialPalette.black
+              : charts.MaterialPalette.white;
+          return new charts.TextStyleSpec(color: color);
+        },
+        labelAccessorFn: (ChartBubbles row, _) =>
+            '${DateFormat.E().format(row.weekDay)}: ${row.number}',
+      )
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 3,
-        ),
-      ),
-      height: MediaQuery.of(context).size.height * 0.5,
-      width: MediaQuery.of(context).size.width * 0.9,
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: Column(
+      child: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
           Text(
-            'Your Bubbles in the past week\n(press and hold for more information)',
+            'Your Bubbles\nin the past week',
             style: TextStyle(
               fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
               fontSize: 14,
@@ -60,41 +79,13 @@ class WeeklyChart extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Container(
-            height: MediaQuery  .of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width,
-            child: BezierChart(
-              fromDate: _fromDate,
-              bezierChartScale: BezierChartScale.WEEKLY,
-              toDate: _toDate,
-              selectedDate: _toDate,
-              series: [
-                BezierLine(
-                  label: 'Bubble(s)',
-                  onMissingValue: (dateTime) {
-                    return 0.0;
-                  },
-                  data: groupedTransactionValues.map((data) {
-                    return DataPoint<DateTime>(
-                      value: data['amount'],
-                      xAxis: data['day'],
-                    );
-                  }).toList(),
-                ),
-              ],
-              config: BezierChartConfig(
-                verticalIndicatorStrokeWidth: 3.0,
-                verticalIndicatorColor: Theme.of(context).primaryColor,
-                showVerticalIndicator: true,
-                verticalIndicatorFixedPosition: false,
-                backgroundColor: Theme.of(context).accentColor,
-                footerHeight: 30.0,
-                showDataPoints: true,
-                bubbleIndicatorLabelStyle: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.headline6.fontFamily),
-                bubbleIndicatorValueStyle: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.headline6.fontFamily),
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: charts.PieChart(
+              _groupedTransactionValues(recentTransactions, context),
+              animate: true,
+              defaultRenderer: new charts.ArcRendererConfig(
+                arcWidth: 10,
+                arcRendererDecorators: [new charts.ArcLabelDecorator()],
               ),
             ),
           ),

@@ -26,10 +26,13 @@ class PlayScreen extends StatefulWidget {
 class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
   AnimationController _iconController;
   Animation<Color> _colourAnimation;
+  Animation<Color> _bubbleColourAnimation;
+  Animation<Color> _textColourAnimation;
   double _totalBubbles;
   int _time;
   bool _countingDown = false;
   bool _bubbling = true;
+  bool _finished = false;
   CountdownTimer _countDownTimer;
   StreamSubscription<CountdownTimer> _sub;
   var _lines = List<String>();
@@ -131,9 +134,11 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
           var bubble = widget.bubbleInfo;
           bubble.completed = true;
           bubble.save();
-          _time = 0;
           setState(() {
             _iconController.reverse();
+
+            _time = 0;
+            _finished = !_finished;
           });
         } else {
           _restCountDown(widget.bubbleInfo.bubbleTemplate.restTime * 60);
@@ -226,11 +231,27 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    _bubbleColourAnimation = ColorTween(
+      begin: Colors.lightGreenAccent[100],
+      end: Theme.of(context).primaryColor,
+    ).animate(_iconController)
+      ..addListener(() {
+        setState(() {});
+      });
+    _textColourAnimation = ColorTween(
+      begin: Colors.lightGreenAccent[100],
+      end: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Colors.lightBlue[100],
+    ).animate(_iconController)
+      ..addListener(() {
+        setState(() {});
+      });
     return BasicScaffold(
       screenTitle: widget.bubbleInfo.title,
       implyLeading: true,
       childWidget: SafeArea(
-              child: Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
@@ -294,20 +315,23 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Container(
-                    height: 80,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.bubbleInfo.notes,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily:
-                            Theme.of(context).textTheme.headline6.fontFamily,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                  widget.bubbleInfo.notes.isEmpty
+                      ? SizedBox.shrink()
+                      : Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          alignment: Alignment.center,
+                          child: Text(
+                            widget.bubbleInfo.notes,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .fontFamily,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                   TemplateListItem(
                     timerTemplate: widget.bubbleInfo.bubbleTemplate,
                   ),
@@ -332,7 +356,9 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Theme.of(context).primaryColor,
+                                      color: !_finished
+                                          ? Theme.of(context).primaryColor
+                                          : _bubbleColourAnimation.value,
                                       width: 4,
                                     ),
                                   ),
@@ -342,10 +368,12 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                       Text(
                                         transformSeconds(_time),
                                         style: TextStyle(
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? Colors.white
-                                              : Colors.lightBlue,
+                                          color: !_finished
+                                              ? (Theme.of(context).brightness ==
+                                                      Brightness.light
+                                                  ? Colors.white
+                                                  : Colors.lightBlue[100])
+                                              : _textColourAnimation.value,
                                           fontSize: 50,
                                           fontFamily: Theme.of(context)
                                               .textTheme
@@ -354,12 +382,18 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                         ),
                                       ),
                                       Text(
-                                        _bubbling ? 'Working' : 'Resting',
+                                        !_finished
+                                            ? (_bubbling
+                                                ? 'Working'
+                                                : 'Resting')
+                                            : 'Finished',
                                         style: TextStyle(
-                                          color: Theme.of(context).brightness ==
-                                                  Brightness.light
-                                              ? Colors.white
-                                              : Colors.lightBlue,
+                                          color: !_finished
+                                              ? (Theme.of(context).brightness ==
+                                                      Brightness.light
+                                                  ? Colors.white
+                                                  : Colors.lightBlue[100])
+                                              : _textColourAnimation.value,
                                           fontSize: 18,
                                           fontFamily: Theme.of(context)
                                               .textTheme
@@ -383,7 +417,9 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Theme.of(context).primaryColor,
+                                      color: !_finished
+                                          ? Theme.of(context).primaryColor
+                                          : _bubbleColourAnimation.value,
                                       width: 4,
                                     ),
                                     gradient: LinearGradient(
@@ -397,22 +433,45 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           _totalBubbles.toStringAsFixed(0),
                                           softWrap: true,
                                           style: TextStyle(
-                                            fontSize: 24,
-                                            fontFamily: Theme.of(context)
-                                                .textTheme
-                                                .headline6
-                                                .fontFamily,
-                                          ),
+                                              fontSize: 24,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  .fontFamily,
+                                              color: !_finished
+                                                  ? (Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.white
+                                                      : Colors.lightBlue[100])
+                                                  : _textColourAnimation.value),
                                         ),
-                                        Text(_totalBubbles != 1
-                                            ? 'Bubbles'
-                                            : 'Bubble')
+                                        Text(
+                                          _totalBubbles != 1
+                                              ? 'Bubbles'
+                                              : 'Bubble',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  .fontFamily,
+                                              color: !_finished
+                                                  ? (Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.white
+                                                      : Colors.lightBlue[100])
+                                                  : _textColourAnimation.value,
+                                                  ),
+                                        )
                                       ],
                                     ),
                                   ),
