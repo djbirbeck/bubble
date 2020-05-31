@@ -274,34 +274,21 @@ class _BubbleListState extends State<BubbleList> {
             return Center(
               child: Container(
                 padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: Colors.lightBlue, width: 2),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
-                    ],
-                  ),
-                ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                  onPressed: () => Navigator.push(
-                    context,
-                    SlideRightRoute(
-                      page: NewBubbleTabs(),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Create a to-do Bubble using the',
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                  ),
-                  child: Text(
-                    'Add a Bubble?',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                    Icon(Icons.add),
+                    Text(
+                      'above.',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ],
                 ),
               ),
             );
