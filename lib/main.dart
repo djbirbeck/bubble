@@ -43,9 +43,9 @@ class _MyAppState extends State<MyApp> {
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('notification_icon');
     var initializationSettingsIOS = new IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
     );
     var initializationSettings = new InitializationSettings(

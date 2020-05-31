@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:notification_permissions/notification_permissions.dart';
 
 import './home_screen.dart';
-import './intro.dart';
 import '../widgets/begin_button.dart';
 import '../widgets/bubble.dart';
+import '../widgets/onboarding.dart';
 import '../transitions/fade.dart';
 
 class Splash extends StatefulWidget {
@@ -42,16 +41,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     _controller = AnimationController(
         duration: const Duration(milliseconds: 600), vsync: this);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
-    permissionStatusFuture = getCheckNotificationPermStatus();
     super.initState();
-  }
-
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      setState(() {
-        permissionStatusFuture = getCheckNotificationPermStatus();
-      });
-    }
   }
 
   void _animateIn() {
@@ -101,38 +91,14 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       });
     } else {
       Timer(Duration(milliseconds: 400), () {
-        NotificationPermissions.requestNotificationPermissions(
-                iosSettings: const NotificationSettingsIos(
-                    sound: true, badge: true, alert: true))
-            .then((_) {
-          setState(() {
-            permissionStatusFuture = getCheckNotificationPermStatus();
-          });
-        });
         Navigator.pushReplacement(
           context,
           FadeRoute(
-            page: Intro(),
+            page: OnBoarding(),
           ),
         );
       });
     }
-  }
-
-  Future<String> getCheckNotificationPermStatus() {
-    return NotificationPermissions.getNotificationPermissionStatus()
-        .then((status) {
-      switch (status) {
-        case PermissionStatus.denied:
-          return permDenied;
-        case PermissionStatus.granted:
-          return permGranted;
-        case PermissionStatus.unknown:
-          return permUnknown;
-        default:
-          return null;
-      }
-    });
   }
 
   @override

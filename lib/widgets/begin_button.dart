@@ -16,7 +16,7 @@ class BeginButton extends StatelessWidget {
       child: ValueListenableBuilder(
         valueListenable: Hive.box<IntroToApp>('intro').listenable(),
         builder: (context, Box<IntroToApp> box, _) {
-          if (box.values.isEmpty == true) {
+          if (box.values.isEmpty) {
             return Container(
               height: 48,
               child: FlatButton(
