@@ -1,9 +1,12 @@
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hive/hive.dart';
 
-import '../transitions/slide_right.dart';
+import '../transitions/fade.dart';
 import '../screens/home_screen.dart';
+import '../models/timer_template.dart';
+import '../models/intro.dart';
 
 class OnBoarding extends StatelessWidget {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =  FlutterLocalNotificationsPlugin();
@@ -108,6 +111,43 @@ class OnBoarding extends StatelessWidget {
     ),
   ];
 
+    void _navigateHome(BuildContext context) {
+    Box<TimerTemplate> templatesBox = Hive.box<TimerTemplate>('timerTemplates');
+    Box<IntroToApp> introBox = Hive.box<IntroToApp>('intro');
+    var smallTemplate = TimerTemplate(
+      title: 'Small Bubble',
+      workTime: 25,
+      restTime: 5,
+    );
+    var bigTemplate = TimerTemplate(
+      title: 'Big Bubble',
+      workTime: 50,
+      restTime: 10,
+    );
+
+    templatesBox.add(smallTemplate);
+    templatesBox.add(bigTemplate);
+
+    var intro = IntroToApp(introCompleted: true);
+    introBox.add(intro);
+
+    flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+
+    Navigator.pushReplacement(
+      context,
+      FadeRoute(
+        page: HomeScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,38 +156,8 @@ class OnBoarding extends StatelessWidget {
         skipButtonText: "Skip",
         pageList: pageList,
         doneButtonBackgroundColor: Colors.indigo,
-        onDoneButtonPressed: () {
-          flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
-          Navigator.pushReplacement(
-            context,
-            SlideRightRoute(
-              page: HomeScreen(),
-            ),
-          );
-        },
-        onSkipButtonPressed: () {
-          flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
-          Navigator.pushReplacement(
-            context,
-            SlideRightRoute(
-              page: HomeScreen(),
-            ),
-          );
-        },
+        onDoneButtonPressed: () => _navigateHome(context),
+        onSkipButtonPressed: () => _navigateHome(context),
       ),
     );
   }
