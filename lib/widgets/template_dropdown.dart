@@ -30,6 +30,63 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
     super.initState();
   }
 
+  void _cupertinoPopUp(BuildContext context, Box box) {
+    if (_template == null) {
+      var initialTemp = box.values.toList().elementAt(0);
+      widget.updateTimer(initialTemp);
+      setState(() {
+        _template = initialTemp;
+      });
+    }
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 264,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                width: double.infinity,
+                alignment: Alignment.centerRight,
+                child: FlatButton(
+                  child: Text('Done', style: CupertinoTheme.of(context).textTheme.actionTextStyle,),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+              Container(
+                height: 216,
+                color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                child: CupertinoPicker(
+                  itemExtent: 32.0,
+                  scrollController:
+                      FixedExtentScrollController(initialItem: _iosIndex),
+                  onSelectedItemChanged: (value) {
+                    var templateToUse = box.values.toList().elementAt(value);
+                    widget.updateTimer(templateToUse);
+                    setState(() {
+                      _iosIndex = value;
+                      _template = templateToUse;
+                    });
+                  },
+                  children: box.values.map((e) {
+                    return Center(
+                      child: Text(
+                        e.title,
+                        style: CupertinoTheme.of(context).textTheme.textStyle,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -166,51 +223,7 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                             ),
                             onPressed: _editing
                                 ? null
-                                : () {
-                                    if (_template == null) {
-                                      var initialTemp =
-                                          box.values.toList().elementAt(0);
-                                      widget.updateTimer(initialTemp);
-                                      setState(() {
-                                        _template = initialTemp;
-                                      });
-                                    }
-                                    showCupertinoModalPopup(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Container(
-                                          height: 216,
-                                          color: CupertinoTheme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          child: CupertinoPicker(
-                                            itemExtent: 32.0,
-                                            scrollController: FixedExtentScrollController(initialItem: _iosIndex),
-                                            onSelectedItemChanged: (value) {
-                                              var templateToUse = box.values
-                                                  .toList()
-                                                  .elementAt(value);
-                                              widget.updateTimer(templateToUse);
-                                              setState(() {
-                                                _iosIndex = value;
-                                                _template = templateToUse;
-                                              });
-                                            },
-                                            children: box.values.map((e) {
-                                              return Center(
-                                                child: Text(
-                                                  e.title,
-                                                  style:
-                                                      CupertinoTheme.of(context)
-                                                          .textTheme
-                                                          .textStyle,
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                                : () => _cupertinoPopUp(context, box),
                           ),
                         ),
                 );
