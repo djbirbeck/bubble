@@ -238,14 +238,21 @@ class _SingleUseBubbleState extends State<SingleUseBubble>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                transformSeconds(_time),
-                style: TextStyle(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? Colors.white
-                      : Colors.lightBlue,
-                  fontSize: 50,
-                  fontFamily: Theme.of(context).textTheme.headline6.fontFamily,
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    transformSeconds(_time),
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.white
+                          : Colors.lightBlue,
+                      fontSize: 50,
+                      fontFamily:
+                          Theme.of(context).textTheme.headline6.fontFamily,
+                    ),
+                  ),
                 ),
               ),
               Text(

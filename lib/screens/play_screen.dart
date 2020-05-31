@@ -365,20 +365,27 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        transformSeconds(_time),
-                                        style: TextStyle(
-                                          color: !_finished
-                                              ? (Theme.of(context).brightness ==
-                                                      Brightness.light
-                                                  ? Colors.white
-                                                  : Colors.lightBlue[100])
-                                              : _textColourAnimation.value,
-                                          fontSize: 50,
-                                          fontFamily: Theme.of(context)
-                                              .textTheme
-                                              .headline6
-                                              .fontFamily,
+                                      FittedBox(
+                                        fit: BoxFit.fitWidth,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 8),
+                                          child: Text(
+                                            transformSeconds(_time),
+                                            style: TextStyle(
+                                              color: !_finished
+                                                  ? (Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? Colors.white
+                                                      : Colors.lightBlue[100])
+                                                  : _textColourAnimation.value,
+                                              fontSize: 50,
+                                              fontFamily: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  .fontFamily,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Text(
@@ -458,19 +465,19 @@ class _PlayScreenState extends State<PlayScreen> with TickerProviderStateMixin {
                                               ? 'Bubbles'
                                               : 'Bubble',
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6
-                                                  .fontFamily,
-                                              color: !_finished
-                                                  ? (Theme.of(context)
-                                                              .brightness ==
-                                                          Brightness.light
-                                                      ? Colors.white
-                                                      : Colors.lightBlue[100])
-                                                  : _textColourAnimation.value,
-                                                  ),
+                                            fontSize: 16,
+                                            fontFamily: Theme.of(context)
+                                                .textTheme
+                                                .headline6
+                                                .fontFamily,
+                                            color: !_finished
+                                                ? (Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.light
+                                                    ? Colors.white
+                                                    : Colors.lightBlue[100])
+                                                : _textColourAnimation.value,
+                                          ),
                                         )
                                       ],
                                     ),
