@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../models/timer_template.dart';
 import '../widgets/template_dropdown.dart';
+import '../widgets/template.dart';
+import '../transitions/slide_right.dart';
 
 class BubbleType extends StatelessWidget {
   final Function saveBubble;
@@ -37,6 +39,28 @@ class BubbleType extends StatelessWidget {
                 updateTimer: updateBubbleTemplate,
                 editing: editing,
                 timerTemp: bubbleTemplate,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlineButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.cyan[100]
+                        : Colors.cyan,
+                    width: 3,
+                  ),
+                  child: Text(
+                    'Add new Template',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  onPressed: () => Navigator.push(
+                              context,
+                              SlideRightRoute(page: TemplateSheet()),
+                            ),
+                ),
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.2,

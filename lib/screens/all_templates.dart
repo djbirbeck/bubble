@@ -24,7 +24,7 @@ class AllTemplates extends StatelessWidget {
       ),
       drawer: MenuDrawer(currentScreen: 'templates'),
       body: SafeArea(
-              child: Container(
+        child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -96,23 +96,24 @@ class AllTemplates extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: ButtonBar(
-                      alignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 16),
-                          child: Text(
-                            'My Templates',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 16),
+                        child: Text(
+                          'My Templates',
+                          style: Theme.of(context).textTheme.headline6,
                         ),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () => Navigator.push(
-                            context,
-                            SlideRightRoute(page: TemplateSheet()),
-                          ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () => Navigator.push(
+                          context,
+                          SlideRightRoute(page: TemplateSheet()),
                         ),
-                      ]),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               ValueListenableBuilder(

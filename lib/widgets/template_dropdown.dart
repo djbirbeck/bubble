@@ -51,7 +51,10 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
                 width: double.infinity,
                 alignment: Alignment.centerRight,
                 child: FlatButton(
-                  child: Text('Done', style: CupertinoTheme.of(context).textTheme.actionTextStyle,),
+                  child: Text(
+                    'Done',
+                    style: CupertinoTheme.of(context).textTheme.actionTextStyle,
+                  ),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ),
@@ -90,7 +93,7 @@ class _TemplateDropdownState extends State<TemplateDropdown> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 4),
+      margin: EdgeInsets.symmetric(vertical: 8),
       color: Colors.transparent,
       elevation: 0,
       child: Container(

@@ -68,28 +68,51 @@ class _BubbleDetailsState extends State<BubbleDetails> {
       });
     } else if (Platform.isIOS) {
       showCupertinoModalPopup(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoTheme(
-              data: CupertinoThemeData(),
-              child: Container(
-                color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-                height: 216,
-                child: CupertinoDatePicker(
-                  initialDateTime:
-                      _selectedDate == null ? DateTime.now() : _selectedDate,
-                  onDateTimeChanged: (DateTime newDate) {
-                    widget.updateDueDate(newDate);
-                    setState(() {
-                      _selectedDate = newDate;
-                    });
-                  },
-                  minimumYear: 2020,
-                  mode: CupertinoDatePickerMode.date,
-                ),
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoTheme(
+            data: CupertinoThemeData(),
+            child: Container(
+              height: 264,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                    width: double.infinity,
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      child: Text(
+                        'Done',
+                        style: CupertinoTheme.of(context)
+                            .textTheme
+                            .actionTextStyle,
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  Container(
+                    color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+                    height: 216,
+                    child: CupertinoDatePicker(
+                      initialDateTime: _selectedDate == null
+                          ? DateTime.now()
+                          : _selectedDate,
+                      onDateTimeChanged: (DateTime newDate) {
+                        widget.updateDueDate(newDate);
+                        setState(() {
+                          _selectedDate = newDate;
+                        });
+                      },
+                      minimumYear: 2020,
+                      mode: CupertinoDatePickerMode.date,
+                    ),
+                  ),
+                ],
               ),
-            );
-          });
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -169,6 +192,7 @@ class _BubbleDetailsState extends State<BubbleDetails> {
                 autocorrect: false,
                 maxLength: 160,
                 maxLines: 4,
+                textInputAction: TextInputAction.done,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: 'Bubble details (optional)',
